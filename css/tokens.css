@@ -1,0 +1,22 @@
+:root {
+    /* C`olor Tokens */
+    --color-sage: #72977B;
+    --color-sage-light: #A9BFa8;
+    --color-cream: #F6F0E5;
+    ----color-text-green: #3F5D4A;
+
+    /* Semantic colors */
+    --color-button-bg: var(--color-text-green);
+    --color-button-text: var(--color-cream);
+    --color-accent: var(--color-sage);
+
+    /* Spacing (8px scale) */
+    --space-1: 8px;
+    --space-2: 16px;
+    --space-3: 24px;
+    --space-4: 32px;
+
+    /* Radii */
+    --radius-sm: 12px;
+    --radius-lg: 16px;
+}

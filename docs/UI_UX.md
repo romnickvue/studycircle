@@ -20,7 +20,8 @@
 **Color roles:**
 | Token | Hex | Usage |
 |---|---|---|
-| Sage Green (Primary) | `#72977B` | Primary actions, active nav states |
+| Sage Green (Accent) | `#72977B` | Active nav states, icons, decorative accents — not for button backgrounds or small text (fails WCAG AA contrast on cream) |
+| Text Green (Buttons) | `#3F5D4A` | Primary button background, paired with Cream text |
 | Sage Light (Secondary) | `#A9BFA8` | Secondary buttons, hover states, accents |
 | Cream (Background) | `#F6F0E5` | Page background |
 | Text Green (Headings) | `#3F5D4A` | Headings, high-emphasis text |
