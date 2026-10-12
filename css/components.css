@@ -1,3 +1,4 @@
+/* modal */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -30,6 +31,8 @@
   display: none !important;
 }
 
+/* toast */
+
 .toast {
   position: fixed;
   bottom: var(--space-3);
@@ -55,6 +58,8 @@
   cursor: pointer;
 }
 
+/* skeleton loader */
+
 .skeleton {
   background: linear-gradient(90deg, var(--color-sage-light) 25%, var(--color-cream) 50%, var(--color-sage-light) 75%);
   background-size: 200% 100%;
@@ -74,4 +79,17 @@
 @keyframes skeleton-loading {
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
+}
+
+/* empty state */
+
+.empty-state {
+  text-align: center;
+  padding: var(--space-4);
+  color: var(--color-text-green);
+}
+
+.empty-state p {
+  margin-bottom: var(--space-2);
+  opacity: 0.8;
 }
