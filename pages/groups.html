@@ -42,9 +42,29 @@
         <p>You haven't joined any groups yet.</p>
         <button id="create-group-btn">Create a Group</button>
       </div>
+
+      <div id="create-group-modal" class="modal-overlay" hidden>
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('create-group-modal')">&times;</button>
+            <h3>Create a Group</h3>
+
+            <form id="create-group-form">
+            <label for="new-group-name">Group name</label>
+            <input type="text" id="new-group-name" required />
+
+            <label for="new-group-description">Description (optional)</label>
+            <input type="text" id="new-group-description" />
+
+            <p id="create-group-error" class="form-error" hidden></p>
+
+            <button type="submit">Create</button>
+            </form>
+        </div>
+    </div>
     </main>
   </div>
 
+  <script src="../js/utils/modal.js"></script>
   <script src="../js/services/groups.service.js"></script>
   <script src="../js/pages/groups.js"></script>
 </body>
