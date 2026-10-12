@@ -297,6 +297,8 @@ Ideas that come up mid-build go here instead of into the current slice. Review t
 
 - [ ] Update sign-in.js redirect from index.html to pages/dashboard.html once Stage 4 (S4.1) is built
 
+- [ ] Add `<script src="../js/utils/route-guard.js"></script>` (right after auth.service.js, before anything else) to every protected page as it's built: Group Overview, Dashboard, My Tasks, Calendar, Members, Group Settings, etc.
+
 ---
 
 ## End of Roadmap
