@@ -29,3 +29,19 @@
 [hidden] {
   display: none !important;
 }
+
+.toast {
+  position: fixed;
+  bottom: var(--space-3);
+  right: var(--space-3);
+  background: var(--color-text-green);
+  color: var(--color-cream);
+  padding: var(--space-2);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  z-index: 200;
+}
+
+.toast.toast-error {
+  background: #8B3A3A;
+}

@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="../css/components.css" />
 
   <script src="../js/utils/modal.js"></script>
+  <script src="../js/utils/toast.js"></script>
 </head>
 <body>
   <div class="app-shell">
@@ -68,6 +69,15 @@
         <h3>Test Modal</h3>
         <p>This is just to confirm the modal renders and opens/closes correctly.</p>
       </div>
+    </div>
+
+    <hr style="margin: var(--space-4) 0;" />
+
+    <h2 style="padding-left: var(--space-2);">Toast Test</h2>
+
+    <div style="padding-left: var(--space-2); display: flex; gap: var(--space-1);">
+      <button onclick="showToast('Group created successfully!')">Show Success Toast</button>
+      <button onclick="showToast('Something went wrong.', 'error')">Show Error Toast</button>
     </div>
 </body>
 </html>
