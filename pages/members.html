@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Members — StudyCircle</title>
+  <link rel="stylesheet" href="../css/reset.css" />
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/layout.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+</head>
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/config/supabase.local.js"></script>
+  <script src="../js/config/supabase.js"></script>
+  <script src="../js/services/auth.service.js"></script>
+  <script src="../js/utils/route-guard.js"></script>
+  <script src="../js/utils/toast.js"></script>
+  <script src="../js/utils/modal.js"></script>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <nav>
+        <ul>
+          <li><a href="#">Overview</a></li>
+          <li><a href="#">Subjects</a></li>
+          <li><a href="#">Academic Activities</a></li>
+          <li><a href="#">Group Calendar</a></li>
+          <li><a href="members.html" class="active">Members</a></li>
+          <li><a href="#">Group Settings</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <h1>Members</h1>
+
+      <div id="loading-state" class="skeleton skeleton-card" style="max-width: 400px;"></div>
+
+      <table id="members-table" hidden border="1" cellpadding="8">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="members-tbody"></tbody>
+      </table>
+
+      <button id="leave-group-btn" hidden>Leave Group</button>
+    </main>
+  </div>
+
+  <script src="../js/services/groups.service.js"></script>
+  <script src="../js/services/members.service.js"></script>
+  <script src="../js/pages/members.js"></script>
+</body>
+</html>

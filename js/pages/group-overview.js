@@ -24,6 +24,8 @@ async function loadGroup() {
   nameEl.textContent = group.name;
   descriptionEl.textContent = group.description || '';
   headerEl.hidden = false;
+
+  document.querySelector('a[href="members.html"]').href = `members.html?id=${groupId}`;
 }
 
 loadGroup();
