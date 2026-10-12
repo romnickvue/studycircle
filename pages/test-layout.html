@@ -79,5 +79,25 @@
       <button onclick="showToast('Group created successfully!')">Show Success Toast</button>
       <button onclick="showToast('Something went wrong.', 'error')">Show Error Toast</button>
     </div>
+
+    <hr style="margin: var(--space-4) 0;" />
+
+    <h2 style="padding-left: var(--space-2);">Confirmation Dialog Test</h2>
+
+    <div style="padding-left: var(--space-2);">
+      <button class="btn-destructive" onclick="confirmAction('Are you sure you want to do this?', () => showToast('Confirmed!'))">
+        Delete Something
+      </button>
+    </div>
+
+    <hr style="margin: var(--space-4) 0;" />
+
+    <h2 style="padding-left: var(--space-2);">Skeleton Loader Test</h2>
+
+    <div style="padding-left: var(--space-2); max-width: 300px;">
+      <div class="skeleton skeleton-text"></div>
+      <div class="skeleton skeleton-text" style="width: 80%;"></div>
+      <div class="skeleton skeleton-card"></div>
+    </div>
 </body>
 </html>

@@ -45,3 +45,33 @@
 .toast.toast-error {
   background: #8B3A3A;
 }
+
+.btn-destructive {
+  background: #8B3A3A;
+  color: var(--color-cream);
+  border: none;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--color-sage-light) 25%, var(--color-cream) 50%, var(--color-sage-light) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+.skeleton-text {
+  height: 1rem;
+  margin-bottom: var(--space-1);
+}
+
+.skeleton-card {
+  height: 80px;
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
