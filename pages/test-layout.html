@@ -6,6 +6,9 @@
   <link rel="stylesheet" href="../css/reset.css" />
   <link rel="stylesheet" href="../css/tokens.css" />
   <link rel="stylesheet" href="../css/layout.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+
+  <script src="../js/utils/modal.js"></script>
 </head>
 <body>
   <div class="app-shell">
@@ -32,23 +35,39 @@
     <h2 style="padding-left: var(--space-2);">Group Mode — Layout Test</h2>
 
     <div class="app-shell">
-    <aside class="sidebar">
-        <nav>
-        <ul>
-            <li><a href="#" class="active">Overview</a></li>
-            <li><a href="#">Subjects</a></li>
-            <li><a href="#">Academic Activities</a></li>
-            <li><a href="#">Group Calendar</a></li>
-            <li><a href="#">Members</a></li>
-            <li><a href="#">Group Settings</a></li>
-        </ul>
-        </nav>
-    </aside>
+      <aside class="sidebar">
+          <nav>
+          <ul>
+              <li><a href="#" class="active">Overview</a></li>
+              <li><a href="#">Subjects</a></li>
+              <li><a href="#">Academic Activities</a></li>
+              <li><a href="#">Group Calendar</a></li>
+              <li><a href="#">Members</a></li>
+              <li><a href="#">Group Settings</a></li>
+          </ul>
+          </nav>
+      </aside>
 
-    <main class="content">
-        <h1>Group Overview — Layout Test</h1>
-        <p>This is a temporary page just to see the group-mode sidebar render correctly.</p>
-    </main>
+      <main class="content">
+          <h1>Group Overview — Layout Test</h1>
+          <p>This is a temporary page just to see the group-mode sidebar render correctly.</p>
+      </main>
+    </div>
+
+    <hr style="margin: var(--space-4) 0;" />
+
+    <h2 style="padding-left: var(--space-2);">Modal Test</h2>
+
+    <div style="padding-left: var(--space-2);">
+      <button onclick="openModal('test-modal')">Open Modal</button>
+    </div>
+
+    <div id="test-modal" class="modal-overlay" hidden>
+      <div class="modal">
+        <button class="modal-close" onclick="closeModal('test-modal')">&times;</button>
+        <h3>Test Modal</h3>
+        <p>This is just to confirm the modal renders and opens/closes correctly.</p>
+      </div>
     </div>
 </body>
 </html>
