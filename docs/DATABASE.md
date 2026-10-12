@@ -254,7 +254,7 @@ group_memberships
 ├── id uuid PK
 ├── group_id uuid NOT NULL
 ├── user_id uuid NOT NULL
-├── role group_role NOT NULL DEFAULT 'MEMBER'
+├── role membership_role NOT NULL DEFAULT 'MEMBER'
 ├── joined_at timestamptz NOT NULL
 └── updated_at timestamptz NOT NULL
 ```
@@ -262,7 +262,7 @@ group_memberships
 ### Role Enum
 Recommended:
 ```sql
-create type group_role as enum (
+create type membership_role as enum (
     'ADMIN',
     'MEMBER'
 );
