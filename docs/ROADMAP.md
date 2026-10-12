@@ -295,6 +295,8 @@ Ideas that come up mid-build go here instead of into the current slice. Review t
 
 - _(empty)_
 
+- [ ] Update sign-in.js redirect from index.html to pages/dashboard.html once Stage 4 (S4.1) is built
+
 ---
 
 ## End of Roadmap
