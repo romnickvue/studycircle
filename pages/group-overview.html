@@ -16,6 +16,7 @@
   <script src="../js/services/auth.service.js"></script>
   <script src="../js/utils/route-guard.js"></script>
   <script src="../js/utils/toast.js"></script>
+  <script src="../js/utils/modal.js"></script>
 
   <div class="app-shell">
     <aside class="sidebar">
@@ -37,11 +38,23 @@
       <div id="group-header" hidden>
         <h1 id="group-name"></h1>
         <p id="group-description"></p>
+
+        <div id="invite-panel">
+          <button id="generate-invite-btn">Generate Invitation Link</button>
+
+          <div id="active-invite" hidden>
+            <p>Invite link: <code id="invite-link-text"></code></p>
+            <p>Expires: <span id="invite-expiry-text"></span></p>
+            <button id="copy-invite-btn">Copy Link</button>
+            <button id="regenerate-invite-btn">Regenerate</button>
+          </div>
+        </div>
       </div>
     </main>
   </div>
 
   <script src="../js/services/groups.service.js"></script>
+  <script src="../js/services/invitations.service.js"></script>
   <script src="../js/pages/group-overview.js"></script>
 </body>
 </html>
