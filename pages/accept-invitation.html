@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Join Group — StudyCircle</title>
+  <link rel="stylesheet" href="../css/reset.css" />
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+</head>
+<body>
+  <main style="max-width: 500px; margin: var(--space-4) auto; text-align: center;">
+
+    <div id="loading-state" class="skeleton skeleton-card"></div>
+
+    <div id="invalid-state" class="empty-state" hidden>
+      <h2>This invitation can't be used</h2>
+      <p>It may have expired or been revoked.</p>
+      <a href="../index.html">Go back home</a>
+    </div>
+
+    <div id="preview-state" hidden>
+      <h2>You've been invited to join</h2>
+      <h1 id="preview-group-name"></h1>
+
+      <div id="signed-out-actions">
+        <p>Sign in or register to join this group.</p>
+        <a href="sign-in.html" id="sign-in-link">Sign In</a> |
+        <a href="register.html" id="register-link">Register</a>
+      </div>
+
+      <div id="signed-in-actions" hidden>
+        <button id="join-btn">Join Group</button>
+      </div>
+    </div>
+
+    <div id="already-member-state" hidden>
+      <p>You're already a member of this group.</p>
+    </div>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/config/supabase.local.js"></script>
+  <script src="../js/config/supabase.js"></script>
+  <script src="../js/services/auth.service.js"></script>
+  <script src="../js/services/invitations.service.js"></script>
+  <script src="../js/pages/accept-invitation.js"></script>
+  <script src="../js/utils/toast.js"></script>
+</body>
+</html>

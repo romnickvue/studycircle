@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Group Settings — StudyCircle</title>
+  <link rel="stylesheet" href="../css/reset.css" />
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/layout.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+</head>
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/config/supabase.local.js"></script>
+  <script src="../js/config/supabase.js"></script>
+  <script src="../js/services/auth.service.js"></script>
+  <script src="../js/utils/route-guard.js"></script>
+  <script src="../js/utils/toast.js"></script>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <nav>
+        <ul>
+          <li><a href="#">Overview</a></li>
+          <li><a href="#">Subjects</a></li>
+          <li><a href="#">Academic Activities</a></li>
+          <li><a href="#">Group Calendar</a></li>
+          <li><a href="#">Members</a></li>
+          <li><a href="group-settings.html" class="active">Group Settings</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <h1>Group Settings</h1>
+
+      <div id="loading-state" class="skeleton skeleton-card" style="max-width: 400px;"></div>
+
+      <form id="settings-form" hidden>
+        <label for="group-name">Group name</label>
+        <input type="text" id="group-name" required />
+
+        <label for="group-description">Description</label>
+        <input type="text" id="group-description" />
+
+        <p id="form-error" class="form-error" hidden></p>
+
+        <button type="submit">Save Changes</button>
+      </form>
+    </main>
+  </div>
+
+  <script src="../js/services/groups.service.js"></script>
+  <script src="../js/pages/group-settings.js"></script>
+</body>
+</html>
