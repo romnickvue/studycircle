@@ -50,11 +50,43 @@
           </div>
         </div>
       </div>
+
+      <div id="subjects-section" hidden>
+        <h2>Subjects</h2>
+
+        <div id="subjects-list"></div>
+
+        <div id="subjects-empty" class="empty-state" hidden>
+          <p>Add your first subject.</p>
+        </div>
+
+        <button id="add-subject-btn">+ Add Subject</button>
+
+        <div id="subject-modal" class="modal-overlay" hidden>
+          <div class="modal">
+            <button class="modal-close" onclick="closeModal('subject-modal')">&times;</button>
+            <h3>Add Subject</h3>
+
+            <form id="subject-form">
+              <label for="subject-name">Name</label>
+              <input type="text" id="subject-name" required />
+
+              <label for="subject-code">Code (optional)</label>
+              <input type="text" id="subject-code" />
+
+              <p id="subject-error" class="form-error" hidden></p>
+
+              <button type="submit">Save</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </main>
   </div>
 
   <script src="../js/services/groups.service.js"></script>
   <script src="../js/services/invitations.service.js"></script>
+  <script src="../js/services/subjects.service.js"></script>
   <script src="../js/pages/group-overview.js"></script>
 </body>
 </html>

@@ -298,6 +298,8 @@ Ideas that come up mid-build go here instead of into the current slice. Review t
 
 - [ ] Add `<script src="../js/utils/route-guard.js"></script>` (right after auth.service.js, before anything else) to every protected page as it's built: Group Overview, Dashboard, My Tasks, Calendar, Members, Group Settings, etc.
 
+- [ ] Show a friendlier "a subject with this name already exists" message instead of the raw Postgres duplicate-key error on the Add Subject form
+
 ---
 
 ## End of Roadmap
