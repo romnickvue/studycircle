@@ -557,7 +557,7 @@ group_invitations
 
 - `code` is an opaque, unguessable value used in the shareable URL.
 - `created_by` must be an Admin of `group_id` at creation time.
-- `expires_at` is set automatically at creation as `created_at` plus a default duration. **The default duration is a placeholder: 7 days, pending owner confirmation.**
+- `expires_at` is set automatically at creation as `created_at` plus 3 days. **Confirmed by owner — no longer a placeholder.**
 
 ### Derived Validity Rule (not a stored field)
 An invitation is usable only while:

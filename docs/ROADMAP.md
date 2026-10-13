@@ -269,7 +269,6 @@ Stage 5  Hardening        [ ] S5.1  [ ] S5.2  [ ] S5.3  [ ] S5.4  [ ] S5.5
 | Decision | Needed by | Notes |
 |---|---|---|
 | Primary button color (contrast) | S1.1 (tokens) | Sage Green (`#72977B`) on cream is 2.9:1 and white on Sage is 3.3:1, both below the 4.5:1 AA threshold for small text. Text Green (`#3F5D4A`) on cream is 6.4:1. Proposal: primary buttons use Text Green with a cream label; Sage stays for accents and active states. Changes `UI_UX.md` §1. |
-| Invitation expiry default | S2.5 | 7 days proposed in `DATABASE_invitations_addition.md`. |
 | Static hosting provider | S5.5 | Open per `ARCHITECTURE.md` §45. |
 | Favicon and logo asset files | Later | Brand board received; individual files not yet cropped. |
 | Username field on profiles | S1.2 | Optional per `DATABASE.md` §8; skip unless needed. |
