@@ -38,6 +38,29 @@ const ActivitiesService = {
       .eq('id', activityId)
       .single();
     return { activity: data, error };
+  },
+
+    async update(activityId, { subjectId, title, description, activityType, dueAt }) {
+    const { data, error } = await supabaseClient
+      .from('academic_activities')
+      .update({
+        subject_id: subjectId || null,
+        title,
+        description: description || null,
+        activity_type: activityType,
+        due_at: dueAt || null
+      })
+      .eq('id', activityId)
+      .select();
+    return { updated: data && data.length > 0, error };
+  },
+
+  async remove(activityId) {
+    const { error } = await supabaseClient
+      .from('academic_activities')
+      .delete()
+      .eq('id', activityId);
+    return { error };
   }
 };
 

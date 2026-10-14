@@ -8,6 +8,39 @@ const activityForm = document.getElementById('activity-form');
 const activityError = document.getElementById('activity-error');
 const activitySubjectSelect = document.getElementById('activity-subject');
 
+let editingActivityId = null;
+
+async function openAddActivityModal() {
+  editingActivityId = null;
+  activityForm.reset();
+  document.querySelector('#activity-modal h3').textContent = 'New Activity';
+  await populateSubjectDropdown();
+  openModal('activity-modal');
+}
+
+async function openEditActivityModal(activity) {
+  editingActivityId = activity.id;
+  await populateSubjectDropdown();
+  document.getElementById('activity-title').value = activity.title;
+  document.getElementById('activity-type').value = activity.activity_type;
+  activitySubjectSelect.value = activity.subject_id || '';
+  document.getElementById('activity-due').value = activity.due_at ? activity.due_at.split('T')[0] : '';
+  document.querySelector('#activity-modal h3').textContent = 'Edit Activity';
+  openModal('activity-modal');
+}
+
+async function handleDeleteActivity(activityId) {
+  confirmAction('Delete this activity?', async () => {
+    const { error } = await ActivitiesService.remove(activityId);
+    if (error) {
+      showToast(error.message, 'error');
+      return;
+    }
+    showToast('Activity deleted.');
+    loadActivities();
+  });
+}
+
 async function populateSubjectDropdown() {
   const { subjects } = await SubjectsService.listByGroup(groupId);
   activitySubjectSelect.innerHTML = '<option value="">— None —</option>';
@@ -43,31 +76,52 @@ async function loadActivities() {
     emptyEl.hidden = true;
     listEl.hidden = false;
 
-    activities.forEach((activity) => {
+        activities.forEach((activity) => {
       const card = document.createElement('div');
       card.style.padding = 'var(--space-2)';
       card.style.marginBottom = 'var(--space-1)';
       card.style.background = 'var(--color-sage-light)';
       card.style.borderRadius = 'var(--radius-sm)';
-      card.style.cursor = 'pointer';
+      card.style.display = 'flex';
+      card.style.justifyContent = 'space-between';
+      card.style.alignItems = 'center';
 
+      const label = document.createElement('span');
+      label.style.cursor = 'pointer';
       const subjectLabel = activity.subjects ? ` — ${activity.subjects.name}` : '';
       const dueLabel = activity.due_at ? formatUrgencyLabel(activity.due_at, false) : 'No due date';
-      card.textContent = `${activity.title}${subjectLabel} (${dueLabel})`;
-
-      card.addEventListener('click', () => {
+      label.textContent = `${activity.title}${subjectLabel} (${dueLabel})`;
+      label.addEventListener('click', () => {
         window.location.href = `activity-detail.html?id=${activity.id}`;
       });
 
+      const actions = document.createElement('span');
+
+      const editBtn = document.createElement('button');
+      editBtn.textContent = 'Edit';
+      editBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openEditActivityModal(activity);
+      });
+
+      const deleteBtn = document.createElement('button');
+      deleteBtn.textContent = 'Delete';
+      deleteBtn.className = 'btn-destructive';
+      deleteBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        handleDeleteActivity(activity.id);
+      });
+
+      actions.appendChild(editBtn);
+      actions.appendChild(deleteBtn);
+      card.appendChild(label);
+      card.appendChild(actions);
       listEl.appendChild(card);
     });
   }
 }
 
-document.getElementById('add-activity-btn').addEventListener('click', async () => {
-  await populateSubjectDropdown();
-  openModal('activity-modal');
-});
+document.getElementById('add-activity-btn').addEventListener('click', openAddActivityModal);
 
 activityForm.addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -78,28 +132,35 @@ activityForm.addEventListener('submit', async (event) => {
   const activityType = document.getElementById('activity-type').value;
   const subjectId = activitySubjectSelect.value;
   const dueDateOnly = document.getElementById('activity-due').value;
+  const dueAt = dueDateOnly ? endOfDayManila(dueDateOnly) : null;
 
   const submitButton = activityForm.querySelector('button[type="submit"]');
   submitButton.disabled = true;
 
-  const { error } = await ActivitiesService.create(groupId, {
-    subjectId,
-    title,
-    activityType,
-    dueAt: dueDateOnly ? endOfDayManila(dueDateOnly) : null
-  });
+  let result;
+  if (editingActivityId) {
+    result = await ActivitiesService.update(editingActivityId, { subjectId, title, activityType, dueAt });
+  } else {
+    result = await ActivitiesService.create(groupId, { subjectId, title, activityType, dueAt });
+  }
 
   submitButton.disabled = false;
 
-  if (error) {
-    activityError.textContent = error.message;
+  if (result.error) {
+    activityError.textContent = result.error.message;
+    activityError.hidden = false;
+    return;
+  }
+
+  if (editingActivityId && !result.updated) {
+    activityError.textContent = 'You do not have permission to edit this activity.';
     activityError.hidden = false;
     return;
   }
 
   closeModal('activity-modal');
   activityForm.reset();
-  showToast('Activity created.');
+  showToast(editingActivityId ? 'Activity updated.' : 'Activity created.');
   loadActivities();
 });
 
