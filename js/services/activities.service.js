@@ -29,6 +29,15 @@ const ActivitiesService = {
       .eq('group_id', groupId)
       .order('due_at', { ascending: true, nullsFirst: false });
     return { activities: data ?? [], error };
+  },
+
+  async getById(activityId) {
+  const { data, error } = await supabaseClient
+      .from('academic_activities')
+      .select('*, subjects(name)')
+      .eq('id', activityId)
+      .single();
+    return { activity: data, error };
   }
 };
 
