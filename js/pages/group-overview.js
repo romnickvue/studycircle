@@ -30,6 +30,7 @@ async function loadGroup() {
 
   document.querySelector('a[href="members.html"]').href = `members.html?id=${groupId}`;
   document.querySelector('a[href="group-settings.html"]').href = `group-settings.html?id=${groupId}`;
+  document.querySelector('a[href="activities.html"]').href = `activities.html?id=${groupId}`;
 }
 
 const generateBtn = document.getElementById('generate-invite-btn');

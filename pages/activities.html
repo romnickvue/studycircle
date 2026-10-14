@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Academic Activities — StudyCircle</title>
+  <link rel="stylesheet" href="../css/reset.css" />
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/layout.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+</head>
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/config/supabase.local.js"></script>
+  <script src="../js/config/supabase.js"></script>
+  <script src="../js/services/auth.service.js"></script>
+  <script src="../js/utils/route-guard.js"></script>
+  <script src="../js/utils/toast.js"></script>
+  <script src="../js/utils/modal.js"></script>
+  <script src="../js/utils/dates.js"></script>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <nav>
+        <ul>
+          <li><a href="#">Overview</a></li>
+          <li><a href="#">Subjects</a></li>
+          <li><a href="activities.html" class="active">Academic Activities</a></li>
+          <li><a href="#">Group Calendar</a></li>
+          <li><a href="#">Members</a></li>
+          <li><a href="#">Group Settings</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <h1>Academic Activities</h1>
+
+      <div id="loading-state" class="skeleton skeleton-card" style="max-width: 400px;"></div>
+
+      <div id="activities-list" hidden></div>
+
+      <div id="activities-empty" class="empty-state" hidden>
+        <p>No academic activities yet.</p>
+      </div>
+
+      <button id="add-activity-btn">+ New Activity</button>
+
+      <div id="activity-modal" class="modal-overlay" hidden>
+        <div class="modal">
+          <button class="modal-close" onclick="closeModal('activity-modal')">&times;</button>
+          <h3>New Activity</h3>
+
+          <form id="activity-form">
+            <label for="activity-title">Title</label>
+            <input type="text" id="activity-title" required />
+
+            <label for="activity-type">Type</label>
+            <select id="activity-type" required>
+              <option value="QUIZ">Quiz</option>
+              <option value="ASSIGNMENT">Assignment</option>
+              <option value="EXAM">Exam</option>
+              <option value="PROJECT">Project</option>
+              <option value="RECITATION">Recitation</option>
+              <option value="PRESENTATION">Presentation</option>
+              <option value="OTHER">Other</option>
+            </select>
+
+            <label for="activity-subject">Subject (optional)</label>
+            <select id="activity-subject">
+              <option value="">— None —</option>
+            </select>
+
+            <label for="activity-due">Due date</label>
+            <input type="date" id="activity-due" />
+
+            <p id="activity-error" class="form-error" hidden></p>
+
+            <button type="submit">Create</button>
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/services/subjects.service.js"></script>
+  <script src="../js/services/activities.service.js"></script>
+  <script src="../js/pages/activities.js"></script>
+</body>
+</html>
