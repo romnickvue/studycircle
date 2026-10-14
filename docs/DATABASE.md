@@ -470,7 +470,7 @@ activity_progress
 ├── id uuid PK
 ├── activity_id uuid NOT NULL
 ├── user_id uuid NOT NULL
-├── status activity_progress_status NOT NULL
+├── status progress_status NOT NULL,
 ├── completed_at timestamptz NULL
 ├── updated_at timestamptz NOT NULL
 └── created_at timestamptz NOT NULL
