@@ -300,6 +300,12 @@ Ideas that come up mid-build go here instead of into the current slice. Review t
 
 - [ ] Show a friendlier "a subject with this name already exists" message instead of the raw Postgres duplicate-key error on the Add Subject form
 
+- [ ] Note for future: app behavior depends on the device's system clock/timezone being correct (saw a false "Due today" when a laptop clock was misconfigured to Pacific Time) — maybe worth a note in README for testers
+- [ ] Consider renaming "Activity"/"Academic Activity" to "Task" throughout the app later (terminology change only, not urgent) — keep current naming for now
+- [ ] Show a friendlier "a subject with this name already exists" message instead of the raw Postgres duplicate-key error on the Add Subject form
+
+- [ ] Revisit Group Settings page-gate (currently Admin-only for the whole page) once it grows features that all members should see, not just admin-only ones
+
 ---
 
 ## End of Roadmap
