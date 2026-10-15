@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Tasks — StudyCircle</title>
+  <link rel="stylesheet" href="../css/reset.css" />
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/layout.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+</head>
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/config/supabase.local.js"></script>
+  <script src="../js/config/supabase.js"></script>
+  <script src="../js/services/auth.service.js"></script>
+  <script src="../js/utils/route-guard.js"></script>
+  <script src="../js/utils/dates.js"></script>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <nav>
+        <ul>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="tasks.html" class="active">My Tasks</a></li>
+          <li><a href="#">Calendar</a></li>
+          <li><a href="groups.html">My Groups</a></li>
+          <li><a href="#">Profile</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <h1>My Tasks</h1>
+
+      <div id="loading-state" class="skeleton skeleton-card" style="max-width: 400px;"></div>
+
+      <div id="tasks-list" hidden></div>
+
+      <div id="empty-state" class="empty-state" hidden>
+        <p>No academic activities yet across your groups.</p>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/services/groups.service.js"></script>
+  <script src="../js/services/activities.service.js"></script>
+  <script src="../js/pages/tasks.js"></script>
+</body>
+</html>
