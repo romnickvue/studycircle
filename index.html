@@ -1,15 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudyCircle</title>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/config/supabase.local.js"></script>
-    <script src="js/config/supabase.js"></script>
-    <script src="js/services/auth.service.js"></script>
+  <meta charset="UTF-8" />
+  <title>StudyCircle</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config/supabase.local.js"></script>
+  <script src="js/config/supabase.js"></script>
+  <script src="js/services/auth.service.js"></script>
+  <script>
+    (async function redirect() {
+      const { session } = await AuthService.getSession();
+      if (session) {
+        window.location.href = 'pages/dashboard.html';
+      } else {
+        window.location.href = 'pages/sign-in.html';
+      }
+    })();
+  </script>
 </head>
-<body>
-    <button id="sign-out-btn">Sign Out (temporary)</button>
-
-    <script src="js/app.js"></script>
-</body>
+<body></body>
+</html>

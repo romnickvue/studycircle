@@ -61,7 +61,26 @@ const ActivitiesService = {
       .delete()
       .eq('id', activityId);
     return { error };
+  },
+
+  async listMine() {
+    const { groups } = await GroupsService.listMine();
+    const groupIds = groups.map((g) => g.id);
+
+    if (groupIds.length === 0) {
+      return { activities: [], error: null };
+    }
+
+    const { data, error } = await supabaseClient
+      .from('academic_activities')
+      .select('*, subjects(name), groups(name)')
+      .in('group_id', groupIds)
+      .order('due_at', { ascending: true, nullsFirst: false });
+
+    return { activities: data ?? [], error };
   }
 };
 
 window.ActivitiesService = ActivitiesService;
+
+  

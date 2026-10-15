@@ -306,6 +306,8 @@ Ideas that come up mid-build go here instead of into the current slice. Review t
 
 - [ ] Revisit Group Settings page-gate (currently Admin-only for the whole page) once it grows features that all members should see, not just admin-only ones
 
+- [ ] Filter out COMPLETED activities from Dashboard's Overdue/Today/Due Soon sections (4B polish pass)
+
 ---
 
 ## End of Roadmap
