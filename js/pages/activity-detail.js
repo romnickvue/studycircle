@@ -3,7 +3,13 @@ const activityId = params.get('id');
 
 const loadingEl = document.getElementById('loading-state');
 const contentEl = document.getElementById('detail-content');
-const statusSelect = document.getElementById('status-select');
+const statusButtons = document.querySelectorAll('.status-btn');
+
+function highlightActiveStatus(status) {
+  statusButtons.forEach((btn) => {
+    btn.classList.toggle('active', btn.dataset.status === status);
+  });
+}
 
 async function loadActivity() {
   if (!activityId) {
@@ -32,21 +38,23 @@ async function loadActivity() {
     : 'No due date';
   document.getElementById('activity-description').textContent = activity.description || '';
 
-  statusSelect.value = status;
+  highlightActiveStatus(status);
   contentEl.hidden = false;
 }
 
-statusSelect.addEventListener('change', async () => {
-  const newStatus = statusSelect.value;
-  const { error } = await ProgressService.setStatus(activityId, newStatus);
+statusButtons.forEach((btn) => {
+  btn.addEventListener('click', async () => {
+    const newStatus = btn.dataset.status;
+    const { error } = await ProgressService.setStatus(activityId, newStatus);
 
-  if (error) {
-    showToast(error.message, 'error');
-    return;
-  }
+    if (error) {
+      showToast(error.message, 'error');
+      return;
+    }
 
-  showToast('Status updated.');
-  loadActivity();
+    showToast('Status updated.');
+    loadActivity();
+  });
 });
 
 loadActivity();

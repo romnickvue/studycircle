@@ -42,12 +42,12 @@
         <p id="activity-due"></p>
         <p id="activity-description"></p>
 
-        <label for="status-select">Your status</label>
-        <select id="status-select">
-          <option value="NOT_STARTED">Not Started</option>
-          <option value="IN_PROGRESS">In Progress</option>
-          <option value="COMPLETED">Completed</option>
-        </select>
+        <p>Your status:</p>
+        <div id="status-buttons">
+          <button data-status="NOT_STARTED" class="status-btn">Not Started</button>
+          <button data-status="IN_PROGRESS" class="status-btn">In Progress</button>
+          <button data-status="COMPLETED" class="status-btn">Completed</button>
+        </div>
       </div>
     </main>
   </div>
