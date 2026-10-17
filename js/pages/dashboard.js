@@ -2,7 +2,6 @@ const loadingEl = document.getElementById('loading-state');
 const contentEl = document.getElementById('dashboard-content');
 const greetingEl = document.getElementById('greeting');
 
-const overdueSection = document.getElementById('overdue-section');
 const overdueList = document.getElementById('overdue-list');
 const todayList = document.getElementById('today-list');
 const soonList = document.getElementById('soon-list');
@@ -31,37 +30,44 @@ async function loadDashboard() {
   const { activities } = await ActivitiesService.listMine();
   const { groups } = await GroupsService.listMine();
 
+  const thisWeekActivities = activities.filter((a) => a.due_at && isWithinCurrentWeek(a.due_at));
+  const activityIds = thisWeekActivities.map((a) => a.id);
+  const { statusMap } = await ProgressService.getManyMine(activityIds);
+
   loadingEl.hidden = true;
   contentEl.hidden = false;
 
-  const withDueDate = activities.filter((a) => a.due_at);
-
-  const overdue = [];
-  const today = [];
+  const todayList2 = [];
   const soon = [];
+  const completed = [];
+  const overdue = [];
 
-  withDueDate.forEach((activity) => {
-    const status = getUrgencyStatus(activity.due_at, false);
-    if (status === 'OVERDUE') overdue.push(activity);
-    else if (status === 'DUE_TODAY' || status === 'DUE_TOMORROW') today.push(activity);
+  thisWeekActivities.forEach((activity) => {
+    const status = statusMap[activity.id] || 'NOT_STARTED';
+
+    if (status === 'COMPLETED') {
+      completed.push(activity);
+      return;
+    }
+
+    const urgency = getUrgencyStatus(activity.due_at, false);
+
+    if (urgency === 'OVERDUE') overdue.push(activity);
+    else if (urgency === 'DUE_TODAY') todayList2.push(activity);
     else soon.push(activity);
   });
 
-  overdueList.innerHTML = '';
   todayList.innerHTML = '';
   soonList.innerHTML = '';
+  document.getElementById('completed-list').innerHTML = '';
+  overdueList.innerHTML = '';
 
-  if (overdue.length > 0) {
-    overdueSection.hidden = false;
-    overdue.forEach((a) => overdueList.appendChild(buildActivityCard(a)));
-  } else {
-    overdueSection.hidden = true;
-  }
-
-  today.forEach((a) => todayList.appendChild(buildActivityCard(a)));
+  todayList2.forEach((a) => todayList.appendChild(buildActivityCard(a)));
   soon.forEach((a) => soonList.appendChild(buildActivityCard(a)));
+  completed.forEach((a) => document.getElementById('completed-list').appendChild(buildActivityCard(a)));
+  overdue.forEach((a) => overdueList.appendChild(buildActivityCard(a)));
 
-  if (overdue.length === 0 && today.length === 0 && soon.length === 0) {
+  if (todayList2.length === 0 && soon.length === 0 && completed.length === 0 && overdue.length === 0) {
     allCaughtUpEl.hidden = false;
   } else {
     allCaughtUpEl.hidden = true;

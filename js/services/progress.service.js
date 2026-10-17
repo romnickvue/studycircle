@@ -29,6 +29,27 @@ const ProgressService = {
       }, { onConflict: 'activity_id,user_id' });
 
     return { error };
+  },
+
+    async getManyMine(activityIds) {
+    if (activityIds.length === 0) return { statusMap: {}, error: null };
+
+    const { session } = await AuthService.getSession();
+
+    const { data, error } = await supabaseClient
+      .from('activity_progress')
+      .select('activity_id, status')
+      .eq('user_id', session.user.id)
+      .in('activity_id', activityIds);
+
+    if (error) return { statusMap: {}, error };
+
+    const statusMap = {};
+    data.forEach((row) => {
+      statusMap[row.activity_id] = row.status;
+    });
+
+    return { statusMap, error: null };
   }
 };
 

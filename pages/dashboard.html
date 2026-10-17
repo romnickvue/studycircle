@@ -37,19 +37,26 @@
       <div id="loading-state" class="skeleton skeleton-card" style="max-width: 400px;"></div>
 
       <div id="dashboard-content" hidden>
-        <div id="overdue-section" hidden>
-          <h2>Overdue</h2>
-          <div id="overdue-list"></div>
-        </div>
+        <h2>Tasks</h2>
 
         <div id="today-section">
-          <h2>Today</h2>
+          <h3>Today</h3>
           <div id="today-list"></div>
         </div>
 
         <div id="soon-section">
-          <h2>Due Soon</h2>
+          <h3>Due Soon</h3>
           <div id="soon-list"></div>
+        </div>
+
+        <div id="completed-section">
+          <h3>Completed</h3>
+          <div id="completed-list"></div>
+        </div>
+
+        <div id="overdue-section">
+          <h3>Overdue</h3>
+          <div id="overdue-list"></div>
         </div>
 
         <div id="all-caught-up" class="empty-state" hidden>
@@ -63,12 +70,14 @@
         <div id="no-groups-state" class="empty-state" hidden>
           <p>Create a group or join one with an invitation.</p>
         </div>
+</div>
       </div>
     </main>
   </div>
 
   <script src="../js/services/groups.service.js"></script>
   <script src="../js/services/activities.service.js"></script>
+  <script src="../js/services/progress.service.js"></script>
   <script src="../js/pages/dashboard.js"></script>
 </body>
 </html>
