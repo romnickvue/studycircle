@@ -32,4 +32,21 @@ const today = new Date();
 const todayDateOnly = today.toLocaleDateString('en-CA', { timeZone: 'Asia/Manila' });
 assertEqual('Date-only deadline = due today', getUrgencyStatus(endOfDayManila(todayDateOnly), false), 'DUE_TODAY');
 
+// Week window tests
+const { start: weekStart, end: weekEnd } = getCurrentWeekWindow();
+assertEqual('Week window starts on a Sunday', weekStart.getDay(), 0);
+assertEqual('Week window spans exactly 7 days', Math.round((weekEnd - weekStart) / (24 * 60 * 60 * 1000)), 7);
+
+// Something due right now should be within the current week
+assertEqual('Due right now is within current week', isWithinCurrentWeek(new Date().toISOString()), true);
+
+// Something due 10 days from now should NOT be within the current week
+assertEqual('Due in 10 days is NOT within current week', isWithinCurrentWeek(isoDaysFromNow(10)), false);
+
+// Something due 10 days ago should NOT be within the current week
+assertEqual('Due 10 days ago is NOT within current week', isWithinCurrentWeek(isoDaysFromNow(-10)), false);
+
+// No due date at all should never count as "within the week"
+assertEqual('No due date is NOT within current week', isWithinCurrentWeek(null), false);
+
 document.getElementById('results').textContent = results.join('\n');

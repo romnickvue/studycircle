@@ -56,3 +56,31 @@ function formatUrgencyLabel(dueDateIso, isCompleted) {
 function endOfDayManila(dateOnlyString) {
   return `${dateOnlyString}T23:59:59+08:00`;
 }
+
+// Returns { start, end } of the current "week window" in Manila time.
+// Week starts Sunday 00:00. The window resets automatically once that boundary passes.
+function getCurrentWeekWindow() {
+  const todayManila = getManilaToday(); // already Manila midnight, from existing function
+  const dayOfWeek = todayManila.getDay(); // 0 = Sunday
+
+  const start = new Date(todayManila);
+  start.setDate(start.getDate() - dayOfWeek);
+
+  const end = new Date(start);
+  end.setDate(end.getDate() + 7);
+
+  return { start, end };
+}
+
+// True if the given due date falls within the current week window.
+function isWithinCurrentWeek(dueDateIso) {
+  if (!dueDateIso) return false;
+
+  const due = new Date(dueDateIso);
+  const dueManilaString = due.toLocaleString('en-US', { timeZone: TIMEZONE });
+  const dueManila = new Date(dueManilaString);
+
+  const { start, end } = getCurrentWeekWindow();
+
+  return dueManila >= start && dueManila < end;
+}
