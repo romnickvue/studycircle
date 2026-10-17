@@ -1,5 +1,6 @@
 const params = new URLSearchParams(window.location.search);
 const groupId = params.get('id');
+wireGroupSidebarLinks(groupId);
 
 const loadingEl = document.getElementById('loading-state');
 const listEl = document.getElementById('activities-list');

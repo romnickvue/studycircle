@@ -24,6 +24,9 @@ async function loadActivity() {
     return;
   }
 
+  wireGroupSidebarLinks(activity.group_id);
+    document.getElementById('back-to-group-link').href = `group-overview.html?id=${activity.group_id}`;
+
   const { status } = await ProgressService.getMine(activityId);
 
   loadingEl.hidden = true;
