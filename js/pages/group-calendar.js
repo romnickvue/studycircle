@@ -6,6 +6,7 @@ const gridEl = document.getElementById('cal-grid');
 const titleEl = document.getElementById('calendar-title');
 
 const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+let allActivities = [];
 
 let viewYear, viewMonth; // viewMonth is 0-indexed, matches JS Date
 
@@ -25,6 +26,7 @@ async function renderCalendar() {
   }
 
   const { activities, error } = await ActivitiesService.listByGroup(groupId);
+  allActivities = activities;
 
   loadingEl.hidden = true;
 
@@ -85,6 +87,9 @@ async function renderCalendar() {
 
     const dayLabel = document.createElement('div');
     dayLabel.textContent = dayNum;
+    dayLabel.style.cursor = 'pointer';
+    dayLabel.style.fontWeight = 'bold';
+    dayLabel.addEventListener('click', () => openDayModal(cellKey, cellDate));
     cell.appendChild(dayLabel);
 
     const dayEvents = eventsByDay[cellKey] || [];
@@ -100,6 +105,35 @@ async function renderCalendar() {
 
     gridEl.appendChild(cell);
   }
+}
+
+function openDayModal(dateKey, dateObj) {
+  const dayEvents = allActivities.filter((a) => a.due_at && manilaDateKey(a.due_at) === dateKey);
+
+  document.getElementById('day-modal-title').textContent = dateObj.toLocaleDateString('en-US', {
+    weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'
+  });
+
+  const listEl = document.getElementById('day-modal-list');
+  listEl.innerHTML = '';
+
+  if (dayEvents.length === 0) {
+    listEl.textContent = 'No activities due this day.';
+  } else {
+    dayEvents.forEach((activity) => {
+      const item = document.createElement('div');
+      item.style.padding = 'var(--space-1)';
+      item.style.cursor = 'pointer';
+      const subjectLabel = activity.subjects ? ` — ${activity.subjects.name}` : '';
+      item.textContent = `${activity.title}${subjectLabel} (${activity.activity_type})`;
+      item.addEventListener('click', () => {
+        window.location.href = `activity-detail.html?id=${activity.id}`;
+      });
+      listEl.appendChild(item);
+    });
+  }
+
+  openModal('day-modal');
 }
 
 document.getElementById('prev-month-btn').addEventListener('click', () => {
