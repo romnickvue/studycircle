@@ -32,19 +32,39 @@
 
     <main class="content">
       <h1>My Tasks</h1>
+        <div id="loading-state" class="skeleton skeleton-card" style="max-width: 400px;"></div>
 
-      <div id="loading-state" class="skeleton skeleton-card" style="max-width: 400px;"></div>
+        <div id="tasks-content" hidden>
+          <div id="today-section">
+            <h3>Today</h3>
+            <div id="today-list"></div>
+          </div>
 
-      <div id="tasks-list" hidden></div>
+          <div id="soon-section">
+            <h3>Due Soon</h3>
+            <div id="soon-list"></div>
+          </div>
 
-      <div id="empty-state" class="empty-state" hidden>
-        <p>No academic activities yet across your groups.</p>
-      </div>
+          <div id="completed-section">
+            <h3>Completed</h3>
+            <div id="completed-list"></div>
+          </div>
+
+          <div id="overdue-section">
+            <h3>Overdue</h3>
+            <div id="overdue-list"></div>
+          </div>
+
+          <div id="all-caught-up" class="empty-state" hidden>
+            <p>Nothing due this week.</p>
+          </div>
+        </div>
     </main>
   </div>
 
   <script src="../js/services/groups.service.js"></script>
   <script src="../js/services/activities.service.js"></script>
+  <script src="../js/services/progress.service.js"></script>
   <script src="../js/pages/tasks.js"></script>
 </body>
 </html>

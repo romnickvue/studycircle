@@ -1,2 +1,3 @@
 .env
 js/config/supabase.local.js
+workspace.code-workspace
