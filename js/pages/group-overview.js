@@ -28,11 +28,6 @@ async function loadGroup() {
 
   loadSubjects();
   loadActivities();
-
-  document.querySelector('a[href="members.html"]').href = `members.html?id=${groupId}`;
-  document.querySelector('a[href="group-settings.html"]').href = `group-settings.html?id=${groupId}`;
-  document.querySelector('a[href="activities.html"]').href = `activities.html?id=${groupId}`;
-  document.querySelector('a[href="group-calendar.html"]').href = `group-calendar.html?id=${groupId}`;
 }
 
 const generateBtn = document.getElementById('generate-invite-btn');
@@ -79,9 +74,6 @@ document.getElementById('copy-invite-btn').addEventListener('click', async () =>
   await navigator.clipboard.writeText(linkTextEl.textContent);
   showToast('Link copied.');
 });
-
-loadActiveInvite();
-loadGroup();
 
 const subjectsSection = document.getElementById('subjects-section');
 const subjectsListEl = document.getElementById('subjects-list');
@@ -132,7 +124,7 @@ async function loadSubjects() {
     subjectsEmptyEl.hidden = false;
   } else {
     subjectsEmptyEl.hidden = true;
-        subjects.forEach((subject) => {
+    subjects.forEach((subject) => {
       const item = document.createElement('div');
       item.style.display = 'flex';
       item.style.justifyContent = 'space-between';
@@ -196,7 +188,6 @@ subjectForm.addEventListener('submit', async (event) => {
   loadSubjects();
 });
 
-const activitiesListEl = document.getElementById('activities-list');
 const activitiesEmptyEl = document.getElementById('activities-empty');
 const activityForm = document.getElementById('activity-form');
 const activityError = document.getElementById('activity-error');
@@ -221,21 +212,58 @@ async function loadActivities() {
     return;
   }
 
-  activitiesListEl.innerHTML = '';
+  const thisWeekActivities = activities.filter((a) => a.due_at && isWithinCurrentWeek(a.due_at));
+  const activityIds = thisWeekActivities.map((a) => a.id);
+  const { statusMap } = await ProgressService.getManyMine(activityIds);
 
-  if (activities.length === 0) {
-    activitiesEmptyEl.hidden = false;
-  } else {
-    activitiesEmptyEl.hidden = true;
-    activities.forEach((activity) => {
-      const item = document.createElement('div');
-      item.style.padding = 'var(--space-1)';
-      const subjectLabel = activity.subjects ? ` — ${activity.subjects.name}` : '';
-      const dueLabel = activity.due_at ? formatUrgencyLabel(activity.due_at, false) : 'No due date';
-      item.textContent = `${activity.title}${subjectLabel} (${dueLabel})`;
-      activitiesListEl.appendChild(item);
+  const todayArr = [];
+  const soonArr = [];
+  const completedArr = [];
+  const overdueArr = [];
+
+  thisWeekActivities.forEach((activity) => {
+    const status = statusMap[activity.id] || 'NOT_STARTED';
+
+    if (status === 'COMPLETED') {
+      completedArr.push(activity);
+      return;
+    }
+
+    const urgency = getUrgencyStatus(activity.due_at, false);
+
+    if (urgency === 'OVERDUE') overdueArr.push(activity);
+    else if (urgency === 'DUE_TODAY') todayArr.push(activity);
+    else soonArr.push(activity);
+  });
+
+  const todayListEl = document.getElementById('today-list');
+  const soonListEl = document.getElementById('soon-list');
+  const completedListEl = document.getElementById('completed-list');
+  const overdueListEl = document.getElementById('overdue-list');
+
+  todayListEl.innerHTML = '';
+  soonListEl.innerHTML = '';
+  completedListEl.innerHTML = '';
+  overdueListEl.innerHTML = '';
+
+  function buildCard(activity) {
+    const item = document.createElement('div');
+    item.style.padding = 'var(--space-1)';
+    item.style.cursor = 'pointer';
+    const subjectLabel = activity.subjects ? ` — ${activity.subjects.name}` : '';
+    item.textContent = `${activity.title}${subjectLabel}`;
+    item.addEventListener('click', () => {
+      window.location.href = `activity-detail.html?id=${activity.id}`;
     });
+    return item;
   }
+
+  todayArr.forEach((a) => todayListEl.appendChild(buildCard(a)));
+  soonArr.forEach((a) => soonListEl.appendChild(buildCard(a)));
+  completedArr.forEach((a) => completedListEl.appendChild(buildCard(a)));
+  overdueArr.forEach((a) => overdueListEl.appendChild(buildCard(a)));
+
+  activitiesEmptyEl.hidden = activities.length > 0;
 }
 
 document.getElementById('add-activity-btn').addEventListener('click', async () => {
@@ -276,3 +304,7 @@ activityForm.addEventListener('submit', async (event) => {
   showToast('Activity created.');
   loadActivities();
 });
+
+// These run last, after everything above has been declared
+loadActiveInvite();
+loadGroup();

@@ -28,6 +28,7 @@
           <li><a href="group-calendar.html">Group Calendar</a></li>
           <li><a href="members.html">Members</a></li>
           <li><a href="group-settings.html">Group Settings</a></li>
+        </ul>
       </nav>
     </aside>
 
@@ -83,9 +84,27 @@
       </div>
 
       <div id="activities-section">
-        <h2>Upcoming in this Group</h2>
+        <h2>Academic Activities</h2>
 
-        <div id="activities-list"></div>
+        <div id="today-section">
+          <h3>Today</h3>
+          <div id="today-list"></div>
+        </div>
+
+        <div id="soon-section">
+          <h3>Due Soon</h3>
+          <div id="soon-list"></div>
+        </div>
+
+        <div id="completed-section">
+          <h3>Completed</h3>
+          <div id="completed-list"></div>
+        </div>
+
+        <div id="overdue-section">
+          <h3>Overdue</h3>
+          <div id="overdue-list"></div>
+        </div>
 
         <div id="activities-empty" class="empty-state" hidden>
           <p>No academic activities yet.</p>
@@ -137,6 +156,7 @@
   <script src="../js/services/activities.service.js"></script>
   <script src="../js/utils/dates.js"></script>
   <script src="../js/utils/sidebar-links.js"></script>
+  <script src="../js/services/progress.service.js"></script>
   <script src="../js/pages/group-overview.js"></script>
 </body>
 </html>
