@@ -95,8 +95,4 @@ async function loadDashboard() {
   }
 }
 
-document.getElementById('create-group-btn').addEventListener('click', () => {
-  window.location.href = 'groups.html';
-});
-
 loadDashboard();
