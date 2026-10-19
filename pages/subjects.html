@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Subjects — StudyCircle</title>
+  <link rel="stylesheet" href="../css/reset.css" />
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/layout.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+</head>
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/config/supabase.local.js"></script>
+  <script src="../js/config/supabase.js"></script>
+  <script src="../js/services/auth.service.js"></script>
+  <script src="../js/utils/route-guard.js"></script>
+  <script src="../js/utils/toast.js"></script>
+  <script src="../js/utils/modal.js"></script>
+  <script src="../js/utils/sidebar-links.js"></script>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <nav>
+        <ul>
+          <li><a href="group-overview.html">Overview</a></li>
+          <li><a href="subjects.html" class="active">Subjects</a></li>
+          <li><a href="activities.html">Academic Activities</a></li>
+          <li><a href="group-calendar.html">Group Calendar</a></li>
+          <li><a href="members.html">Members</a></li>
+          <li><a href="group-settings.html">Group Settings</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <p><a href="#" id="back-to-group-link">&larr; Back to Group Overview</a></p>
+      <h1>Subjects</h1>
+
+      <div id="loading-state" class="skeleton skeleton-card" style="max-width: 400px;"></div>
+
+      <div id="subjects-list" hidden></div>
+
+      <div id="subjects-empty" class="empty-state" hidden>
+        <p>Add your first subject.</p>
+      </div>
+
+      <button id="add-subject-btn">+ Add Subject</button>
+
+      <div id="subject-modal" class="modal-overlay" hidden>
+        <div class="modal">
+          <button class="modal-close" onclick="closeModal('subject-modal')">&times;</button>
+          <h3>Add Subject</h3>
+
+          <form id="subject-form">
+            <label for="subject-name">Name</label>
+            <input type="text" id="subject-name" required />
+
+            <label for="subject-code">Code (optional)</label>
+            <input type="text" id="subject-code" />
+
+            <p id="subject-error" class="form-error" hidden></p>
+
+            <button type="submit">Save</button>
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/services/subjects.service.js"></script>
+  <script src="../js/pages/subjects.js"></script>
+</body>
+</html>
