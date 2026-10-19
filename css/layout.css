@@ -43,14 +43,15 @@
 }
 
 .sidebar-footer {
-  padding-top: var(--space-3);
+  padding-top: var(--space-4);
+  padding-right: var(--space-2);
   font-size: 0.9rem;
   color: var(--color-text-green);
 }
 
 .sidebar-footer img {
-  width: 56px;
-  height: 56px;
+  width: 72px;
+  height: 72px;
   display: block;
   margin-bottom: var(--space-1);
 }
