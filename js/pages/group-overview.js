@@ -30,51 +30,6 @@ async function loadGroup() {
   loadActivities();
 }
 
-const generateBtn = document.getElementById('generate-invite-btn');
-const activeInviteEl = document.getElementById('active-invite');
-const linkTextEl = document.getElementById('invite-link-text');
-const expiryTextEl = document.getElementById('invite-expiry-text');
-
-function buildInviteUrl(code) {
-  return `${window.location.origin}/pages/accept-invitation.html?code=${code}`;
-}
-
-async function loadActiveInvite() {
-  const { invitation, error } = await InvitationsService.getActive(groupId);
-
-  if (error || !invitation) {
-    activeInviteEl.hidden = true;
-    return;
-  }
-
-  linkTextEl.textContent = buildInviteUrl(invitation.code);
-  expiryTextEl.textContent = new Date(invitation.expires_at).toLocaleString();
-  activeInviteEl.hidden = false;
-}
-
-async function handleGenerateOrRegenerate() {
-  const { code, error } = await InvitationsService.generate(groupId);
-
-  if (error) {
-    showToast(error.message, 'error');
-    return;
-  }
-
-  showToast('Invitation link generated.');
-  loadActiveInvite();
-}
-
-generateBtn.addEventListener('click', handleGenerateOrRegenerate);
-
-document.getElementById('regenerate-invite-btn').addEventListener('click', () => {
-  confirmAction('Regenerating will invalidate the current link for anyone still holding it. Continue?', handleGenerateOrRegenerate);
-});
-
-document.getElementById('copy-invite-btn').addEventListener('click', async () => {
-  await navigator.clipboard.writeText(linkTextEl.textContent);
-  showToast('Link copied.');
-});
-
 const subjectsSection = document.getElementById('subjects-section');
 const subjectsListEl = document.getElementById('subjects-list');
 const subjectsEmptyEl = document.getElementById('subjects-empty');
@@ -306,5 +261,4 @@ activityForm.addEventListener('submit', async (event) => {
 });
 
 // These run last, after everything above has been declared
-loadActiveInvite();
 loadGroup();

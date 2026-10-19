@@ -3,6 +3,7 @@ const groupId = params.get('id');
 wireGroupSidebarLinks(groupId);
 
 const loadingEl = document.getElementById('loading-state');
+const adminSection = document.getElementById('admin-section');
 const formEl = document.getElementById('settings-form');
 const nameInput = document.getElementById('group-name');
 const descriptionInput = document.getElementById('group-description');
@@ -23,10 +24,12 @@ async function loadGroup() {
     .eq('user_id', session.user.id)
     .maybeSingle();
 
-  if (!membership || membership.role !== 'ADMIN') {
+  if (!membership) {
     window.location.href = 'unauthorized.html';
     return;
   }
+
+  const isAdmin = membership.role === 'ADMIN';
 
   const { group, error } = await GroupsService.getById(groupId);
 
@@ -37,9 +40,14 @@ async function loadGroup() {
     return;
   }
 
-  nameInput.value = group.name;
-  descriptionInput.value = group.description || '';
-  formEl.hidden = false;
+  document.getElementById('back-to-group-link').href = `group-overview.html?id=${groupId}`;
+
+  if (isAdmin) {
+    nameInput.value = group.name;
+    descriptionInput.value = group.description || '';
+    adminSection.hidden = false;
+    loadActiveInvite();
+  }
 }
 
 formEl.addEventListener('submit', async (event) => {
@@ -50,7 +58,7 @@ formEl.addEventListener('submit', async (event) => {
   const submitButton = formEl.querySelector('button[type="submit"]');
   submitButton.disabled = true;
 
-    const { updated, error } = await GroupsService.update(
+  const { updated, error } = await GroupsService.update(
     groupId,
     nameInput.value.trim(),
     descriptionInput.value.trim() || null
@@ -70,6 +78,63 @@ formEl.addEventListener('submit', async (event) => {
   }
 
   showToast('Group settings saved.');
+});
+
+const generateBtn = document.getElementById('generate-invite-btn');
+const activeInviteEl = document.getElementById('active-invite');
+const linkTextEl = document.getElementById('invite-link-text');
+const expiryTextEl = document.getElementById('invite-expiry-text');
+
+function buildInviteUrl(code) {
+  return `${window.location.origin}/pages/accept-invitation.html?code=${code}`;
+}
+
+async function loadActiveInvite() {
+  const { invitation, error } = await InvitationsService.getActive(groupId);
+
+  if (error || !invitation) {
+    activeInviteEl.hidden = true;
+    return;
+  }
+
+  linkTextEl.textContent = buildInviteUrl(invitation.code);
+  expiryTextEl.textContent = new Date(invitation.expires_at).toLocaleString();
+  activeInviteEl.hidden = false;
+}
+
+async function handleGenerateOrRegenerate() {
+  const { code, error } = await InvitationsService.generate(groupId);
+
+  if (error) {
+    showToast(error.message, 'error');
+    return;
+  }
+
+  showToast('Invitation link generated.');
+  loadActiveInvite();
+}
+
+generateBtn.addEventListener('click', handleGenerateOrRegenerate);
+
+document.getElementById('regenerate-invite-btn').addEventListener('click', () => {
+  confirmAction('Regenerating will invalidate the current link for anyone still holding it. Continue?', handleGenerateOrRegenerate);
+});
+
+document.getElementById('copy-invite-btn').addEventListener('click', async () => {
+  await navigator.clipboard.writeText(linkTextEl.textContent);
+  showToast('Link copied.');
+});
+
+document.getElementById('leave-group-btn').addEventListener('click', () => {
+  confirmAction('Are you sure you want to leave this group?', async () => {
+    const { error } = await MembersService.leave(groupId);
+    if (error) {
+      showToast(error.message, 'error');
+      return;
+    }
+    showToast('You left the group.');
+    window.location.href = 'groups.html';
+  });
 });
 
 loadGroup();

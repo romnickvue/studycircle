@@ -5,7 +5,6 @@ wireGroupSidebarLinks(groupId);
 const loadingEl = document.getElementById('loading-state');
 const tableEl = document.getElementById('members-table');
 const tbodyEl = document.getElementById('members-tbody');
-const leaveBtn = document.getElementById('leave-group-btn');
 
 let currentUserId = null;
 let currentUserRole = null;
@@ -71,7 +70,6 @@ async function loadMembers() {
   });
 
   tableEl.hidden = false;
-  leaveBtn.hidden = false;
 }
 
 async function handlePromote(userId) {
@@ -105,17 +103,5 @@ async function handleRemove(userId) {
     loadMembers();
   });
 }
-
-leaveBtn.addEventListener('click', () => {
-  confirmAction('Are you sure you want to leave this group?', async () => {
-    const { error } = await MembersService.leave(groupId);
-    if (error) {
-      showToast(error.message, 'error');
-      return;
-    }
-    showToast('You left the group.');
-    window.location.href = 'groups.html';
-  });
-});
 
 loadMembers();

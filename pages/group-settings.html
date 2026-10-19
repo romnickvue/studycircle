@@ -15,6 +15,9 @@
   <script src="../js/config/supabase.js"></script>
   <script src="../js/services/auth.service.js"></script>
   <script src="../js/utils/route-guard.js"></script>
+  <script src="../js/utils/modal.js"></script>
+  <script src="../js/services/invitations.service.js"></script>
+  <script src="../js/services/members.service.js"></script>
   <script src="../js/utils/toast.js"></script>
 
   <div class="app-shell">
@@ -32,21 +35,38 @@
     </aside>
 
     <main class="content">
+      <p><a href="#" id="back-to-group-link">&larr; Back to Group Overview</a></p>
       <h1>Group Settings</h1>
 
       <div id="loading-state" class="skeleton skeleton-card" style="max-width: 400px;"></div>
 
-      <form id="settings-form" hidden>
-        <label for="group-name">Group name</label>
-        <input type="text" id="group-name" required />
+      <div id="admin-section" hidden>
+        <h2>Group Details</h2>
+        <form id="settings-form">
+          <label for="group-name">Group name</label>
+          <input type="text" id="group-name" required />
 
-        <label for="group-description">Description</label>
-        <input type="text" id="group-description" />
+          <label for="group-description">Description</label>
+          <input type="text" id="group-description" />
 
-        <p id="form-error" class="form-error" hidden></p>
+          <p id="form-error" class="form-error" hidden></p>
 
-        <button type="submit">Save Changes</button>
-      </form>
+          <button type="submit">Save Changes</button>
+        </form>
+
+        <h2>Invitation</h2>
+        <button id="generate-invite-btn">Generate Invitation Link</button>
+
+        <div id="active-invite" hidden>
+          <p>Invite link: <code id="invite-link-text"></code></p>
+          <p>Expires: <span id="invite-expiry-text"></span></p>
+          <button id="copy-invite-btn">Copy Link</button>
+          <button id="regenerate-invite-btn">Regenerate</button>
+        </div>
+      </div>
+
+      <h2>Membership</h2>
+      <button id="leave-group-btn" class="btn-destructive">Leave Group</button>
     </main>
   </div>
 
