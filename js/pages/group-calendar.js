@@ -108,7 +108,11 @@ async function renderCalendar() {
   }
 }
 
+let selectedDayKey = null;
+
 function openDayModal(dateKey, dateObj) {
+  selectedDayKey = dateKey;
+
   const dayEvents = allActivities.filter((a) => a.due_at && manilaDateKey(a.due_at) === dateKey);
 
   document.getElementById('day-modal-title').textContent = dateObj.toLocaleDateString('en-US', {
@@ -119,7 +123,9 @@ function openDayModal(dateKey, dateObj) {
   listEl.innerHTML = '';
 
   if (dayEvents.length === 0) {
-    listEl.textContent = 'No activities due this day.';
+    const emptyMsg = document.createElement('p');
+    emptyMsg.textContent = 'No activities due this day.';
+    listEl.appendChild(emptyMsg);
   } else {
     dayEvents.forEach((activity) => {
       const item = document.createElement('div');
@@ -134,8 +140,65 @@ function openDayModal(dateKey, dateObj) {
     });
   }
 
+  const addBtn = document.createElement('button');
+  addBtn.textContent = '+ Add Activity';
+  addBtn.addEventListener('click', async () => {
+    closeModal('day-modal');
+    await populateSubjectDropdown();
+    document.getElementById('activity-due').value = selectedDayKey;
+    openModal('activity-modal');
+  });
+  listEl.appendChild(addBtn);
+
   openModal('day-modal');
 }
+
+async function populateSubjectDropdown() {
+  const { subjects } = await SubjectsService.listByGroup(groupId);
+  const select = document.getElementById('activity-subject');
+  select.innerHTML = '<option value="">— None —</option>';
+  subjects.forEach((subject) => {
+    const option = document.createElement('option');
+    option.value = subject.id;
+    option.textContent = subject.name;
+    select.appendChild(option);
+  });
+}
+
+document.getElementById('activity-form').addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  const errorEl = document.getElementById('activity-error');
+  errorEl.hidden = true;
+
+  const title = document.getElementById('activity-title').value.trim();
+  const activityType = document.getElementById('activity-type').value;
+  const subjectId = document.getElementById('activity-subject').value;
+  const dueDateOnly = document.getElementById('activity-due').value;
+
+  const submitButton = event.target.querySelector('button[type="submit"]');
+  submitButton.disabled = true;
+
+  const { error } = await ActivitiesService.create(groupId, {
+    subjectId,
+    title,
+    activityType,
+    dueAt: dueDateOnly ? endOfDayManila(dueDateOnly) : null
+  });
+
+  submitButton.disabled = false;
+
+  if (error) {
+    errorEl.textContent = error.message;
+    errorEl.hidden = false;
+    return;
+  }
+
+  closeModal('activity-modal');
+  event.target.reset();
+  showToast('Activity created.');
+  renderCalendar();
+});
 
 document.getElementById('prev-month-btn').addEventListener('click', () => {
   viewMonth--;

@@ -81,11 +81,47 @@
           <div id="day-modal-list"></div>
         </div>
       </div>
+
+      <div id="activity-modal" class="modal-overlay" hidden>
+        <div class="modal">
+          <button class="modal-close" onclick="closeModal('activity-modal')">&times;</button>
+          <h3>New Activity</h3>
+
+          <form id="activity-form">
+            <label for="activity-title">Title</label>
+            <input type="text" id="activity-title" required />
+
+            <label for="activity-type">Type</label>
+            <select id="activity-type" required>
+              <option value="QUIZ">Quiz</option>
+              <option value="ASSIGNMENT">Assignment</option>
+              <option value="EXAM">Exam</option>
+              <option value="PROJECT">Project</option>
+              <option value="RECITATION">Recitation</option>
+              <option value="PRESENTATION">Presentation</option>
+              <option value="OTHER">Other</option>
+            </select>
+
+            <label for="activity-subject">Subject (optional)</label>
+            <select id="activity-subject">
+              <option value="">— None —</option>
+            </select>
+
+            <label for="activity-due">Due date</label>
+            <input type="date" id="activity-due" required />
+
+            <p id="activity-error" class="form-error" hidden></p>
+
+            <button type="submit">Create</button>
+          </form>
+        </div>
+      </div>
     </main>
   </div>
 
   <script src="../js/services/activities.service.js"></script>
   <script src="../js/utils/sidebar-links.js"></script>
+  <script src="../js/services/subjects.service.js"></script>
   <script src="../js/pages/group-calendar.js"></script>
 </body>
 </html>
