@@ -113,11 +113,10 @@ subjectForm.addEventListener('submit', async (event) => {
 
   submitButton.disabled = false;
 
-  if (error) {
-    subjectError.textContent = error.message;
-    subjectError.hidden = false;
-    return;
-  }
+        if (error) {
+          showToast(error.message, 'error');
+          return;
+        }
 
   closeModal('subject-modal');
   subjectForm.reset();

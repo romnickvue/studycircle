@@ -1,5 +1,5 @@
 const SubjectsService = {
-  async create(groupId, name, code, description) {
+    async create(groupId, name, code, description) {
     const { session } = await AuthService.getSession();
 
     const { data, error } = await supabaseClient
@@ -13,6 +13,10 @@ const SubjectsService = {
       })
       .select()
       .single();
+
+    if (error && error.code === '23505') {
+      return { subject: null, error: { message: 'A subject with this name already exists in this group.' } };
+    }
 
     return { subject: data, error };
   },
