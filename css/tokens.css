@@ -1,9 +1,9 @@
 :root {
-    /* C`olor Tokens */
+    /* Color Tokens */
     --color-sage: #72977B;
     --color-sage-light: #A9BFa8;
     --color-cream: #F6F0E5;
-    ----color-text-green: #3F5D4A;
+    --color-text-green: #3F5D4A;
 
     /* Semantic colors */
     --color-button-bg: var(--color-text-green);

@@ -47,6 +47,7 @@ async function loadMembers() {
       if (member.role === 'MEMBER') {
         const promoteBtn = document.createElement('button');
         promoteBtn.textContent = 'Promote';
+        promoteBtn.className = 'btn-secondary';
         promoteBtn.addEventListener('click', () => handlePromote(member.user_id));
         actionsCell.appendChild(promoteBtn);
       } else {

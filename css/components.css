@@ -108,3 +108,34 @@
   color: var(--color-cream);
   border-color: var(--color-text-green);
 }
+
+button {
+  background: var(--color-button-bg);
+  color: var(--color-button-text);
+  border: none;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: var(--color-cream);
+  color: var(--color-text-green);
+  border: 1px solid var(--color-text-green);
+}
+
+.modal-close {
+  background: none;
+  color: var(--color-text-green);
+  padding: 0;
+}

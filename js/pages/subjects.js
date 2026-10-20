@@ -77,6 +77,7 @@ async function loadSubjects() {
 
       const editBtn = document.createElement('button');
       editBtn.textContent = 'Edit';
+      editBtn.className = 'btn-secondary';
       editBtn.addEventListener('click', () => openEditSubjectModal(subject));
 
       const deleteBtn = document.createElement('button');

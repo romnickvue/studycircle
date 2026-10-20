@@ -100,6 +100,7 @@ async function loadActivities() {
 
       const editBtn = document.createElement('button');
       editBtn.textContent = 'Edit';
+      editBtn.className = 'btn-secondary';
       editBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         openEditActivityModal(activity);
