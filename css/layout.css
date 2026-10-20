@@ -132,3 +132,55 @@ a {
     padding-bottom: 70px;
   }
 }
+
+.hamburger-btn {
+  display: none;
+}
+
+.drawer-overlay {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .sidebar.group-mode {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    transform: translateX(-100%);
+    transition: transform 0.2s ease;
+    z-index: 200;
+    width: 240px;
+  }
+
+  .sidebar.group-mode.open {
+    transform: translateX(0);
+  }
+
+  .hamburger-btn {
+    display: block;
+    position: fixed;
+    top: var(--space-2);
+    left: var(--space-2);
+    z-index: 150;
+    font-size: 1.5rem;
+    background: var(--color-text-green);
+    color: var(--color-cream);
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 4px 10px;
+    cursor: pointer;
+  }
+
+  .drawer-overlay.open {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 190;
+  }
+
+  .content {
+    padding-top: 56px;
+  }
+}
