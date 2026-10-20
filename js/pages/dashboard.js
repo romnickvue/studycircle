@@ -10,17 +10,6 @@ const allCaughtUpEl = document.getElementById('all-caught-up');
 const groupsListEl = document.getElementById('groups-list');
 const noGroupsEl = document.getElementById('no-groups-state');
 
-function buildActivityCard(activity) {
-  const card = document.createElement('div');
-  card.style.padding = 'var(--space-1)';
-  card.style.cursor = 'pointer';
-  const groupLabel = activity.groups ? ` — ${activity.groups.name}` : '';
-  card.textContent = `${activity.title}${groupLabel}`;
-  card.addEventListener('click', () => {
-    window.location.href = `activity-detail.html?id=${activity.id}`;
-  });
-  return card;
-}
 
 async function loadDashboard() {
   const { session } = await AuthService.getSession();
@@ -62,10 +51,10 @@ async function loadDashboard() {
   document.getElementById('completed-list').innerHTML = '';
   overdueList.innerHTML = '';
 
-  todayList2.forEach((a) => todayList.appendChild(buildActivityCard(a)));
-  soon.forEach((a) => soonList.appendChild(buildActivityCard(a)));
-  completed.forEach((a) => document.getElementById('completed-list').appendChild(buildActivityCard(a)));
-  overdue.forEach((a) => overdueList.appendChild(buildActivityCard(a)));
+  todayList2.forEach((a) => todayList.appendChild(buildActivityCard(a, { showGroup: true })));
+  soon.forEach((a) => soonList.appendChild(buildActivityCard(a, { showGroup: true })));
+  completed.forEach((a) => document.getElementById('completed-list').appendChild(buildActivityCard(a, { showGroup: true })));
+  overdue.forEach((a) => overdueList.appendChild(buildActivityCard(a, { showGroup: true })));
 
   if (todayList2.length === 0 && soon.length === 0 && completed.length === 0 && overdue.length === 0) {
     allCaughtUpEl.hidden = false;

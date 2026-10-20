@@ -117,22 +117,10 @@ async function loadActivities() {
   completedListEl.innerHTML = '';
   overdueListEl.innerHTML = '';
 
-  function buildCard(activity) {
-    const item = document.createElement('div');
-    item.style.padding = 'var(--space-1)';
-    item.style.cursor = 'pointer';
-    const subjectLabel = activity.subjects ? ` — ${activity.subjects.name}` : '';
-    item.textContent = `${activity.title}${subjectLabel}`;
-    item.addEventListener('click', () => {
-      window.location.href = `activity-detail.html?id=${activity.id}`;
-    });
-    return item;
-  }
-
-  todayArr.forEach((a) => todayListEl.appendChild(buildCard(a)));
-  soonArr.forEach((a) => soonListEl.appendChild(buildCard(a)));
-  completedArr.forEach((a) => completedListEl.appendChild(buildCard(a)));
-  overdueArr.forEach((a) => overdueListEl.appendChild(buildCard(a)));
+  todayArr.forEach((a) => todayListEl.appendChild(buildActivityCard(a, { showSubject: true })));
+  soonArr.forEach((a) => soonListEl.appendChild(buildActivityCard(a, { showSubject: true })));
+  completedArr.forEach((a) => completedListEl.appendChild(buildActivityCard(a, { showSubject: true })));
+  overdueArr.forEach((a) => overdueListEl.appendChild(buildActivityCard(a, { showSubject: true })));
 
   activitiesEmptyEl.hidden = activities.length > 0;
 }
