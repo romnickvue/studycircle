@@ -19,7 +19,7 @@
   <script src="../js/utils/dates.js"></script>
 
   <div class="app-shell">
-    <aside class="sidebar">
+        <aside class="sidebar personal-mode">
       <nav>
         <ul>
           <li><a href="dashboard.html">Dashboard</a></li>
@@ -37,6 +37,14 @@
         <p class="copyright">&copy; 2026 StudyCircle</p>
       </div>
     </aside>
+
+    <nav class="bottom-tab-bar">
+      <a href="dashboard.html" class="active">Dashboard</a>
+      <a href="tasks.html">My Tasks</a>
+      <a href="calendar.html">Calendar</a>
+      <a href="groups.html">My Groups</a>
+      <a href="#">Profile</a>
+    </nav>
 
     <main class="content">
       <h1 id="greeting"></h1>
@@ -76,7 +84,7 @@
         <div id="no-groups-state" class="empty-state" hidden>
           <p>Create a group or join one with an invitation.</p>
         </div>
-</div>
+      </div>
       </div>
     </main>
   </div>
