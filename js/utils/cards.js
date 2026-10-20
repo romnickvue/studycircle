@@ -23,3 +23,15 @@ function buildActivityCard(activity, options = {}) {
 
   return card;
 }
+
+function buildGroupCard(group) {
+  const card = document.createElement('div');
+  card.className = 'group-card';
+  card.textContent = group.name;
+
+  card.addEventListener('click', () => {
+    window.location.href = `group-overview.html?id=${group.id}`;
+  });
+
+  return card;
+}

@@ -164,3 +164,17 @@ button:disabled {
   font-size: 0.85rem;
   opacity: 0.8;
 }
+
+.group-card {
+  background: var(--color-sage-light);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2);
+  margin-bottom: var(--space-1);
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--color-text-green);
+}
+
+.group-card:hover {
+  opacity: 0.9;
+}

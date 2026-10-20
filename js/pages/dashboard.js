@@ -68,18 +68,9 @@ async function loadDashboard() {
     noGroupsEl.hidden = false;
   } else {
     noGroupsEl.hidden = true;
+    
     groups.forEach((group) => {
-      const card = document.createElement('div');
-      card.textContent = group.name;
-      card.style.cursor = 'pointer';
-      card.style.padding = 'var(--space-2)';
-      card.style.marginBottom = 'var(--space-1)';
-      card.style.background = 'var(--color-sage-light)';
-      card.style.borderRadius = 'var(--radius-sm)';
-      card.addEventListener('click', () => {
-        window.location.href = `group-overview.html?id=${group.id}`;
-      });
-      groupsListEl.appendChild(card);
+      groupsListEl.appendChild(buildGroupCard(group));
     });
   }
 }

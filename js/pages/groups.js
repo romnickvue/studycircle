@@ -21,21 +21,12 @@ async function loadGroups() {
   }
 
   gridEl.hidden = false;
+
   emptyEl.hidden = true;
   gridEl.innerHTML = '';
 
   groups.forEach((group) => {
-    const card = document.createElement('div');
-    card.textContent = group.name;
-    card.style.cursor = 'pointer';
-    card.style.padding = 'var(--space-2)';
-    card.style.marginBottom = 'var(--space-1)';
-    card.style.background = 'var(--color-sage-light)';
-    card.style.borderRadius = 'var(--radius-sm)';
-    card.addEventListener('click', () => {
-      window.location.href = `group-overview.html?id=${group.id}`;
-    });
-    gridEl.appendChild(card);
+    gridEl.appendChild(buildGroupCard(group));
   });
 }
 
