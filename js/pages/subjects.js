@@ -65,15 +65,14 @@ async function loadSubjects() {
 
     subjects.forEach((subject) => {
       const item = document.createElement('div');
-      item.style.display = 'flex';
-      item.style.justifyContent = 'space-between';
-      item.style.alignItems = 'center';
-      item.style.padding = 'var(--space-1)';
+      item.className = 'subject-row';
 
       const label = document.createElement('span');
+      label.className = 'subject-row-name';
       label.textContent = subject.code ? `${subject.name} (${subject.code})` : subject.name;
 
       const actions = document.createElement('span');
+      actions.className = 'subject-row-actions';
 
       const editBtn = document.createElement('button');
       editBtn.textContent = 'Edit';

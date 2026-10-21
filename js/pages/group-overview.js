@@ -48,9 +48,9 @@ async function loadSubjects() {
     subjectsEmptyEl.hidden = false;
   } else {
     subjectsEmptyEl.hidden = true;
-    subjects.forEach((subject) => {
+      subjects.forEach((subject) => {
       const item = document.createElement('div');
-      item.style.padding = 'var(--space-1)';
+      item.className = 'subject-row';
       item.textContent = subject.code ? `${subject.name} (${subject.code})` : subject.name;
       subjectsListEl.appendChild(item);
     });
