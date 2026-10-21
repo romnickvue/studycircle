@@ -244,3 +244,39 @@ button:disabled {
   background: var(--color-sage-light);
   color: var(--color-text-green);
 }
+
+label {
+  display: block;
+  margin-top: var(--space-2);
+  margin-bottom: 4px;
+  font-weight: bold;
+  color: var(--color-text-green);
+  font-size: 0.9rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+select {
+  width: 100%;
+  max-width: 400px;
+  padding: var(--space-1);
+  border: 1px solid var(--color-sage-light);
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-family: inherit;
+  box-sizing: border-box;
+  background: var(--color-cream);
+  color: var(--color-text-green);
+}
+
+input:focus,
+select:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+}
+
+form button[type="submit"] {
+  margin-top: var(--space-2);
+}
