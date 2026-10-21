@@ -96,7 +96,8 @@ async function renderCalendar() {
     const dayEvents = eventsByDay[cellKey] || [];
     dayEvents.forEach((activity) => {
       const eventEl = document.createElement('div');
-      eventEl.className = 'cal-event';
+      const status = getUrgencyStatus(activity.due_at, false).toLowerCase().replace('_', '-');
+      eventEl.className = `cal-event ${status}`;
       eventEl.textContent = activity.title;
       eventEl.addEventListener('click', () => {
         window.location.href = `activity-detail.html?id=${activity.id}`;

@@ -8,36 +8,6 @@
   <link rel="stylesheet" href="../css/tokens.css" />
   <link rel="stylesheet" href="../css/layout.css" />
   <link rel="stylesheet" href="../css/components.css" />
-  <style>
-    .cal-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 4px;
-      max-width: 700px;
-    }
-    .cal-day {
-      border: 1px solid var(--color-sage-light);
-      border-radius: var(--radius-sm);
-      padding: var(--space-1);
-      min-height: 70px;
-      font-size: 0.85rem;
-    }
-    .cal-day.other-month {
-      opacity: 0.4;
-    }
-    .cal-day.today {
-      border-color: var(--color-text-green);
-      border-width: 2px;
-    }
-    .cal-event {
-      background: var(--color-sage-light);
-      border-radius: 4px;
-      padding: 2px 4px;
-      margin-top: 2px;
-      cursor: pointer;
-      font-size: 0.75rem;
-    }
-  </style>
 </head>
 <body>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>

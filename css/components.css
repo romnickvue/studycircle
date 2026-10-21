@@ -318,3 +318,65 @@ form button[type="submit"] {
   background: var(--color-text-green);
   color: var(--color-cream);
 }
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  max-width: 700px;
+}
+
+.cal-day {
+  background: var(--color-cream);
+  border: 1px solid var(--color-sage-light);
+  border-radius: var(--radius-sm);
+  padding: var(--space-1);
+  min-height: 80px;
+  font-size: 0.85rem;
+}
+
+.cal-day.other-month {
+  opacity: 0.35;
+}
+
+.cal-day.today {
+  border-color: var(--color-text-green);
+  border-width: 2px;
+  background: #FBF7EF;
+}
+
+.cal-event {
+  border-radius: 4px;
+  padding: 2px 6px;
+  margin-top: 3px;
+  cursor: pointer;
+  font-size: 0.72rem;
+  color: var(--color-cream);
+  background: var(--color-sage-light);
+}
+
+.cal-event:hover {
+  opacity: 0.85;
+}
+
+.cal-event.overdue {
+  background: #8B3A3A;
+}
+
+.cal-event.due-today {
+  background: #C97B3D;
+}
+
+.cal-event.due-tomorrow {
+  background: #D4A843;
+  color: var(--color-text-green);
+}
+
+.cal-event.due-soon {
+  background: var(--color-sage-light);
+  color: var(--color-text-green);
+}
+
+.cal-event.completed {
+  background: var(--color-text-green);
+}
