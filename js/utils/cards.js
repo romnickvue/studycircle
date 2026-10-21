@@ -17,6 +17,9 @@ function buildActivityCard(activity, options = {}) {
   card.appendChild(title);
   if (metaParts.length > 0) card.appendChild(meta);
 
+  const badge = buildUrgencyBadge(activity.due_at, options.isCompleted || false);
+  if (badge) card.appendChild(badge);
+
   card.addEventListener('click', () => {
     window.location.href = `activity-detail.html?id=${activity.id}`;
   });
@@ -35,3 +38,16 @@ function buildGroupCard(group) {
 
   return card;
 }
+
+function buildUrgencyBadge(dueDateIso, isCompleted) {
+  if (!dueDateIso) return null;
+
+  const status = getUrgencyStatus(dueDateIso, isCompleted);
+  const label = formatUrgencyLabel(dueDateIso, isCompleted);
+
+  const badge = document.createElement('span');
+  badge.className = `urgency-badge ${status.toLowerCase().replace('_', '-')}`;
+  badge.textContent = label;
+
+  return badge;
+}k

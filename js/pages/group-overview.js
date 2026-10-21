@@ -119,7 +119,7 @@ async function loadActivities() {
 
   todayArr.forEach((a) => todayListEl.appendChild(buildActivityCard(a, { showSubject: true })));
   soonArr.forEach((a) => soonListEl.appendChild(buildActivityCard(a, { showSubject: true })));
-  completedArr.forEach((a) => completedListEl.appendChild(buildActivityCard(a, { showSubject: true })));
+  completedArr.forEach((a) => document.getElementById('completed-list').appendChild(buildActivityCard(a, { showGroup: true, isCompleted: true })));
   overdueArr.forEach((a) => overdueListEl.appendChild(buildActivityCard(a, { showSubject: true })));
 
   activitiesEmptyEl.hidden = activities.length > 0;

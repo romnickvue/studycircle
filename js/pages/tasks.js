@@ -48,7 +48,7 @@ async function loadTasks() {
 
   today.forEach((a) => todayList.appendChild(buildActivityCard(a, { showGroup: true })));
   soon.forEach((a) => soonList.appendChild(buildActivityCard(a, { showGroup: true })));
-  completed.forEach((a) => completedList.appendChild(buildActivityCard(a, { showGroup: true })));
+  completed.forEach((a) => document.getElementById('completed-list').appendChild(buildActivityCard(a, { showGroup: true, isCompleted: true })));
   overdue.forEach((a) => overdueList.appendChild(buildActivityCard(a, { showGroup: true })));
 
   if (today.length === 0 && soon.length === 0 && completed.length === 0 && overdue.length === 0) {

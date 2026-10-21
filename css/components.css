@@ -148,6 +148,7 @@ button:disabled {
   cursor: pointer;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 2px;
 }
 
@@ -279,4 +280,38 @@ select:focus {
 
 form button[type="submit"] {
   margin-top: var(--space-2);
+}
+
+.urgency-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: bold;
+  margin-top: 4px;
+}
+
+.urgency-badge.overdue {
+  background: #8B3A3A;
+  color: var(--color-cream);
+}
+
+.urgency-badge.due-today {
+  background: #C97B3D;
+  color: var(--color-cream);
+}
+
+.urgency-badge.due-tomorrow {
+  background: #D4A843;
+  color: var(--color-text-green);
+}
+
+.urgency-badge.due-soon {
+  background: var(--color-sage-light);
+  color: var(--color-text-green);
+}
+
+.urgency-badge.completed {
+  background: var(--color-text-green);
+  color: var(--color-cream);
 }
