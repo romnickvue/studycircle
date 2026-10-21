@@ -39,7 +39,10 @@ async function loadMembers() {
     nameCell.textContent = member.profiles?.display_name || '(unknown)';
 
     const roleCell = document.createElement('td');
-    roleCell.textContent = member.role;
+    const roleBadge = document.createElement('span');
+    roleBadge.className = `role-badge ${member.role === 'ADMIN' ? 'admin' : 'member'}`;
+    roleBadge.textContent = member.role;
+    roleCell.appendChild(roleBadge);
 
     const actionsCell = document.createElement('td');
 

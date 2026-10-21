@@ -204,3 +204,43 @@ button:disabled {
   display: flex;
   gap: var(--space-1);
 }
+
+.members-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-cream);
+}
+
+.members-table th {
+  text-align: left;
+  padding: var(--space-1) var(--space-2);
+  border-bottom: 2px solid var(--color-text-green);
+  color: var(--color-text-green);
+}
+
+.members-table td {
+  padding: var(--space-1) var(--space-2);
+  border-bottom: 1px solid var(--color-sage-light);
+}
+
+.members-table tr:last-child td {
+  border-bottom: none;
+}
+
+.role-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.role-badge.admin {
+  background: var(--color-text-green);
+  color: var(--color-cream);
+}
+
+.role-badge.member {
+  background: var(--color-sage-light);
+  color: var(--color-text-green);
+}
