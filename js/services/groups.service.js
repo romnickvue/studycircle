@@ -31,6 +31,14 @@ const GroupsService = {
       .eq('id', groupId)
       .select();
     return { updated: data && data.length > 0, error };
+  },
+
+  async getMemberCount(groupId) {
+    const { count, error } = await supabaseClient
+      .from('group_memberships')
+      .select('id', { count: 'exact', head: true })
+      .eq('group_id', groupId);
+    return { count: count || 0, error };
   }
 };
 

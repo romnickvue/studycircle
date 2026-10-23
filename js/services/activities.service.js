@@ -78,6 +78,18 @@ const ActivitiesService = {
       .order('due_at', { ascending: true, nullsFirst: false });
 
     return { activities: data ?? [], error };
+  },
+
+  async countThisWeek(groupId) {
+    const { start, end } = getCurrentWeekWindow();
+    const { count, error } = await supabaseClient
+      .from('academic_activities')
+      .select('id', { count: 'exact', head: true })
+      .eq('group_id', groupId)
+      .not('due_at', 'is', null)
+      .gte('due_at', start.toISOString())
+      .lt('due_at', end.toISOString());
+    return { count: count || 0, error };
   }
 };
 

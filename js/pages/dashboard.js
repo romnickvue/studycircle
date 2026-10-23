@@ -1,6 +1,6 @@
 const loadingEl = document.getElementById('loading-state');
 const contentEl = document.getElementById('dashboard-content');
-const greetingEl = document.getElementById('greeting');
+const greetingEl = document.getElementById('greeting-name');
 
 const overdueList = document.getElementById('overdue-list');
 const todayList = document.getElementById('today-list');
@@ -14,7 +14,7 @@ const noGroupsEl = document.getElementById('no-groups-state');
 async function loadDashboard() {
   const { session } = await AuthService.getSession();
   const name = session.user.user_metadata?.display_name || 'there';
-  greetingEl.textContent = `Hi, ${name}!`;
+  greetingEl.textContent = `${name}!`;
 
   const { activities } = await ActivitiesService.listMine();
   const { groups } = await GroupsService.listMine();
@@ -51,10 +51,10 @@ async function loadDashboard() {
   document.getElementById('completed-list').innerHTML = '';
   overdueList.innerHTML = '';
 
-  todayList2.forEach((a) => todayList.appendChild(buildActivityCard(a, { showGroup: true })));
-  soon.forEach((a) => soonList.appendChild(buildActivityCard(a, { showGroup: true })));
-  completed.forEach((a) => document.getElementById('completed-list').appendChild(buildActivityCard(a, { showGroup: true, isCompleted: true })));
-  overdue.forEach((a) => overdueList.appendChild(buildActivityCard(a, { showGroup: true })));
+  todayList2.forEach((a) => todayList.appendChild(buildActivityCard(a, { showGroup: true, neo: true, sectionBorder: 'today' })));
+  soon.forEach((a) => soonList.appendChild(buildActivityCard(a, { showGroup: true, neo: true, sectionBorder: 'soon' })));
+  completed.forEach((a) => document.getElementById('completed-list').appendChild(buildActivityCard(a, { showGroup: true, isCompleted: true, neo: true, sectionBorder: 'completed' })));
+  overdue.forEach((a) => overdueList.appendChild(buildActivityCard(a, { showGroup: true, neo: true, sectionBorder: 'overdue' })));
 
   if (todayList2.length === 0 && soon.length === 0 && completed.length === 0 && overdue.length === 0) {
     allCaughtUpEl.hidden = false;
@@ -68,10 +68,12 @@ async function loadDashboard() {
     noGroupsEl.hidden = false;
   } else {
     noGroupsEl.hidden = true;
-    
-    groups.forEach((group) => {
-      groupsListEl.appendChild(buildGroupCard(group));
-    });
+
+    for (const group of groups) {
+      const { count: memberCount } = await GroupsService.getMemberCount(group.id);
+      const { count: activeCount } = await ActivitiesService.countThisWeek(group.id);
+      groupsListEl.appendChild(buildGroupCard(group, { neo: true, memberCount, activeCount }));
+    }
   }
 }
 

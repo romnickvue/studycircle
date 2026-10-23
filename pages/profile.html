@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile — StudyCircle</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="../css/reset.css" />
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/layout.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+</head>
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/config/supabase.local.js"></script>
+  <script src="../js/config/supabase.js"></script>
+  <script src="../js/services/auth.service.js"></script>
+  <script src="../js/utils/route-guard.js"></script>
+
+  <div class="app-shell">
+    <aside class="sidebar personal-mode">
+      <nav>
+        <ul>
+          <li><a href="dashboard.html"><i class="bi bi-house-door"></i> Dashboard</a></li>
+          <li><a href="tasks.html"><i class="bi bi-check2-square"></i> My Tasks</a></li>
+          <li><a href="calendar.html"><i class="bi bi-calendar3"></i> Calendar</a></li>
+          <li><a href="groups.html"><i class="bi bi-people"></i> My Groups</a></li>
+          <li><a href="profile.html" class="active"><i class="bi bi-person-circle"></i> Profile</a></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <img src="../assets/images/logo-placeholder.png" alt="StudyCircle logo" />
+        <p class="app-name">StudyCircle</p>
+        <p class="tagline">Learn together. Move forward together.</p>
+        <p class="copyright">&copy; 2026 StudyCircle</p>
+      </div>
+    </aside>
+
+    <nav class="bottom-tab-bar">
+      <a href="dashboard.html"><i class="bi bi-house-door"></i><span>Dashboard</span></a>
+      <a href="tasks.html"><i class="bi bi-check2-square"></i><span>My Tasks</span></a>
+      <a href="calendar.html"><i class="bi bi-calendar3"></i><span>Calendar</span></a>
+      <a href="groups.html"><i class="bi bi-people"></i><span>My Groups</span></a>
+      <a href="profile.html" class="active"><i class="bi bi-person-circle"></i><span>Profile</span></a>
+    </nav>
+
+    <main class="content">
+      <h1>Profile</h1>
+
+      <div id="loading-state" class="skeleton skeleton-card" style="max-width: 400px;"></div>
+
+      <div id="profile-content" hidden>
+        <p><strong>Name:</strong> <span id="profile-name"></span></p>
+        <p><strong>Email:</strong> <span id="profile-email"></span></p>
+
+        <button id="sign-out-btn" class="btn-destructive">Sign Out</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/pages/profile.js"></script>
+</body>
+</html>

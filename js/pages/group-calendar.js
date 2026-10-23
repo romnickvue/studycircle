@@ -94,16 +94,22 @@ async function renderCalendar() {
     cell.appendChild(dayLabel);
 
     const dayEvents = eventsByDay[cellKey] || [];
-    dayEvents.forEach((activity) => {
-      const eventEl = document.createElement('div');
-      const status = getUrgencyStatus(activity.due_at, false).toLowerCase().replace('_', '-');
-      eventEl.className = `cal-event ${status}`;
-      eventEl.textContent = activity.title;
-      eventEl.addEventListener('click', () => {
-        window.location.href = `activity-detail.html?id=${activity.id}`;
+    if (dayEvents.length > 0) {
+      const dotsContainer = document.createElement('div');
+      dotsContainer.className = 'cal-dots';
+
+      dayEvents.forEach((activity) => {
+        const dot = document.createElement('span');
+        const status = getUrgencyStatus(activity.due_at, false).toLowerCase().replace('_', '-');
+        dot.className = `cal-dot ${status}`;
+        dot.title = activity.title;
+        dotsContainer.appendChild(dot);
       });
-      cell.appendChild(eventEl);
-    });
+
+      dotsContainer.addEventListener('click', () => openDayModal(cellKey, cellDate));
+
+      cell.appendChild(dotsContainer);
+    }
 
     gridEl.appendChild(cell);
   }

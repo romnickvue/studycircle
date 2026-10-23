@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="../css/tokens.css" />
   <link rel="stylesheet" href="../css/layout.css" />
   <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
 </head>
 <body>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -21,11 +22,11 @@
     <aside class="sidebar personal-mode">
       <nav>
         <ul>
-          <li><a href="dashboard.html">Dashboard</a></li>
-          <li><a href="tasks.html">My Tasks</a></li>
-          <li><a href="calendar.html">Calendar</a></li>
-          <li><a href="groups.html">My Groups</a></li>
-          <li><a href="profile.html">Profile</a></li>
+          <li><a href="dashboard.html"><i class="bi bi-house-door"></i> Dashboard</a></li>
+          <li><a href="tasks.html"><i class="bi bi-check2-square"></i> My Tasks</a></li>
+          <li><a href="calendar.html"><i class="bi bi-calendar3"></i> Calendar</a></li>
+          <li><a href="groups.html"><i class="bi bi-people"></i> My Groups</a></li>
+          <li><a href="profile.html"><i class="bi bi-person-circle"></i> Profile</a></li>
         </ul>
       </nav>
 
@@ -38,42 +39,80 @@
     </aside>
 
     <nav class="bottom-tab-bar">
-      <a href="dashboard.html">Dashboard</a>
-      <a href="tasks.html" class="active">My Tasks</a>
-      <a href="calendar.html">Calendar</a>
-      <a href="groups.html">My Groups</a>
-      <a href="#">Profile</a>
+      <a href="dashboard.html"><i class="bi bi-house-door"></i><span>Dashboard</span></a>
+      <a href="tasks.html"><i class="bi bi-check2-square"></i><span>My Tasks</span></a>
+      <a href="calendar.html"><i class="bi bi-calendar3"></i><span>Calendar</span></a>
+      <a href="groups.html"><i class="bi bi-people"></i><span>My Groups</span></a>
+      <a href="profile.html"><i class="bi bi-person-circle"></i><span>Profile</span></a>
     </nav>
 
     <main class="content">
-      <h1>My Tasks</h1>
-        <div id="loading-state" class="skeleton skeleton-card" style="max-width: 400px;"></div>
+      <div class="tasks-header-row">
+        <div>
+          <p class="eyebrow">YOUR PERSONAL WORKSPACE</p>
+          <h1>My Tasks</h1>
+          <p class="hero-sub">Stay on top of your academic work, one task at a time.</p>
+        </div>
+        <button id="add-task-btn">+ Add task</button>
+      </div>
 
-        <div id="tasks-content" hidden>
-          <div id="today-section">
-            <h3>Today</h3>
-            <div id="today-list"></div>
+      <div id="loading-state" class="skeleton skeleton-card" style="max-width: 400px;"></div>
+
+      <div id="tasks-content" hidden>
+        <div class="stats-row">
+          <div class="neo-card stat-card">
+            <p class="stat-label">Due today</p>
+            <p class="stat-sublabel">Focus on these first</p>
+            <p class="stat-number" id="stat-today">0</p>
           </div>
-
-          <div id="soon-section">
-            <h3>Due Soon</h3>
-            <div id="soon-list"></div>
+          <div class="neo-card stat-card">
+            <p class="stat-label">Due soon</p>
+            <p class="stat-sublabel">Coming up next</p>
+            <p class="stat-number" id="stat-soon">0</p>
           </div>
-
-          <div id="completed-section">
-            <h3>Completed</h3>
-            <div id="completed-list"></div>
-          </div>
-
-          <div id="overdue-section">
-            <h3>Overdue</h3>
-            <div id="overdue-list"></div>
-          </div>
-
-          <div id="all-caught-up" class="empty-state" hidden>
-            <p>Nothing due this week.</p>
+          <div class="neo-card stat-card">
+            <p class="stat-label">Completed</p>
+            <p class="stat-sublabel">Look how far you've come</p>
+            <p class="stat-number" id="stat-completed">0</p>
           </div>
         </div>
+
+        <div id="today-section">
+          <div class="section-header-row">
+            <h3>Today <span class="section-count" id="today-count">0</span></h3>
+            <span class="section-hint">Needs your attention</span>
+          </div>
+          <div id="today-list"></div>
+        </div>
+
+        <div id="soon-section">
+          <div class="section-header-row">
+            <h3>Due Soon <span class="section-count" id="soon-count">0</span></h3>
+            <span class="section-hint">Plan ahead</span>
+          </div>
+          <div id="soon-list"></div>
+        </div>
+
+        <div id="completed-section">
+          <div class="section-header-row">
+            <h3>Completed <span class="section-count" id="completed-count">0</span></h3>
+            <span class="section-hint">Nice work!</span>
+          </div>
+          <div id="completed-list"></div>
+        </div>
+
+        <div id="overdue-section">
+          <div class="section-header-row">
+            <h3>Overdue <span class="section-count" id="overdue-count">0</span></h3>
+            <span class="section-hint">Catch up when you can</span>
+          </div>
+          <div id="overdue-list"></div>
+        </div>
+
+        <div id="all-caught-up" class="empty-state" hidden>
+          <p>You're all caught up!</p>
+        </div>
+      </div>
     </main>
   </div>
 

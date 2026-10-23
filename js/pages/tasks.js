@@ -41,15 +41,24 @@ async function loadTasks() {
     else soon.push(activity);
   });
 
+  document.getElementById('stat-today').textContent = today.length;
+  document.getElementById('stat-soon').textContent = soon.length;
+  document.getElementById('stat-completed').textContent = completed.length;
+
+  document.getElementById('today-count').textContent = today.length;
+  document.getElementById('soon-count').textContent = soon.length;
+  document.getElementById('completed-count').textContent = completed.length;
+  document.getElementById('overdue-count').textContent = overdue.length;
+
   todayList.innerHTML = '';
   soonList.innerHTML = '';
   completedList.innerHTML = '';
   overdueList.innerHTML = '';
 
-  today.forEach((a) => todayList.appendChild(buildActivityCard(a, { showGroup: true })));
-  soon.forEach((a) => soonList.appendChild(buildActivityCard(a, { showGroup: true })));
-  completed.forEach((a) => document.getElementById('completed-list').appendChild(buildActivityCard(a, { showGroup: true, isCompleted: true })));
-  overdue.forEach((a) => overdueList.appendChild(buildActivityCard(a, { showGroup: true })));
+  today.forEach((a) => todayList.appendChild(buildActivityCard(a, { showGroup: true, neo: true, sectionBorder: 'today' })));
+  soon.forEach((a) => soonList.appendChild(buildActivityCard(a, { showGroup: true, neo: true, sectionBorder: 'soon' })));
+  completed.forEach((a) => completedList.appendChild(buildActivityCard(a, { showGroup: true, isCompleted: true, neo: true, sectionBorder: 'completed' })));
+  overdue.forEach((a) => overdueList.appendChild(buildActivityCard(a, { showGroup: true, neo: true, sectionBorder: 'overdue' })));
 
   if (today.length === 0 && soon.length === 0 && completed.length === 0 && overdue.length === 0) {
     allCaughtUpEl.hidden = false;
@@ -57,5 +66,9 @@ async function loadTasks() {
     allCaughtUpEl.hidden = true;
   }
 }
+
+document.getElementById('add-task-btn').addEventListener('click', () => {
+  showToast('Add Task coming soon!');
+});
 
 loadTasks();
