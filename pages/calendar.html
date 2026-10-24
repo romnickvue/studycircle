@@ -78,19 +78,30 @@
     </nav>
 
     <main class="content">
-      <h1 id="calendar-title"></h1>
-
-      <div>
-        <button id="prev-month-btn">&lt; Prev</button>
-        <button id="next-month-btn">Next &gt;</button>
-      </div>
+      <h1>Calendar</h1>
+      <p class="hero-sub">Keep track of your classes, tasks, and group activities.</p>
 
       <div id="loading-state" class="skeleton skeleton-card" style="max-width: 700px;"></div>
 
-      <div class="cal-weekdays">
-        <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+      <div class="neo-card">
+        <h2 id="calendar-title"></h2>
+        <div class="cal-weekdays">
+          <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+        </div>
+        <div id="cal-grid" class="cal-grid" hidden></div>
+
+        <div class="calendar-legend">
+          <span><span class="legend-dot today"></span> Today</span>
+          <span><span class="legend-dot soon"></span> Due Soon</span>
+          <span><span class="legend-dot completed"></span> Completed</span>
+          <span><span class="legend-dot overdue"></span> Overdue</span>
+        </div>
+
+        <div class="calendar-pager">
+          <button id="prev-month-btn" class="neo-pager-btn">&lt; Prev</button>
+          <button id="next-month-btn" class="neo-pager-btn">Next &gt;</button>
+        </div>
       </div>
-      <div id="cal-grid" class="cal-grid" hidden></div>
 
       <div id="day-modal" class="modal-overlay" hidden>
         <div class="modal">
@@ -104,6 +115,7 @@
 
   <script src="../js/services/groups.service.js"></script>
   <script src="../js/services/activities.service.js"></script>
+  <script src="../js/services/progress.service.js"></script>
   <script src="../js/pages/calendar.js"></script>
 </body>
 </html>

@@ -24,10 +24,10 @@ const GroupsService = {
     return { group: data, error };
   },
 
-  async update(groupId, name, description) {
-  const { data, error } = await supabaseClient
+  async update(groupId, name, description, iconName) {
+    const { data, error } = await supabaseClient
       .from('groups')
-      .update({ name, description })
+      .update({ name, description, icon_name: iconName || null })
       .eq('id', groupId)
       .select();
     return { updated: data && data.length > 0, error };

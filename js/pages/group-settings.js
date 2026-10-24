@@ -9,6 +9,28 @@ const nameInput = document.getElementById('group-name');
 const descriptionInput = document.getElementById('group-description');
 const errorEl = document.getElementById('form-error');
 
+const GROUP_ICONS = ['bi-journal-bookmark', 'bi-calculator', 'bi-flask', 'bi-palette', 'bi-music-note-beamed', 'bi-globe', 'bi-translate', 'bi-bank', 'bi-heart-pulse', 'bi-tree', 'bi-stars', 'bi-trophy', 'bi-briefcase', 'bi-lightbulb', 'bi-camera', 'bi-film', 'bi-pencil', 'bi-mortarboard', 'bi-chat-dots', 'bi-code-slash', 'bi-terminal', 'bi-cpu'];
+
+let selectedIcon = null;
+
+function renderIconPicker(currentIcon) {
+  selectedIcon = currentIcon;
+  const picker = document.getElementById('icon-picker');
+  picker.innerHTML = '';
+
+  GROUP_ICONS.forEach((icon) => {
+    const btn = document.createElement('div');
+    btn.className = `icon-option ${icon === currentIcon ? 'selected' : ''}`;
+    btn.innerHTML = `<i class="bi ${icon}"></i>`;
+    btn.addEventListener('click', () => {
+      selectedIcon = icon;
+      picker.querySelectorAll('.icon-option').forEach((el) => el.classList.remove('selected'));
+      btn.classList.add('selected');
+    });
+    picker.appendChild(btn);
+  });
+}
+
 async function loadGroup() {
   if (!groupId) {
     window.location.href = 'unauthorized.html';
@@ -45,6 +67,7 @@ async function loadGroup() {
   if (isAdmin) {
     nameInput.value = group.name;
     descriptionInput.value = group.description || '';
+    renderIconPicker(group.icon_name);
     adminSection.hidden = false;
     loadActiveInvite();
   }
@@ -61,7 +84,8 @@ formEl.addEventListener('submit', async (event) => {
   const { updated, error } = await GroupsService.update(
     groupId,
     nameInput.value.trim(),
-    descriptionInput.value.trim() || null
+    descriptionInput.value.trim() || null,
+    selectedIcon
   );
 
   submitButton.disabled = false;

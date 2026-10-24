@@ -16,8 +16,21 @@ function todayManilaKey() {
   return new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Manila' });
 }
 
+function calendarBucket(activity, statusMap) {
+  const status = statusMap[activity.id] || 'NOT_STARTED';
+  if (status === 'COMPLETED') return 'completed';
+
+  const urgency = getUrgencyStatus(activity.due_at, false);
+  if (urgency === 'OVERDUE') return 'overdue';
+  if (urgency === 'DUE_TODAY') return 'today';
+  return 'soon';
+}
+
 async function renderCalendar() {
   const { activities, error } = await ActivitiesService.listMine();
+
+  const activityIds = activities.filter((a) => a.due_at).map((a) => a.id);
+  const { statusMap } = await ProgressService.getManyMine(activityIds);
 
   allActivities = activities;
   loadingEl.hidden = true;
@@ -89,8 +102,7 @@ async function renderCalendar() {
 
       dayEvents.forEach((activity) => {
         const dot = document.createElement('span');
-        const status = getUrgencyStatus(activity.due_at, false).toLowerCase().replace('_', '-');
-        dot.className = `cal-dot ${status}`;
+        dot.className = `cal-dot ${calendarBucket(activity, statusMap)}`;
         dot.title = activity.title;
         dotsContainer.appendChild(dot);
       });

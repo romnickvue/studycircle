@@ -21,13 +21,16 @@ async function loadGroups() {
   }
 
   gridEl.hidden = false;
-
   emptyEl.hidden = true;
-  gridEl.innerHTML = '';
+  document.getElementById('groups-count').textContent = groups.length;
 
-  groups.forEach((group) => {
-    gridEl.appendChild(buildGroupCard(group));
-  });
+  const listEl = document.getElementById('groups-list');
+  listEl.innerHTML = '';
+
+  for (const group of groups) {
+    const { count: memberCount } = await GroupsService.getMemberCount(group.id);
+    listEl.appendChild(buildGroupCardDetailed(group, memberCount));
+  }
 }
 
 function openCreateGroupModal() {
@@ -36,6 +39,9 @@ function openCreateGroupModal() {
 
 document.getElementById('create-group-btn-main').addEventListener('click', openCreateGroupModal);
 document.getElementById('create-group-btn').addEventListener('click', openCreateGroupModal);
+document.getElementById('join-group-btn').addEventListener('click', () => {
+  showToast('Join a Group is coming soon!');
+});
 
 const createGroupForm = document.getElementById('create-group-form');
 const createGroupError = document.getElementById('create-group-error');

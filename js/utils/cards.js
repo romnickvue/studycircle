@@ -137,4 +137,54 @@ function buildUrgencyBadge(dueDateIso, isCompleted) {
   badge.textContent = label;
 
   return badge;
-}k
+}
+
+function pickGroupIcon(groupId) {
+  const icons = ['bi-book', 'bi-code-slash', 'bi-flask', 'bi-mortarboard', 'bi-calculator', 'bi-globe'];
+  let hash = 0;
+  for (let i = 0; i < groupId.length; i++) hash = (hash + groupId.charCodeAt(i)) % icons.length;
+  return icons[hash];
+}
+
+function buildGroupCardDetailed(group, memberCount) {
+  const card = document.createElement('div');
+  card.className = 'neo-card group-detail-card';
+
+  const iconBox = document.createElement('div');
+  iconBox.className = 'group-icon-box';
+  const icon = group.icon_name || 'bi-people-fill';
+  iconBox.innerHTML = `<i class="bi ${icon}"></i>`;
+
+  const textWrap = document.createElement('div');
+  textWrap.className = 'group-detail-text';
+
+  const title = document.createElement('h3');
+  title.textContent = group.name;
+
+  const desc = document.createElement('p');
+  desc.className = 'group-detail-desc';
+  desc.textContent = group.description || '';
+
+  textWrap.appendChild(title);
+  if (group.description) textWrap.appendChild(desc);
+
+  const arrowBtn = document.createElement('button');
+  arrowBtn.className = 'group-arrow-btn';
+  arrowBtn.innerHTML = '<i class="bi bi-arrow-right"></i>';
+  arrowBtn.setAttribute('aria-label', 'Open group');
+
+  const metaCol = document.createElement('div');
+  metaCol.className = 'group-meta-col';
+  metaCol.innerHTML = `<p><i class="bi bi-people"></i> ${memberCount} member${memberCount === 1 ? '' : 's'}</p>`;
+
+  card.appendChild(iconBox);
+  card.appendChild(textWrap);
+  card.appendChild(arrowBtn);
+  card.appendChild(metaCol);
+
+  card.addEventListener('click', () => {
+    window.location.href = `group-overview.html?id=${group.id}`;
+  });
+
+  return card;
+}

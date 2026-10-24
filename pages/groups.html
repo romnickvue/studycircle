@@ -16,6 +16,7 @@
   <script src="../js/config/supabase.js"></script>
   <script src="../js/services/auth.service.js"></script>
   <script src="../js/utils/route-guard.js"></script>
+  <script src="../js/utils/modal.js"></script>
   <script src="../js/utils/toast.js"></script>
 
   <div class="app-shell">
@@ -46,24 +47,38 @@
     </nav>
 
     <main class="content">
-      <h1>My Groups</h1>
-      <button id="create-group-btn-main">+ Create a Group</button>
+      <div class="groups-page-header">
+        <div>
+          <h1>My Groups</h1>
+          <p class="hero-sub">Your joined groups and study communities.</p>
+        </div>
+      </div>
 
-      <div id="loading-state" class="skeleton skeleton-card" style="max-width: 300px;"></div>
+      <div id="loading-state" class="skeleton skeleton-card" style="max-width: 400px;"></div>
 
-      <div id="groups-grid" hidden></div>
+      <div id="groups-grid" hidden>
+        <div class="section-header-row">
+          <h3><i class="bi bi-people-fill"></i> Joined Groups <span class="section-count" id="groups-count">0</span></h3>
+        </div>
+        <div id="groups-list"></div>
+      </div>
 
       <div id="empty-state" class="empty-state" hidden>
         <p>You haven't joined any groups yet.</p>
         <button id="create-group-btn">Create a Group</button>
       </div>
 
+      <div class="groups-bottom-actions">
+        <button id="create-group-btn-main">+ Create a Group</button>
+        <button id="join-group-btn" class="btn-secondary">Join a Group</button>
+      </div>
+
       <div id="create-group-modal" class="modal-overlay" hidden>
         <div class="modal">
-            <button class="modal-close" onclick="closeModal('create-group-modal')">&times;</button>
-            <h3>Create a Group</h3>
+          <button class="modal-close" onclick="closeModal('create-group-modal')">&times;</button>
+          <h3>Create a Group</h3>
 
-            <form id="create-group-form">
+          <form id="create-group-form">
             <label for="new-group-name">Group name</label>
             <input type="text" id="new-group-name" required />
 
@@ -73,9 +88,9 @@
             <p id="create-group-error" class="form-error" hidden></p>
 
             <button type="submit">Create</button>
-            </form>
+          </form>
         </div>
-    </div>
+      </div>
     </main>
   </div>
 
