@@ -481,7 +481,7 @@ form button[type="submit"] {
 .neo-card {
   background: var(--color-cream);
   border-radius: 20px;
-  box-shadow: 8px 8px 16px var(--neo-shadow-dark), -8px -8px 16px var(--neo-shadow-light);
+  box-shadow: 8px 8px 16px var(--neo-shadow-dark), -2px -2px 12px var(--neo-shadow-light);
   padding: var(--space-3);
   margin-bottom: var(--space-3);
 }
