@@ -58,59 +58,69 @@
 
       <div id="loading-state" class="skeleton skeleton-card" style="max-width: 400px;"></div>
 
-      <div id="tasks-content" hidden>
-        <div class="stats-row">
-          <div class="neo-card stat-card">
-            <p class="stat-label">Due today</p>
-            <p class="stat-sublabel">Focus on these first</p>
-            <p class="stat-number" id="stat-today">0</p>
+        <div id="tasks-content" hidden>
+          <div class="stats-row">
+            <div class="neo-card stat-card">
+              <p class="stat-label">Due today</p>
+              <p class="stat-sublabel">Focus on these first</p>
+              <p class="stat-number" id="stat-today">0</p>
+            </div>
+            <div class="neo-card stat-card">
+              <p class="stat-label">Due soon</p>
+              <p class="stat-sublabel">Coming up next</p>
+              <p class="stat-number" id="stat-soon">0</p>
+            </div>
+            <div class="neo-card stat-card">
+              <p class="stat-label">Completed</p>
+              <p class="stat-sublabel">Look how far you've come</p>
+              <p class="stat-number" id="stat-completed">0</p>
+            </div>
           </div>
-          <div class="neo-card stat-card">
-            <p class="stat-label">Due soon</p>
-            <p class="stat-sublabel">Coming up next</p>
-            <p class="stat-number" id="stat-soon">0</p>
+        <div class="tasks-sections-grid">
+          <div class="neo-card tasks-list-card">
+            <div id="today-section">
+              <div class="section-header-row">
+                <h3>Today <span class="section-count" id="today-count">0</span></h3>
+                <span class="section-hint">Needs your attention</span>
+              </div>
+              <div id="today-list"></div>
+            </div>
           </div>
-          <div class="neo-card stat-card">
-            <p class="stat-label">Completed</p>
-            <p class="stat-sublabel">Look how far you've come</p>
-            <p class="stat-number" id="stat-completed">0</p>
-          </div>
-        </div>
 
-        <div id="today-section">
-          <div class="section-header-row">
-            <h3>Today <span class="section-count" id="today-count">0</span></h3>
-            <span class="section-hint">Needs your attention</span>
+          <div class="neo-card tasks-list-card">
+            <div id="soon-section">
+              <div class="section-header-row">
+                <h3>Due Soon <span class="section-count" id="soon-count">0</span></h3>
+                <span class="section-hint">Plan ahead</span>
+              </div>
+              <div id="soon-list"></div>
+            </div>
           </div>
-          <div id="today-list"></div>
-        </div>
 
-        <div id="soon-section">
-          <div class="section-header-row">
-            <h3>Due Soon <span class="section-count" id="soon-count">0</span></h3>
-            <span class="section-hint">Plan ahead</span>
+          <div class="neo-card tasks-list-card">
+            <div id="completed-section">
+              <div class="section-header-row">
+                <h3>Completed <span class="section-count" id="completed-count">0</span></h3>
+                <span class="section-hint">Nice work!</span>
+              </div>
+              <div id="completed-list"></div>
+            </div>
           </div>
-          <div id="soon-list"></div>
-        </div>
 
-        <div id="completed-section">
-          <div class="section-header-row">
-            <h3>Completed <span class="section-count" id="completed-count">0</span></h3>
-            <span class="section-hint">Nice work!</span>
+          <div class="neo-card tasks-list-card">
+            <div id="overdue-section">
+              <div class="section-header-row">
+                <h3>Overdue <span class="section-count" id="overdue-count">0</span></h3>
+                <span class="section-hint">Catch up when you can</span>
+              </div>
+              <div id="overdue-list"></div>
+            </div>
           </div>
-          <div id="completed-list"></div>
-        </div>
 
-        <div id="overdue-section">
-          <div class="section-header-row">
-            <h3>Overdue <span class="section-count" id="overdue-count">0</span></h3>
-            <span class="section-hint">Catch up when you can</span>
+            <div id="all-caught-up" class="empty-state" hidden>
+              <p>You're all caught up!</p>
+            </div>
           </div>
-          <div id="overdue-list"></div>
-        </div>
-
-        <div id="all-caught-up" class="empty-state" hidden>
-          <p>You're all caught up!</p>
         </div>
       </div>
     </main>

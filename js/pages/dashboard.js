@@ -65,6 +65,11 @@ async function loadDashboard() {
   completed.forEach((a) => document.getElementById('completed-list').appendChild(buildActivityCard(a, { showGroup: true, isCompleted: true, neo: true, sectionBorder: 'completed' })));
   overdue.forEach((a) => overdueList.appendChild(buildActivityCard(a, { showGroup: true, neo: true, sectionBorder: 'overdue' })));
 
+  document.getElementById('today-section').hidden = todayList2.length === 0;
+  document.getElementById('soon-section').hidden = soon.length === 0;
+  document.getElementById('completed-section').hidden = completed.length === 0;
+  document.getElementById('overdue-section').hidden = overdue.length === 0;
+  
   if (todayList2.length === 0 && soon.length === 0 && completed.length === 0 && overdue.length === 0) {
     allCaughtUpEl.hidden = false;
   } else {

@@ -1126,3 +1126,99 @@ form button[type="submit"] {
   font-size: 0.85rem;
   margin: var(--space-1) 0 0;
 }
+
+.tasks-sections-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+  align-items: stretch;
+}
+
+.tasks-sections-grid > .neo-card {
+  margin-bottom: 0;
+}
+
+@media (min-width: 769px) {
+  .tasks-sections-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+#today-list:empty::before,
+#soon-list:empty::before,
+#completed-list:empty::before,
+#overdue-list:empty::before {
+  display: block;
+  padding: var(--space-3) var(--space-2);
+  border-radius: 14px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--color-text-green);
+  opacity: 0.6;
+}
+
+#today-list:empty::before { content: "Nothing due today"; }
+#soon-list:empty::before { content: "Nothing coming up"; }
+#completed-list:empty::before { content: "No completed tasks yet"; }
+#overdue-list:empty::before { content: "No overdue tasks. Great job!"; }
+
+/* Calendar day tiles: card look on all screens */
+.content .cal-day {
+  border: none;
+  background: var(--color-cream);
+  color: var(--color-text-green);
+  font-weight: bold;
+  border-radius: 14px;
+  box-shadow: 2px 2px 4px var(--neo-shadow-dark), -2px -2px 4px var(--neo-shadow-light);
+}
+
+.content .cal-day.other-month {
+  box-shadow: none;
+  opacity: 0.35;
+}
+
+.content .cal-day.today {
+  background: #FBF7EF;
+  box-shadow: inset 2px 2px 4px var(--neo-shadow-dark), inset -2px -2px 4px var(--neo-shadow-light);
+  outline: 2px solid var(--color-text-green);
+  outline-offset: -2px;
+}
+
+/* Desktop only: full width, slightly roomier tiles */
+@media (min-width: 769px) {
+  .content .cal-weekdays,
+  .content .cal-grid {
+    max-width: none;
+    gap: 10px;
+  }
+
+  .content .cal-grid {
+    grid-auto-rows: minmax(80px, auto);
+  }
+
+  .content .cal-day {
+    min-height: 80px;
+    padding: var(--space-1) 12px;
+    font-size: 1rem;
+    border-radius: 16px;
+    box-shadow: 4px 4px 8px var(--neo-shadow-dark), -4px -4px 8px var(--neo-shadow-light);
+    transition: transform 0.15s ease;
+  }
+
+  .content .cal-day:hover {
+    transform: translateY(-2px);
+  }
+
+  .content .cal-day.other-month {
+    box-shadow: none;
+  }
+
+  .content .cal-day.today {
+    box-shadow: inset 3px 3px 6px var(--neo-shadow-dark), inset -3px -3px 6px var(--neo-shadow-light);
+  }
+
+  .content .cal-dot {
+    width: 14px;
+    height: 14px;
+  }
+}
