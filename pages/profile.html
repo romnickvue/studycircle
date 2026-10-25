@@ -116,6 +116,26 @@
         </form>
       </div>
     </div>
+
+    <div id="password-modal" class="modal-overlay" hidden>
+      <div class="modal">
+        <button type="button" class="modal-close" id="password-close-btn" aria-label="Close">&times;</button>
+        <h2>Change Password</h2>
+        <form id="password-form">
+          <label for="current-password">Current password</label>
+          <input type="password" id="current-password" autocomplete="current-password" required />
+
+          <label for="new-password">New password</label>
+          <input type="password" id="new-password" minlength="8" autocomplete="new-password" required />
+
+          <label for="confirm-password">Confirm new password</label>
+          <input type="password" id="confirm-password" minlength="8" autocomplete="new-password" required />
+
+          <p id="password-error" class="form-error" hidden></p>
+          <button type="submit" id="password-save-btn">Update Password</button>
+        </form>
+      </div>
+    </div>
   </div>
 
   <script src="../js/pages/profile.js"></script>
