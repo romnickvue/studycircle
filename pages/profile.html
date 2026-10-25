@@ -47,14 +47,60 @@
 
     <main class="content">
       <h1>Profile</h1>
+      <p class="page-subtitle">Manage your account information and settings.</p>
 
       <div id="loading-state" class="skeleton skeleton-card" style="max-width: 400px;"></div>
 
       <div id="profile-content" hidden>
-        <p><strong>Name:</strong> <span id="profile-name"></span></p>
-        <p><strong>Email:</strong> <span id="profile-email"></span></p>
+        <div class="neo-card profile-card">
+          <div class="profile-avatar">
+            <div class="profile-avatar-inner"><i class="bi bi-person-fill"></i></div>
+          </div>
 
-        <button id="sign-out-btn" class="btn-destructive">Sign Out</button>
+          <div class="profile-info">
+            <h2 id="profile-name" class="profile-name"></h2>
+
+            <p class="profile-line">
+              <i class="bi bi-envelope"></i>
+              <span id="profile-email"></span>
+            </p>
+
+            <p class="profile-line">
+              <i class="bi bi-calendar3"></i>
+              <span>Member since <span id="profile-member-since">—</span></span>
+            </p>
+          </div>
+        </div>
+
+        <div class="profile-actions">
+          <button type="button" id="edit-info-btn" class="neo-card action-row">
+            <span class="neo-icon-circle"><i class="bi bi-pencil-square"></i></span>
+            <span class="action-text">
+              <span class="action-title">Edit Information</span>
+              <span class="action-desc">Update your display name.</span>
+            </span>
+            <span class="group-arrow-btn"><i class="bi bi-arrow-right"></i></span>
+          </button>
+
+          <button type="button" id="change-password-btn" class="neo-card action-row">
+            <span class="neo-icon-circle"><i class="bi bi-lock"></i></span>
+            <span class="action-text">
+              <span class="action-title">Change Password</span>
+              <span class="action-desc">Update your password to keep your account secure.</span>
+            </span>
+            <span class="group-arrow-btn"><i class="bi bi-arrow-right"></i></span>
+          </button>
+
+          <button type="button" id="sign-out-btn" class="neo-card action-row">
+            <span class="neo-icon-circle"><i class="bi bi-box-arrow-right"></i></span>
+            <span class="action-text">
+              <span class="action-title">Sign Out</span>
+              <span class="action-desc">Sign out from your StudyCircle account.</span>
+            </span>
+            <span class="group-arrow-btn"><i class="bi bi-arrow-right"></i></span>
+          </button>
+        </div>
+        
       </div>
     </main>
   </div>
