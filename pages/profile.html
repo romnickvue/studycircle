@@ -103,6 +103,19 @@
         
       </div>
     </main>
+
+    <div id="edit-modal" class="modal-overlay" hidden>
+      <div class="modal">
+        <button type="button" class="modal-close" id="edit-close-btn" aria-label="Close">&times;</button>
+        <h2>Edit Information</h2>
+        <form id="edit-form">
+          <label for="edit-display-name">Display name</label>
+          <input type="text" id="edit-display-name" maxlength="50" required />
+          <p id="edit-error" class="form-error" hidden></p>
+          <button type="submit" id="edit-save-btn">Save</button>
+        </form>
+      </div>
+    </div>
   </div>
 
   <script src="../js/pages/profile.js"></script>

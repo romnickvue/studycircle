@@ -13,7 +13,16 @@ const noGroupsEl = document.getElementById('no-groups-state');
 
 async function loadDashboard() {
   const { session } = await AuthService.getSession();
-  const name = session.user.user_metadata?.display_name || 'there';
+
+  const { data: profile } = await supabaseClient
+    .from('profiles')
+    .select('display_name')
+    .eq('id', session.user.id)
+    .single();
+
+  const name = profile?.display_name
+    || session.user.user_metadata?.display_name
+    || 'there';
   greetingEl.textContent = `${name}!`;
 
   const { activities } = await ActivitiesService.listMine();

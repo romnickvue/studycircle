@@ -1120,3 +1120,9 @@ form button[type="submit"] {
   color: var(--color-text-green);
   opacity: 0.7;
 }
+
+.form-error {
+  color: #8B3A3A;
+  font-size: 0.85rem;
+  margin: var(--space-1) 0 0;
+}
