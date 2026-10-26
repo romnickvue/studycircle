@@ -54,7 +54,7 @@
 
 .btn-destructive {
   background: #8B3A3A;
-  color: var(--color-cream);
+  color: #8B3A3A;
   border: none;
   padding: var(--space-1) var(--space-2);
   border-radius: var(--radius-sm);
@@ -113,28 +113,38 @@
 }
 
 button {
-  background: var(--color-button-bg);
-  color: var(--color-button-text);
+  background: linear-gradient(145deg, #FCF8F0, #EDE4D3);
+  color: var(--color-text-green);
   border: none;
-  padding: var(--space-1) var(--space-2);
+  padding: 10px 20px;
   border-radius: var(--radius-sm);
   font-size: 1rem;
+  font-weight: bold;
   cursor: pointer;
+  box-shadow: 6px 6px 12px rgba(168, 148, 118, 0.55), -6px -6px 12px rgba(255, 255, 255, 0.95);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-button:hover {
-  opacity: 0.9;
+button:active {
+  transform: translateY(0);
+  box-shadow: inset 4px 4px 8px rgba(168, 148, 118, 0.5), inset -4px -4px 8px rgba(255, 255, 255, 0.9);
+}
+
+button:active {
+  transform: translateY(0);
+  box-shadow: inset 3px 3px 6px var(--neo-shadow-dark), inset -3px -3px 6px var(--neo-shadow-light);
 }
 
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 .btn-secondary {
-  background: var(--color-cream);
-  color: var(--color-text-green);
-  border: 1px solid var(--color-text-green);
+  box-shadow: inset 2px 2px 4px var(--neo-shadow-dark), inset -2px -2px 4px var(--neo-shadow-light);
+  border: none;
 }
 
 .modal-close {
