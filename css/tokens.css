@@ -21,7 +21,7 @@
     --radius-lg: 16px;
 
     /* Neomorphism shadows (soft UI, same-color surfaces) */
-    --neo-shadow-light: rgba(255, 255, 255, 0.8);
+    --neo-shadow-light: rgba(255, 255, 255, 0.75);
     --neo-shadow-dark: rgba(168, 148, 118, 0.35);
 }
 

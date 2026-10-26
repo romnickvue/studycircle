@@ -113,7 +113,7 @@
 }
 
 button {
-  background: linear-gradient(145deg, #FCF8F0, #EDE4D3);
+  background: var(--color-cream);
   color: var(--color-text-green);
   border: none;
   padding: 10px 20px;
@@ -121,13 +121,14 @@ button {
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 6px 6px 12px rgba(168, 148, 118, 0.55), -6px -6px 12px rgba(255, 255, 255, 0.95);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow:
+    8px 8px 18px var(--neo-shadow-dark),
+    -6px -6px 14px var(--neo-shadow-light),
+    inset 1px 1px 0 rgba(255, 255, 255, 0.7);
 }
 
-button:active {
-  transform: translateY(0);
-  box-shadow: inset 4px 4px 8px rgba(168, 148, 118, 0.5), inset -4px -4px 8px rgba(255, 255, 255, 0.9);
+button:hover {
+  transform: translateY(-1px);
 }
 
 button:active {
