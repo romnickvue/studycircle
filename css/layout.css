@@ -184,3 +184,136 @@ a {
     padding-top: 56px;
   }
 }
+
+/* ===== Neomorphic navigation ===== */
+
+/* Sidebar card (desktop + the mobile group drawer) */
+.sidebar {
+  background: var(--color-cream);
+  border-right: none;
+  border-radius: 28px;
+  padding: 20px 14px;
+  box-shadow: 8px 8px 18px var(--neo-shadow-dark), -8px -8px 18px var(--neo-shadow-light);
+}
+
+@media (min-width: 769px) {
+  .sidebar {
+    width: 220px;
+    margin: var(--space-2);
+    position: sticky;
+    top: var(--space-2);
+    align-self: flex-start;
+    height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+}
+
+.sidebar nav ul {
+  margin: 0;
+  gap: 10px;
+}
+
+.sidebar nav a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px 8px 8px;
+  border-radius: 999px;
+  font-weight: 500;
+  transition: transform 0.15s ease;
+}
+
+.sidebar nav a:hover {
+  transform: translateX(2px);
+}
+
+.sidebar nav a i {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  background: var(--color-cream);
+  box-shadow: 3px 3px 6px var(--neo-shadow-dark), -3px -3px 6px var(--neo-shadow-light);
+}
+
+/* Active page: pressed-in sage pill */
+.sidebar nav a.active {
+  background: linear-gradient(135deg, #DDE8D8, #C9D9C5);
+  color: var(--color-text-green);
+  font-weight: bold;
+  box-shadow: inset 3px 3px 6px var(--neo-shadow-dark), inset -3px -3px 6px var(--neo-shadow-light);
+}
+
+.sidebar nav a.active i {
+  background: transparent;
+  box-shadow: none;
+}
+
+/* Sidebar footer */
+.sidebar-footer {
+  text-align: center;
+  padding: var(--space-3) 0 0;
+}
+
+.sidebar-footer img {
+  margin: 0 auto var(--space-1);
+}
+
+.sidebar-footer .tagline {
+  font-style: normal;
+  line-height: 1.4;
+}
+
+/* Mobile: floating bottom bar + drawer + hamburger */
+@media (max-width: 768px) {
+  .bottom-tab-bar {
+    left: var(--space-2);
+    right: var(--space-2);
+    bottom: var(--space-2);
+    border-top: none;
+    border-radius: 24px;
+    padding: 6px;
+    box-shadow: 6px 6px 14px var(--neo-shadow-dark), -6px -6px 14px var(--neo-shadow-light);
+  }
+
+  .bottom-tab-bar a {
+    flex: 1;
+    padding: 6px 4px;
+    border-radius: 18px;
+    gap: 2px;
+  }
+
+  .bottom-tab-bar a i {
+    font-size: 1.25rem;
+  }
+
+  .bottom-tab-bar a.active {
+    background: linear-gradient(135deg, #DDE8D8, #C9D9C5);
+    box-shadow: inset 2px 2px 4px var(--neo-shadow-dark), inset -2px -2px 4px var(--neo-shadow-light);
+  }
+
+  .content {
+    padding-bottom: 100px;
+  }
+
+  /* Group drawer floats as a card too */
+  .sidebar.group-mode {
+    top: var(--space-2);
+    left: var(--space-2);
+    height: calc(100vh - 32px);
+    overflow-y: auto;
+    transform: translateX(calc(-100% - 32px));
+  }
+
+  .hamburger-btn {
+    background: linear-gradient(145deg, #FCF8F0, #EDE4D3);
+    color: var(--color-text-green);
+    border-radius: 14px;
+    padding: 6px 12px;
+    box-shadow: 4px 4px 8px var(--neo-shadow-dark), -4px -4px 8px var(--neo-shadow-light);
+  }
+}
