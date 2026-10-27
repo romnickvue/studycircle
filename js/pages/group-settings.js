@@ -8,10 +8,24 @@ const formEl = document.getElementById('settings-form');
 const nameInput = document.getElementById('group-name');
 const descriptionInput = document.getElementById('group-description');
 const errorEl = document.getElementById('form-error');
+const saveBar = document.getElementById('save-bar');
 
 const GROUP_ICONS = ['bi-journal-bookmark', 'bi-calculator', 'bi-flask', 'bi-palette', 'bi-music-note-beamed', 'bi-globe', 'bi-translate', 'bi-bank', 'bi-heart-pulse', 'bi-tree', 'bi-stars', 'bi-trophy', 'bi-briefcase', 'bi-lightbulb', 'bi-camera', 'bi-film', 'bi-pencil', 'bi-mortarboard', 'bi-chat-dots', 'bi-code-slash', 'bi-terminal', 'bi-cpu'];
 
 let selectedIcon = null;
+let initial = null;
+
+function checkDirty() {
+  if (!initial) return;
+  const changed =
+    nameInput.value.trim() !== initial.name ||
+    descriptionInput.value.trim() !== initial.description ||
+    selectedIcon !== initial.icon;
+  saveBar.hidden = !changed;
+}
+
+nameInput.addEventListener('input', checkDirty);
+descriptionInput.addEventListener('input', checkDirty);
 
 function renderIconPicker(currentIcon) {
   selectedIcon = currentIcon;
@@ -26,6 +40,7 @@ function renderIconPicker(currentIcon) {
       selectedIcon = icon;
       picker.querySelectorAll('.icon-option').forEach((el) => el.classList.remove('selected'));
       btn.classList.add('selected');
+      checkDirty();
     });
     picker.appendChild(btn);
   });
@@ -66,6 +81,14 @@ async function loadGroup() {
     nameInput.value = group.name;
     descriptionInput.value = group.description || '';
     renderIconPicker(group.icon_name);
+
+    initial = {
+      name: group.name,
+      description: group.description || '',
+      icon: group.icon_name || null
+    };
+    checkDirty();
+
     adminSection.hidden = false;
     loadActiveInvite();
   }
@@ -76,7 +99,7 @@ formEl.addEventListener('submit', async (event) => {
 
   errorEl.hidden = true;
 
-  const submitButton = formEl.querySelector('button[type="submit"]');
+  const submitButton = document.getElementById('save-btn');
   submitButton.disabled = true;
 
   const { updated, error } = await GroupsService.update(
@@ -99,6 +122,13 @@ formEl.addEventListener('submit', async (event) => {
     return;
   }
 
+  initial = {
+    name: nameInput.value.trim(),
+    description: descriptionInput.value.trim(),
+    icon: selectedIcon
+  };
+  checkDirty();
+
   showToast('Group settings saved.');
 });
 
@@ -116,12 +146,14 @@ async function loadActiveInvite() {
 
   if (error || !invitation) {
     activeInviteEl.hidden = true;
+    generateBtn.hidden = false;
     return;
   }
 
   linkTextEl.textContent = buildInviteUrl(invitation.code);
   expiryTextEl.textContent = new Date(invitation.expires_at).toLocaleString();
   activeInviteEl.hidden = false;
+  generateBtn.hidden = true;
 }
 
 async function handleGenerateOrRegenerate() {

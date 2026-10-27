@@ -43,41 +43,78 @@
     </aside>
 
     <main class="content">
-      <p><a href="#" id="back-to-group-link" class="back-pill">&larr; Back to Group Overview</a></p>
-      <h1>Group Settings</h1>
+      <div class="settings-header">
+        <div class="neo-icon-circle small"><i class="bi bi-gear"></i></div>
+        <h1>Group Settings</h1>
+        <button type="button" id="leave-group-btn" class="pill-btn leave-pill"><i class="bi bi-box-arrow-right"></i> Leave Group</button>
+      </div>
 
       <div id="loading-state" class="skeleton skeleton-card" style="max-width: 400px;"></div>
 
-      <div id="admin-section" hidden>
-        <h2>Group Details</h2>
-        <form id="settings-form">
-          <label for="group-name">Group name</label>
-          <input type="text" id="group-name" required />
+      <div id="admin-section" class="settings-grid" hidden>
+        <form id="settings-form" class="settings-form">
+          <div class="neo-card settings-card">
+            <div class="settings-card-head">
+              <div class="neo-icon-circle small"><i class="bi bi-people"></i></div>
+              <div>
+                <h2>Group Details</h2>
+                <p class="field-help">The name and description your members see.</p>
+              </div>
+            </div>
 
-          <label for="group-description">Description</label>
-          <input type="text" id="group-description" />
+            <div class="form-field">
+              <label for="group-name">Group Name</label>
+              <input type="text" id="group-name" required />
+            </div>
+
+            <div class="form-field">
+              <label for="group-description">Description</label>
+              <textarea id="group-description" rows="3"></textarea>
+            </div>
+          </div>
+
+          <div class="neo-card settings-card">
+            <div class="settings-card-head">
+              <div class="neo-icon-circle small"><i class="bi bi-palette"></i></div>
+              <div>
+                <h2>Group Icon</h2>
+                <p class="field-help">Pick the icon that represents your group.</p>
+              </div>
+            </div>
+
+            <div id="icon-picker" class="icon-picker"></div>
+          </div>
 
           <p id="form-error" class="form-error" hidden></p>
-
-          <button type="submit">Save Changes</button>
         </form>
 
-        <h2>Group Icon</h2>
-        <div id="icon-picker" class="icon-picker"></div>
+        <div class="settings-side">
+          <div class="neo-card settings-card">
+            <div class="settings-card-head">
+              <div class="neo-icon-circle small"><i class="bi bi-link-45deg"></i></div>
+              <div>
+                <h2>Invitation</h2>
+                <p class="field-help">Share this link to invite others to join your group.</p>
+              </div>
+            </div>
 
-        <h2>Invitation</h2>
-        <button id="generate-invite-btn">Generate Invitation Link</button>
+            <div id="active-invite" hidden>
+              <div class="invite-field">
+                <span id="invite-link-text" class="invite-field-text"></span>
+                <button type="button" id="copy-invite-btn" class="icon-btn" aria-label="Copy link"><i class="bi bi-copy"></i></button>
+              </div>
+              <p class="field-help">Expires: <span id="invite-expiry-text"></span></p>
+              <button type="button" id="regenerate-invite-btn" class="pill-btn"><i class="bi bi-link-45deg"></i> Generate New Link</button>
+            </div>
 
-        <div id="active-invite" hidden>
-          <p>Invite link: <code id="invite-link-text"></code></p>
-          <p>Expires: <span id="invite-expiry-text"></span></p>
-          <button id="copy-invite-btn">Copy Link</button>
-          <button id="regenerate-invite-btn">Regenerate</button>
+            <button type="button" id="generate-invite-btn" class="pill-btn"><i class="bi bi-link-45deg"></i> Generate Invitation Link</button>
+          </div>
+
+          <div id="save-bar" hidden>
+            <button type="submit" form="settings-form" id="save-btn" class="save-btn"><i class="bi bi-check2-circle"></i> Save Changes</button>
+          </div>
         </div>
       </div>
-
-      <h2>Membership</h2>
-      <button id="leave-group-btn" class="btn-destructive">Leave Group</button>
     </main>
   </div>
 
