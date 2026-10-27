@@ -167,3 +167,8 @@ activityForm.addEventListener('submit', async (event) => {
 });
 
 loadActivities();
+
+if (params.get('add') === '1') {
+  openAddActivityModal();
+  history.replaceState(null, '', `${window.location.pathname}?id=${groupId}`);
+}
