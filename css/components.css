@@ -54,7 +54,7 @@
 
 .btn-destructive {
   background: #8B3A3A;
-  color: #8B3A3A;
+  color: var(--color-button-text);
   border: none;
   padding: var(--space-1) var(--space-2);
   border-radius: var(--radius-sm);
@@ -1616,4 +1616,96 @@ form button[type="submit"] {
 
 .subject-activity-section {
   margin-bottom: var(--space-3);
+}
+
+.task-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 14px var(--space-2);
+  margin-bottom: var(--space-2);
+  border-radius: 18px;
+  background: var(--color-cream);
+  box-shadow: 4px 4px 8px var(--neo-shadow-dark), -3px -3px 7px var(--neo-shadow-light);
+}
+
+.task-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #7FA588, #6A8F74);
+  color: var(--color-cream);
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.task-main {
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.task-title {
+  margin: 0;
+  font-weight: bold;
+}
+
+.task-subject {
+  margin: 2px 0 0;
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+.task-due {
+  padding: 4px 14px;
+  border-radius: 999px;
+  background: var(--color-sage-light);
+  font-size: 0.8rem;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.task-due-overdue {
+  background: #E8C9C4;
+  color: #8B3A3A;
+}
+
+.task-due-done {
+  background: #C9D9C5;
+}
+
+.task-row {
+  border-left: 4px solid transparent;
+}
+
+.task-row.border-today { border-left-color: #D4A843; }
+.task-row.border-soon { border-left-color: #6B8CAE; }
+.task-row.border-completed { border-left-color: var(--color-sage); }
+.task-row.border-overdue { border-left-color: #8B3A3A; }
+
+.subject-card-row {
+  transition: transform 0.15s ease;
+}
+
+.subject-card-row:hover {
+  transform: translateY(-2px);
+}
+
+.subject-card-row .subject-icon-tile {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  font-size: 1.2rem;
+}
+
+.subject-count-pill {
+  padding: 4px 14px;
+  border-radius: 999px;
+  background: var(--color-sage-light);
+  font-size: 0.8rem;
+  font-weight: bold;
+  white-space: nowrap;
 }

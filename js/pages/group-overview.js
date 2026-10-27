@@ -68,27 +68,39 @@ async function loadSubjects() {
     return;
   }
 
+  const { activities: allActs } = await ActivitiesService.listByGroup(groupId);
+  const countBySubject = {};
+  (allActs || []).forEach((a) => {
+    if (a.subject_id) countBySubject[a.subject_id] = (countBySubject[a.subject_id] || 0) + 1;
+  });
+
   subjectsListEl.innerHTML = '';
 
   if (subjects.length === 0) {
     subjectsEmptyEl.hidden = false;
   } else {
     subjectsEmptyEl.hidden = true;
-      subjects.forEach((subject, i) => {
-        const item = document.createElement('a');
-        item.className = 'subject-card-row';
-        item.href = `subjects.html?id=${groupId}`;
-        item.innerHTML = `
-          <span class="subject-swatch swatch-${i % 4}"></span>
-          <span class="subject-info">
-            <span class="subject-name"></span>
-            <span class="subject-code"></span>
-          </span>
-          <i class="bi bi-chevron-right"></i>`;
-        item.querySelector('.subject-name').textContent = subject.name;
-        item.querySelector('.subject-code').textContent = subject.code || '';
-        subjectsListEl.appendChild(item);
-      });
+      subjects.forEach((subject) => {
+      const count = countBySubject[subject.id] || 0;
+
+      const item = document.createElement('a');
+      item.className = 'subject-card-row';
+      item.href = `subjects.html?id=${groupId}`;
+      item.innerHTML = `
+        <span class="subject-icon-tile"><i class="bi bi-journal-bookmark"></i></span>
+        <span class="subject-info">
+          <span class="subject-name"></span>
+          <span class="subject-code"></span>
+        </span>
+        <span class="subject-count-pill"></span>
+        <i class="bi bi-chevron-right"></i>`;
+
+      item.querySelector('.subject-name').textContent = subject.name;
+      item.querySelector('.subject-code').textContent = subject.code || 'No code';
+      item.querySelector('.subject-count-pill').textContent =
+        `${count} ${count === 1 ? 'task' : 'tasks'}`;
+      subjectsListEl.appendChild(item);
+    });
   }
 
   subjectsSection.hidden = false;

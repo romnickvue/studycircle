@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Academic Activities — StudyCircle</title>
+  <title>Tasks — StudyCircle</title>
   <link rel="stylesheet" href="../css/reset.css" />
   <link rel="stylesheet" href="../css/tokens.css" />
   <link rel="stylesheet" href="../css/layout.css" />
@@ -26,7 +26,7 @@
         <ul>
           <li><a href="group-overview.html"><i class="bi bi-grid"></i> Overview</a></li>
           <li><a href="subjects.html"><i class="bi bi-journal-bookmark"></i> Subjects</a></li>
-          <li><a href="activities.html" class="active"><i class="bi bi-list-task"></i> Academic Activities</a></li>
+          <li><a href="activities.html" class="active"><i class="bi bi-list-task"></i> Tasks</a></li>
           <li><a href="group-calendar.html"><i class="bi bi-calendar3"></i> Group Calendar</a></li>
           <li><a href="members.html"><i class="bi bi-people"></i> Members</a></li>
           <li><a href="group-settings.html"><i class="bi bi-gear"></i> Group Settings</a></li>
@@ -42,17 +42,37 @@
     </aside>
 
     <main class="content">
-      <h1>Academic Activities</h1>
-
       <div id="loading-state" class="skeleton skeleton-card" style="max-width: 400px;"></div>
 
-      <div id="activities-list" hidden></div>
+      <div id="tasks-panel" class="neo-card group-panel" hidden>
+        <div class="panel-header">
+          <div class="neo-icon-circle"><i class="bi bi-calendar-check"></i></div>
+          <div class="panel-heading">
+            <h2>Tasks</h2>
+            <p class="panel-sub"><span id="month-label"></span> · group tasks and important dates</p>
+          </div>
+          <button type="button" id="add-activity-btn" class="pill-btn"><i class="bi bi-plus-lg"></i> New Task</button>
+        </div>
 
-      <div id="activities-empty" class="empty-state" hidden>
-        <p>No academic activities yet.</p>
+        <div id="overdue-section">
+          <h3>Overdue <span class="section-count" id="overdue-count">0</span></h3>
+          <div id="overdue-list"></div>
+        </div>
+
+        <div id="pending-section">
+          <h3>Pending <span class="section-count" id="pending-count">0</span></h3>
+          <div id="pending-list"></div>
+        </div>
+
+        <div id="completed-section">
+          <h3>Completed <span class="section-count" id="completed-count">0</span></h3>
+          <div id="completed-list"></div>
+        </div>
+
+        <div id="activities-empty" class="empty-state" hidden>
+          <p>No tasks this month.</p>
+        </div>
       </div>
-
-      <button id="add-activity-btn">+ New Activity</button>
 
       <div id="activity-modal" class="modal-overlay" hidden>
         <div class="modal">
@@ -95,6 +115,7 @@
   <script src="../js/services/activities.service.js"></script>
   <script src="../js/utils/sidebar-links.js"></script>
   <script src="../js/utils/drawer.js"></script>
+    <script src="../js/services/progress.service.js"></script>
   <script src="../js/pages/activities.js"></script>
 </body>
 </html>

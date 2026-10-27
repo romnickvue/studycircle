@@ -3,13 +3,34 @@ const groupId = params.get('id');
 wireGroupSidebarLinks(groupId);
 
 const loadingEl = document.getElementById('loading-state');
-const listEl = document.getElementById('activities-list');
+const panelEl = document.getElementById('tasks-panel');
 const emptyEl = document.getElementById('activities-empty');
 const activityForm = document.getElementById('activity-form');
 const activityError = document.getElementById('activity-error');
 const activitySubjectSelect = document.getElementById('activity-subject');
 
 let editingActivityId = null;
+
+function manilaYearMonth(date) {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Manila',
+    year: 'numeric',
+    month: '2-digit'
+  }).formatToParts(new Date(date));
+  const year = parts.find((p) => p.type === 'year').value;
+  const month = parts.find((p) => p.type === 'month').value;
+  return `${year}-${month}`;
+}
+
+function isWithinCurrentMonth(dueAt) {
+  return manilaYearMonth(dueAt) === manilaYearMonth(new Date());
+}
+
+document.getElementById('month-label').textContent = new Date().toLocaleDateString('en-US', {
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'Asia/Manila'
+});
 
 async function openAddActivityModal(presetSubjectId) {
   editingActivityId = null;
@@ -56,6 +77,74 @@ async function populateSubjectDropdown() {
   });
 }
 
+function closeAllMenus() {
+  document.querySelectorAll('.menu-dropdown').forEach((m) => { m.hidden = true; });
+}
+
+document.addEventListener('click', closeAllMenus);
+
+function buildTaskRow(activity, isCompleted) {
+  const row = document.createElement('div');
+  row.className = 'task-row';
+
+  const urgency = isCompleted ? 'COMPLETED' : (activity.due_at ? getUrgencyStatus(activity.due_at, false) : '');
+  const dueLabel = activity.due_at ? formatUrgencyLabel(activity.due_at, isCompleted) : 'No due date';
+
+  let borderKey = 'soon';
+  if (isCompleted) borderKey = 'completed';
+  else if (urgency === 'OVERDUE') borderKey = 'overdue';
+  else if (urgency === 'DUE_TODAY') borderKey = 'today';
+  row.classList.add(`border-${borderKey}`);
+
+  row.innerHTML = `
+    <div class="task-icon"><i class="bi bi-check2-square"></i></div>
+    <div class="task-main">
+      <p class="task-title"></p>
+      <p class="task-subject"></p>
+    </div>
+    <span class="task-due"></span>
+    <div class="subject-menu">
+      <button type="button" class="menu-btn" aria-label="Task options"><i class="bi bi-three-dots"></i></button>
+      <div class="menu-dropdown" hidden>
+        <button type="button" class="menu-item" data-action="edit"><i class="bi bi-pencil"></i> Edit Task</button>
+        <button type="button" class="menu-item menu-item-danger" data-action="delete"><i class="bi bi-trash"></i> Remove Task</button>
+      </div>
+    </div>`;
+
+  row.querySelector('.task-title').textContent = activity.title;
+  row.querySelector('.task-subject').textContent = activity.subjects ? activity.subjects.name : 'No subject';
+
+  const dueEl = row.querySelector('.task-due');
+  dueEl.textContent = dueLabel;
+  if (urgency === 'OVERDUE') dueEl.classList.add('task-due-overdue');
+  if (urgency === 'COMPLETED') dueEl.classList.add('task-due-done');
+
+  row.querySelector('.task-main').addEventListener('click', () => {
+    window.location.href = `activity-detail.html?id=${activity.id}`;
+  });
+
+  const dropdown = row.querySelector('.menu-dropdown');
+
+  row.querySelector('.menu-btn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    const wasHidden = dropdown.hidden;
+    closeAllMenus();
+    dropdown.hidden = !wasHidden;
+  });
+
+  row.querySelector('[data-action="edit"]').addEventListener('click', () => {
+    closeAllMenus();
+    openEditActivityModal(activity);
+  });
+
+  row.querySelector('[data-action="delete"]').addEventListener('click', () => {
+    closeAllMenus();
+    handleDeleteActivity(activity.id);
+  });
+
+  return row;
+}
+
 async function loadActivities() {
   if (!groupId) {
     window.location.href = 'unauthorized.html';
@@ -71,59 +160,50 @@ async function loadActivities() {
     return;
   }
 
-  listEl.innerHTML = '';
+  const thisMonth = activities.filter((a) => a.due_at && isWithinCurrentMonth(a.due_at));
+  const { statusMap } = await ProgressService.getManyMine(thisMonth.map((a) => a.id));
 
-  if (activities.length === 0) {
-    emptyEl.hidden = false;
-    listEl.hidden = true;
-  } else {
-    emptyEl.hidden = true;
-    listEl.hidden = false;
+  const overdue = [];
+  const pending = [];
+  const completed = [];
 
-        activities.forEach((activity) => {
-      const card = document.createElement('div');
-      card.style.padding = 'var(--space-2)';
-      card.style.marginBottom = 'var(--space-1)';
-      card.style.background = 'var(--color-sage-light)';
-      card.style.borderRadius = 'var(--radius-sm)';
-      card.style.display = 'flex';
-      card.style.justifyContent = 'space-between';
-      card.style.alignItems = 'center';
+  thisMonth.forEach((activity) => {
+    const status = (statusMap || {})[activity.id] || 'NOT_STARTED';
 
-      const label = document.createElement('span');
-      label.style.cursor = 'pointer';
-      const subjectLabel = activity.subjects ? ` — ${activity.subjects.name}` : '';
-      const dueLabel = activity.due_at ? formatUrgencyLabel(activity.due_at, false) : 'No due date';
-      label.textContent = `${activity.title}${subjectLabel} (${dueLabel})`;
-      label.addEventListener('click', () => {
-        window.location.href = `activity-detail.html?id=${activity.id}`;
-      });
+    if (status === 'COMPLETED') {
+      completed.push(activity);
+      return;
+    }
 
-      const actions = document.createElement('span');
+    if (getUrgencyStatus(activity.due_at, false) === 'OVERDUE') overdue.push(activity);
+    else pending.push(activity);
+  });
 
-      const editBtn = document.createElement('button');
-      editBtn.textContent = 'Edit';
-      editBtn.className = 'btn-secondary';
-      editBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        openEditActivityModal(activity);
-      });
+  const byDueAsc = (a, b) => new Date(a.due_at) - new Date(b.due_at);
+  overdue.sort(byDueAsc);
+  pending.sort(byDueAsc);
+  completed.sort((a, b) => new Date(b.due_at) - new Date(a.due_at));
 
-      const deleteBtn = document.createElement('button');
-      deleteBtn.textContent = 'Delete';
-      deleteBtn.className = 'btn-destructive';
-      deleteBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        handleDeleteActivity(activity.id);
-      });
+  const fill = (listId, items, isCompleted) => {
+    const listEl = document.getElementById(listId);
+    listEl.innerHTML = '';
+    items.forEach((a) => listEl.appendChild(buildTaskRow(a, isCompleted)));
+  };
 
-      actions.appendChild(editBtn);
-      actions.appendChild(deleteBtn);
-      card.appendChild(label);
-      card.appendChild(actions);
-      listEl.appendChild(card);
-    });
-  }
+  fill('overdue-list', overdue, false);
+  fill('pending-list', pending, false);
+  fill('completed-list', completed, true);
+
+  document.getElementById('overdue-count').textContent = overdue.length;
+  document.getElementById('pending-count').textContent = pending.length;
+  document.getElementById('completed-count').textContent = completed.length;
+
+  document.getElementById('overdue-section').hidden = overdue.length === 0;
+  document.getElementById('pending-section').hidden = pending.length === 0;
+  document.getElementById('completed-section').hidden = completed.length === 0;
+
+  emptyEl.hidden = thisMonth.length > 0;
+  panelEl.hidden = false;
 }
 
 document.getElementById('add-activity-btn').addEventListener('click', openAddActivityModal);

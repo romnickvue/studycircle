@@ -15,6 +15,16 @@ let allSubjects = [];
 let allActivities = [];
 let activityStatus = {};
 
+function borderKeyFor(activity, isDone) {
+  if (isDone) return 'completed';
+  if (!activity.due_at) return 'soon';
+
+  const urgency = getUrgencyStatus(activity.due_at, false);
+  if (urgency === 'OVERDUE') return 'overdue';
+  if (urgency === 'DUE_TODAY') return 'today';
+  return 'soon';
+}
+
 function buildSubjectSection(title, subtitle, items, subjectId) {
   const section = document.createElement('div');
   section.className = 'neo-card group-panel subject-activity-section';
@@ -49,7 +59,12 @@ function buildSubjectSection(title, subtitle, items, subjectId) {
   } else {
     items.forEach((a) => {
       const done = activityStatus[a.id] === 'COMPLETED';
-      listEl.appendChild(buildActivityCard(a, { showSubject: false, isCompleted: done, neo: true }));
+      listEl.appendChild(buildActivityCard(a, {
+        showSubject: false,
+        isCompleted: done,
+        neo: true,
+        sectionBorder: borderKeyFor(a, done)
+      }));
     });
   }
 
