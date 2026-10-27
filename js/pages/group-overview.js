@@ -24,6 +24,30 @@ async function loadGroup() {
 
   nameEl.textContent = group.name;
   descriptionEl.textContent = group.description || '';
+  const icon = (group.icon_name || 'people').replace(/^bi-/, '');
+  document.getElementById('group-icon').className = `bi bi-${icon}`;
+
+  const { count } = await GroupsService.getMemberCount(groupId);
+  document.getElementById('group-member-count').textContent =
+    `${count} ${count === 1 ? 'member' : 'members'}`;
+
+  const { session } = await AuthService.getSession();
+
+  const { data: membership } = await supabaseClient
+    .from('group_memberships')
+    .select('joined_at')
+    .eq('group_id', groupId)
+    .eq('user_id', session.user.id)
+    .single();
+
+  if (membership?.joined_at) {
+    document.getElementById('group-joined').textContent =
+      new Date(membership.joined_at).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+      });
+  }
   headerEl.hidden = false;
 
   loadSubjects();
