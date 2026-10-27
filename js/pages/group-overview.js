@@ -2,6 +2,7 @@ const params = new URLSearchParams(window.location.search);
 const groupId = params.get('id');
 wireGroupSidebarLinks(groupId);
 document.getElementById('add-subject-link').href = `subjects.html?id=${groupId}&add=1`;
+document.getElementById('add-activity-link').href = `activities.html?id=${groupId}&add=1`;
 
 const loadingEl = document.getElementById('loading-state');
 const headerEl = document.getElementById('group-header');
@@ -94,20 +95,6 @@ async function loadSubjects() {
 }
 
 const activitiesEmptyEl = document.getElementById('activities-empty');
-const activityForm = document.getElementById('activity-form');
-const activityError = document.getElementById('activity-error');
-const activitySubjectSelect = document.getElementById('activity-subject');
-
-async function populateSubjectDropdown() {
-  const { subjects } = await SubjectsService.listByGroup(groupId);
-  activitySubjectSelect.innerHTML = '<option value="">— None —</option>';
-  subjects.forEach((subject) => {
-    const option = document.createElement('option');
-    option.value = subject.id;
-    option.textContent = subject.name;
-    activitySubjectSelect.appendChild(option);
-  });
-}
 
 async function loadActivities() {
   const { activities, error } = await ActivitiesService.listByGroup(groupId);
@@ -151,52 +138,22 @@ async function loadActivities() {
   completedListEl.innerHTML = '';
   overdueListEl.innerHTML = '';
 
-  todayArr.forEach((a) => todayListEl.appendChild(buildActivityCard(a, { showSubject: true })));
-  soonArr.forEach((a) => soonListEl.appendChild(buildActivityCard(a, { showSubject: true })));
-  completedArr.forEach((a) => document.getElementById('completed-list').appendChild(buildActivityCard(a, { showGroup: true, isCompleted: true })));
-  overdueArr.forEach((a) => overdueListEl.appendChild(buildActivityCard(a, { showSubject: true })));
+  todayArr.forEach((a) => todayListEl.appendChild(buildActivityCard(a, { showSubject: true, neo: true, sectionBorder: 'today' })));
+  soonArr.forEach((a) => soonListEl.appendChild(buildActivityCard(a, { showSubject: true, neo: true, sectionBorder: 'soon' })));
+  completedArr.forEach((a) => completedListEl.appendChild(buildActivityCard(a, { showSubject: true, isCompleted: true, neo: true, sectionBorder: 'completed' })));
+  overdueArr.forEach((a) => overdueListEl.appendChild(buildActivityCard(a, { showSubject: true, neo: true, sectionBorder: 'overdue' })));
+
+  document.getElementById('today-section').hidden = todayArr.length === 0;
+  document.getElementById('soon-section').hidden = soonArr.length === 0;
+  document.getElementById('completed-section').hidden = completedArr.length === 0;
+  document.getElementById('overdue-section').hidden = overdueArr.length === 0;
+
+  const totalShown = todayArr.length + soonArr.length + completedArr.length + overdueArr.length;
+  activitiesEmptyEl.hidden = totalShown > 0;
 
   activitiesEmptyEl.hidden = activities.length > 0;
 }
 
-document.getElementById('add-activity-btn').addEventListener('click', async () => {
-  await populateSubjectDropdown();
-  openModal('activity-modal');
-});
-
-activityForm.addEventListener('submit', async (event) => {
-  event.preventDefault();
-
-  activityError.hidden = true;
-
-  const title = document.getElementById('activity-title').value.trim();
-  const activityType = document.getElementById('activity-type').value;
-  const subjectId = activitySubjectSelect.value;
-  const dueDateOnly = document.getElementById('activity-due').value;
-
-  const submitButton = activityForm.querySelector('button[type="submit"]');
-  submitButton.disabled = true;
-
-  const { error } = await ActivitiesService.create(groupId, {
-    subjectId,
-    title,
-    activityType,
-    dueAt: dueDateOnly ? endOfDayManila(dueDateOnly) : null
-  });
-
-  submitButton.disabled = false;
-
-  if (error) {
-    activityError.textContent = error.message;
-    activityError.hidden = false;
-    return;
-  }
-
-  closeModal('activity-modal');
-  activityForm.reset();
-  showToast('Activity created.');
-  loadActivities();
-});
 
 // These run last, after everything above has been declared
 loadGroup();

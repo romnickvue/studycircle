@@ -58,7 +58,7 @@
         </div>
       </div>
 
-      <div class="group-columns">
+            <div class="group-columns">
         <div id="subjects-section" class="neo-card group-panel" hidden>
           <div class="panel-header">
             <div class="neo-icon-circle"><i class="bi bi-journal-bookmark"></i></div>
@@ -75,69 +75,39 @@
             <p>No subjects yet.</p>
           </div>
         </div>
-      </div>
-      
-      <div id="activities-section">
-        <h2>Academic Activities</h2>
 
-        <div id="today-section">
-          <h3>Today</h3>
-          <div id="today-list"></div>
-        </div>
+        <div id="activities-section" class="neo-card group-panel">
+          <div class="panel-header">
+            <div class="neo-icon-circle"><i class="bi bi-calendar-check"></i></div>
+            <div class="panel-heading">
+              <h2>Academic Activities</h2>
+              <p class="panel-sub">Group activities and important dates.</p>
+            </div>
+            <a id="add-activity-link" href="activities.html" class="pill-btn"><i class="bi bi-plus-lg"></i> Add Activity</a>
+          </div>
 
-        <div id="soon-section">
-          <h3>Due Soon</h3>
-          <div id="soon-list"></div>
-        </div>
+          <div id="today-section">
+            <h3>Today</h3>
+            <div id="today-list"></div>
+          </div>
 
-        <div id="completed-section">
-          <h3>Completed</h3>
-          <div id="completed-list"></div>
-        </div>
+          <div id="soon-section">
+            <h3>Due Soon</h3>
+            <div id="soon-list"></div>
+          </div>
 
-        <div id="overdue-section">
-          <h3>Overdue</h3>
-          <div id="overdue-list"></div>
-        </div>
+          <div id="completed-section">
+            <h3>Completed</h3>
+            <div id="completed-list"></div>
+          </div>
 
-        <div id="activities-empty" class="empty-state" hidden>
-          <p>No academic activities yet.</p>
-        </div>
+          <div id="overdue-section">
+            <h3>Overdue</h3>
+            <div id="overdue-list"></div>
+          </div>
 
-        <button id="add-activity-btn">+ New Activity</button>
-
-        <div id="activity-modal" class="modal-overlay" hidden>
-          <div class="modal">
-            <button class="modal-close" onclick="closeModal('activity-modal')">&times;</button>
-            <h3>New Activity</h3>
-
-            <form id="activity-form">
-              <label for="activity-title">Title</label>
-              <input type="text" id="activity-title" required />
-
-              <label for="activity-type">Type</label>
-              <select id="activity-type" required>
-                <option value="QUIZ">Quiz</option>
-                <option value="ASSIGNMENT">Assignment</option>
-                <option value="EXAM">Exam</option>
-                <option value="PROJECT">Project</option>
-                <option value="RECITATION">Recitation</option>
-                <option value="PRESENTATION">Presentation</option>
-                <option value="OTHER">Other</option>
-              </select>
-
-              <label for="activity-subject">Subject (optional)</label>
-              <select id="activity-subject">
-                <option value="">— None —</option>
-              </select>
-
-              <label for="activity-due">Due date</label>
-              <input type="date" id="activity-due" />
-
-              <p id="activity-error" class="form-error" hidden></p>
-
-              <button type="submit">Create</button>
-            </form>
+          <div id="activities-empty" class="empty-state" hidden>
+            <p>No activities this week.</p>
           </div>
         </div>
       </div>
