@@ -10,7 +10,7 @@ const descriptionInput = document.getElementById('group-description');
 const errorEl = document.getElementById('form-error');
 const saveBar = document.getElementById('save-bar');
 
-const GROUP_ICONS = ['bi-journal-bookmark', 'bi-calculator', 'bi-flask', 'bi-palette', 'bi-music-note-beamed', 'bi-globe', 'bi-translate', 'bi-bank', 'bi-heart-pulse', 'bi-tree', 'bi-stars', 'bi-trophy', 'bi-briefcase', 'bi-lightbulb', 'bi-camera', 'bi-film', 'bi-pencil', 'bi-mortarboard', 'bi-chat-dots', 'bi-code-slash', 'bi-terminal', 'bi-cpu'];
+const GROUP_ICONS = ['bi-journal-bookmark', 'bi-calculator', 'bi-lightning', 'bi-palette', 'bi-music-note-beamed', 'bi-globe', 'bi-translate', 'bi-bank', 'bi-heart-pulse', 'bi-tree', 'bi-stars', 'bi-trophy', 'bi-briefcase', 'bi-lightbulb', 'bi-camera', 'bi-film', 'bi-pencil', 'bi-mortarboard', 'bi-chat-dots', 'bi-code-slash', 'bi-terminal', 'bi-cpu'];
 
 let selectedIcon = null;
 let initial = null;
