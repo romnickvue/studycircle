@@ -1717,3 +1717,134 @@ form button[type="submit"] {
 .page-header h1 {
   margin: 4px 0;
 }
+
+.member-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: var(--color-cream);
+  box-shadow: inset 2px 2px 5px var(--neo-shadow-dark), inset -2px -2px 5px var(--neo-shadow-light);
+  min-width: 220px;
+}
+
+.member-search input {
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 100%;
+  font-size: 0.9rem;
+  color: var(--color-text-green);
+}
+
+.members-head,
+.member-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 12px var(--space-2);
+}
+
+.group-panel.is-admin .members-head,
+.group-panel.is-admin .member-row {
+  grid-template-columns: 2fr 1fr 1fr 48px;
+}
+
+.members-head {
+  border-radius: 14px;
+  background: rgba(169, 191, 168, 0.3);
+  font-size: 0.85rem;
+  font-weight: bold;
+  opacity: 0.85;
+  margin-bottom: var(--space-1);
+}
+
+.group-panel:not(.is-admin) .col-actions {
+  display: none;
+}
+
+.member-row {
+  border-bottom: 1px solid rgba(169, 191, 168, 0.35);
+}
+
+.member-row:last-child {
+  border-bottom: none;
+}
+
+.member-cell-name {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.member-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #7FA588, #6A8F74);
+  color: var(--color-cream);
+  font-size: 0.85rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.member-name {
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.member-role-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.is-admin-role {
+  background: #C9D9C5;
+}
+
+.is-member-role {
+  background: rgba(169, 191, 168, 0.4);
+}
+
+.member-joined {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+  .member-search {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .panel-header:has(.member-search) {
+    flex-wrap: wrap;
+  }
+
+  .members-head,
+  .member-row {
+    grid-template-columns: 2fr 1fr;
+  }
+
+  .group-panel.is-admin .members-head,
+  .group-panel.is-admin .member-row {
+    grid-template-columns: 2fr 1fr 48px;
+  }
+
+  .col-joined {
+    display: none;
+  }
+}

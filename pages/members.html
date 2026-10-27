@@ -41,21 +41,34 @@
     </aside>
 
     <main class="content">
-      <h1>Members</h1>
-
       <div id="loading-state" class="skeleton skeleton-card" style="max-width: 400px;"></div>
 
-      <table id="members-table" class="members-table" hidden>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Role</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="members-tbody"></tbody>
-      </table>
+      <div id="members-panel" class="neo-card group-panel" hidden>
+        <div class="panel-header">
+          <div class="neo-icon-circle"><i class="bi bi-people"></i></div>
+          <div class="panel-heading">
+            <h2>Group Members</h2>
+            <p class="panel-sub" id="members-count"></p>
+          </div>
+          <div class="member-search">
+            <i class="bi bi-search"></i>
+            <input type="search" id="member-search" placeholder="Search members..." />
+          </div>
+        </div>
 
+        <div class="members-head">
+          <span>Name</span>
+          <span>Role</span>
+          <span class="col-joined">Joined</span>
+          <span class="col-actions"></span>
+        </div>
+
+        <div id="members-list"></div>
+
+        <div id="members-empty" class="empty-state" hidden>
+          <p>No members match your search.</p>
+        </div>
+      </div>
     </main>
   </div>
 
