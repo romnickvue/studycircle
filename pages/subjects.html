@@ -41,8 +41,13 @@
         </div>
     </aside>
 
-        <main class="content">
+    <main class="content">
       <p><a href="#" id="back-to-group-link" class="back-pill">&larr; Back to Group Overview</a></p>
+
+      <div id="view-pills" class="view-pills" hidden>
+        <button type="button" class="view-pill active" data-view="subjects"><i class="bi bi-journal-bookmark"></i> Subjects</button>
+        <button type="button" class="view-pill" data-view="activities"><i class="bi bi-list-task"></i> Academic Activities</button>
+      </div>
 
       <div id="loading-state" class="skeleton skeleton-card" style="max-width: 400px;"></div>
 
@@ -60,6 +65,14 @@
 
         <div id="subjects-empty" class="empty-state" hidden>
           <p>Add your first subject.</p>
+        </div>
+      </div>
+
+      <div id="activities-section" hidden>
+        <div id="activities-by-subject"></div>
+
+        <div id="activities-empty" class="empty-state" hidden>
+          <p>Add a subject first to start adding activities.</p>
         </div>
       </div>
 
@@ -87,6 +100,9 @@
   <script src="../js/services/activities.service.js"></script>
   <script src="../js/services/subjects.service.js"></script>
   <script src="../js/utils/drawer.js"></script>
+  <script src="../js/utils/dates.js"></script>
+  <script src="../js/services/progress.service.js"></script>
+  <script src="../js/utils/cards.js"></script>
   <script src="../js/pages/subjects.js"></script>
 </body>
 </html>

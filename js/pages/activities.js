@@ -11,11 +11,14 @@ const activitySubjectSelect = document.getElementById('activity-subject');
 
 let editingActivityId = null;
 
-async function openAddActivityModal() {
+async function openAddActivityModal(presetSubjectId) {
   editingActivityId = null;
   activityForm.reset();
   document.querySelector('#activity-modal h3').textContent = 'New Activity';
   await populateSubjectDropdown();
+  if (typeof presetSubjectId === 'string' && presetSubjectId) {
+    activitySubjectSelect.value = presetSubjectId;
+  }
   openModal('activity-modal');
 }
 
@@ -169,6 +172,6 @@ activityForm.addEventListener('submit', async (event) => {
 loadActivities();
 
 if (params.get('add') === '1') {
-  openAddActivityModal();
+  openAddActivityModal(params.get('subject'));
   history.replaceState(null, '', `${window.location.pathname}?id=${groupId}`);
 }

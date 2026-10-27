@@ -11,6 +11,85 @@ const subjectsSectionEl = document.getElementById('subjects-section');
 
 let editingSubjectId = null;
 
+let allSubjects = [];
+let allActivities = [];
+let activityStatus = {};
+
+function buildSubjectSection(title, subtitle, items, subjectId) {
+  const section = document.createElement('div');
+  section.className = 'neo-card group-panel subject-activity-section';
+  section.innerHTML = `
+    <div class="panel-header">
+      <div class="neo-icon-circle"><i class="bi bi-journal-bookmark"></i></div>
+      <div class="panel-heading">
+        <h2></h2>
+        <p class="panel-sub"></p>
+      </div>
+    </div>
+    <div class="section-activities"></div>`;
+
+  section.querySelector('h2').textContent = title;
+  section.querySelector('.panel-sub').textContent = subtitle;
+
+  if (subjectId) {
+    const addLink = document.createElement('a');
+    addLink.className = 'pill-btn';
+    addLink.href = `activities.html?id=${groupId}&add=1&subject=${subjectId}`;
+    addLink.innerHTML = '<i class="bi bi-plus-lg"></i> Add Activity';
+    section.querySelector('.panel-header').appendChild(addLink);
+  }
+
+  const listEl = section.querySelector('.section-activities');
+
+  if (items.length === 0) {
+    const empty = document.createElement('p');
+    empty.className = 'section-empty';
+    empty.textContent = 'No activities yet.';
+    listEl.appendChild(empty);
+  } else {
+    items.forEach((a) => {
+      const done = activityStatus[a.id] === 'COMPLETED';
+      listEl.appendChild(buildActivityCard(a, { showSubject: false, isCompleted: done, neo: true }));
+    });
+  }
+
+  return section;
+}
+
+function renderActivities() {
+  const wrap = document.getElementById('activities-by-subject');
+  const emptyEl = document.getElementById('activities-empty');
+  wrap.innerHTML = '';
+
+  const byDue = (a, b) => {
+    if (!a.due_at) return 1;
+    if (!b.due_at) return -1;
+    return new Date(a.due_at) - new Date(b.due_at);
+  };
+
+  emptyEl.hidden = allSubjects.length > 0 || allActivities.length > 0;
+
+  allSubjects.forEach((subject) => {
+    const items = allActivities.filter((a) => a.subject_id === subject.id).sort(byDue);
+    const subtitle = `${subject.code || 'No code'} · ${items.length} ${items.length === 1 ? 'activity' : 'activities'}`;
+    wrap.appendChild(buildSubjectSection(subject.name, subtitle, items, subject.id));
+  });
+
+  const unassigned = allActivities.filter((a) => !a.subject_id).sort(byDue);
+  if (unassigned.length > 0) {
+    wrap.appendChild(buildSubjectSection('No subject', 'Activities not tied to a subject', unassigned, null));
+  }
+}
+
+document.querySelectorAll('.view-pill').forEach((pill) => {
+  pill.addEventListener('click', () => {
+    const view = pill.dataset.view;
+    document.querySelectorAll('.view-pill').forEach((p) => p.classList.toggle('active', p === pill));
+    subjectsSectionEl.hidden = view !== 'subjects';
+    document.getElementById('activities-section').hidden = view !== 'activities';
+  });
+});
+
 function openAddSubjectModal() {
   editingSubjectId = null;
   subjectForm.reset();
@@ -67,8 +146,15 @@ async function loadSubjects() {
     if (a.subject_id) countBySubject[a.subject_id] = (countBySubject[a.subject_id] || 0) + 1;
   });
 
+  allSubjects = subjects;
+  allActivities = activities || [];
+  const { statusMap } = await ProgressService.getManyMine(allActivities.map((a) => a.id));
+  activityStatus = statusMap || {};
+  renderActivities();
+  document.getElementById('view-pills').hidden = false;
+
   subjectsListEl.innerHTML = '';
-  subjectsSectionEl.hidden = false;
+  subjectsSectionEl.hidden = document.querySelector('.view-pill.active').dataset.view !== 'subjects';
   subjectsEmptyEl.hidden = subjects.length > 0;
 
   subjects.forEach((subject) => {
@@ -137,10 +223,10 @@ subjectForm.addEventListener('submit', async (event) => {
 
   submitButton.disabled = false;
 
-        if (error) {
-          showToast(error.message, 'error');
-          return;
-        }
+  if (error) {
+    showToast(error.message, 'error');
+    return;
+  }
 
   closeModal('subject-modal');
   subjectForm.reset();
