@@ -153,8 +153,6 @@ async function loadSubjects() {
     return;
   }
 
-  document.getElementById('back-to-group-link').href = `group-overview.html?id=${groupId}`;
-
   const { activities } = await ActivitiesService.listByGroup(groupId);
   const countBySubject = {};
   (activities || []).forEach((a) => {

@@ -1709,3 +1709,11 @@ form button[type="submit"] {
   font-weight: bold;
   white-space: nowrap;
 }
+
+.page-header {
+  margin-bottom: var(--space-3);
+}
+
+.page-header h1 {
+  margin: 4px 0;
+}

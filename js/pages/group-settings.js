@@ -62,8 +62,6 @@ async function loadGroup() {
     return;
   }
 
-  document.getElementById('back-to-group-link').href = `group-overview.html?id=${groupId}`;
-
   if (isAdmin) {
     nameInput.value = group.name;
     descriptionInput.value = group.description || '';
