@@ -41,19 +41,27 @@
         </div>
     </aside>
 
-    <main class="content">
+        <main class="content">
       <p><a href="#" id="back-to-group-link" class="back-pill">&larr; Back to Group Overview</a></p>
-      <h1>Subjects</h1>
 
       <div id="loading-state" class="skeleton skeleton-card" style="max-width: 400px;"></div>
 
-      <div id="subjects-list" hidden></div>
+      <div id="subjects-section" class="neo-card group-panel" hidden>
+        <div class="panel-header">
+          <div class="neo-icon-circle"><i class="bi bi-journal-bookmark"></i></div>
+          <div class="panel-heading">
+            <h2>Subjects</h2>
+            <p class="panel-sub">Your group subjects and course materials.</p>
+          </div>
+          <button type="button" id="add-subject-btn" class="pill-btn"><i class="bi bi-plus-lg"></i> Add Subject</button>
+        </div>
 
-      <div id="subjects-empty" class="empty-state" hidden>
-        <p>Add your first subject.</p>
+        <div id="subjects-list"></div>
+
+        <div id="subjects-empty" class="empty-state" hidden>
+          <p>Add your first subject.</p>
+        </div>
       </div>
-
-      <button id="add-subject-btn">+ Add Subject</button>
 
       <div id="subject-modal" class="modal-overlay" hidden>
         <div class="modal">
@@ -76,6 +84,7 @@
     </main>
   </div>
 
+  <script src="../js/services/activities.service.js"></script>
   <script src="../js/services/subjects.service.js"></script>
   <script src="../js/utils/drawer.js"></script>
   <script src="../js/pages/subjects.js"></script>

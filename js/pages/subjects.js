@@ -7,6 +7,7 @@ const subjectsListEl = document.getElementById('subjects-list');
 const subjectsEmptyEl = document.getElementById('subjects-empty');
 const subjectForm = document.getElementById('subject-form');
 const subjectError = document.getElementById('subject-error');
+const subjectsSectionEl = document.getElementById('subjects-section');
 
 let editingSubjectId = null;
 
@@ -37,6 +38,12 @@ async function handleDeleteSubject(subjectId) {
   });
 }
 
+function closeAllMenus() {
+  document.querySelectorAll('.menu-dropdown').forEach((m) => { m.hidden = true; });
+}
+
+document.addEventListener('click', closeAllMenus);
+
 async function loadSubjects() {
   if (!groupId) {
     window.location.href = 'unauthorized.html';
@@ -54,44 +61,61 @@ async function loadSubjects() {
 
   document.getElementById('back-to-group-link').href = `group-overview.html?id=${groupId}`;
 
+  const { activities } = await ActivitiesService.listByGroup(groupId);
+  const countBySubject = {};
+  (activities || []).forEach((a) => {
+    if (a.subject_id) countBySubject[a.subject_id] = (countBySubject[a.subject_id] || 0) + 1;
+  });
+
   subjectsListEl.innerHTML = '';
+  subjectsSectionEl.hidden = false;
+  subjectsEmptyEl.hidden = subjects.length > 0;
 
-  if (subjects.length === 0) {
-    subjectsEmptyEl.hidden = false;
-    subjectsListEl.hidden = true;
-  } else {
-    subjectsEmptyEl.hidden = true;
-    subjectsListEl.hidden = false;
+  subjects.forEach((subject) => {
+    const count = countBySubject[subject.id] || 0;
 
-    subjects.forEach((subject) => {
-      const item = document.createElement('div');
-      item.className = 'subject-row';
+    const card = document.createElement('div');
+    card.className = 'subject-card';
+    card.innerHTML = `
+      <div class="subject-icon-tile"><i class="bi bi-journal-bookmark"></i></div>
+      <div class="subject-main">
+        <p class="subject-title"></p>
+        <p class="subject-code-line"></p>
+      </div>
+      <div class="subject-stat"><i class="bi bi-list-task"></i> <span class="subject-count"></span></div>
+      <div class="subject-menu">
+        <button type="button" class="menu-btn" aria-label="Subject options"><i class="bi bi-three-dots"></i></button>
+        <div class="menu-dropdown" hidden>
+          <button type="button" class="menu-item" data-action="edit"><i class="bi bi-pencil"></i> Edit Subject</button>
+          <button type="button" class="menu-item menu-item-danger" data-action="delete"><i class="bi bi-trash"></i> Remove Subject</button>
+        </div>
+      </div>`;
 
-      const label = document.createElement('span');
-      label.className = 'subject-row-name';
-      label.textContent = subject.code ? `${subject.name} (${subject.code})` : subject.name;
+    card.querySelector('.subject-title').textContent = subject.name;
+    card.querySelector('.subject-code-line').textContent = subject.code || 'No code';
+    card.querySelector('.subject-count').textContent = `${count} ${count === 1 ? 'activity' : 'activities'}`;
 
-      const actions = document.createElement('span');
-      actions.className = 'subject-row-actions';
+    const dropdown = card.querySelector('.menu-dropdown');
 
-      const editBtn = document.createElement('button');
-      editBtn.textContent = 'Edit';
-      editBtn.className = 'btn-secondary';
-      editBtn.addEventListener('click', () => openEditSubjectModal(subject));
-
-      const deleteBtn = document.createElement('button');
-      deleteBtn.textContent = 'Delete';
-      deleteBtn.className = 'btn-destructive';
-      deleteBtn.addEventListener('click', () => handleDeleteSubject(subject.id));
-
-      actions.appendChild(editBtn);
-      actions.appendChild(deleteBtn);
-
-      item.appendChild(label);
-      item.appendChild(actions);
-      subjectsListEl.appendChild(item);
+    card.querySelector('.menu-btn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      const wasHidden = dropdown.hidden;
+      closeAllMenus();
+      dropdown.hidden = !wasHidden;
     });
-  }
+
+    card.querySelector('[data-action="edit"]').addEventListener('click', () => {
+      closeAllMenus();
+      openEditSubjectModal(subject);
+    });
+
+    card.querySelector('[data-action="delete"]').addEventListener('click', () => {
+      closeAllMenus();
+      handleDeleteSubject(subject.id);
+    });
+
+    subjectsListEl.appendChild(card);
+  });
 }
 
 document.getElementById('add-subject-btn').addEventListener('click', openAddSubjectModal);
