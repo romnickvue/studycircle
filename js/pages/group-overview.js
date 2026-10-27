@@ -1,6 +1,7 @@
 const params = new URLSearchParams(window.location.search);
 const groupId = params.get('id');
 wireGroupSidebarLinks(groupId);
+document.getElementById('add-subject-link').href = `subjects.html?id=${groupId}&add=1`;
 
 const loadingEl = document.getElementById('loading-state');
 const headerEl = document.getElementById('group-header');
@@ -72,12 +73,21 @@ async function loadSubjects() {
     subjectsEmptyEl.hidden = false;
   } else {
     subjectsEmptyEl.hidden = true;
-      subjects.forEach((subject) => {
-      const item = document.createElement('div');
-      item.className = 'subject-row';
-      item.textContent = subject.code ? `${subject.name} (${subject.code})` : subject.name;
-      subjectsListEl.appendChild(item);
-    });
+      subjects.forEach((subject, i) => {
+        const item = document.createElement('a');
+        item.className = 'subject-card-row';
+        item.href = `subjects.html?id=${groupId}`;
+        item.innerHTML = `
+          <span class="subject-swatch swatch-${i % 4}"></span>
+          <span class="subject-info">
+            <span class="subject-name"></span>
+            <span class="subject-code"></span>
+          </span>
+          <i class="bi bi-chevron-right"></i>`;
+        item.querySelector('.subject-name').textContent = subject.name;
+        item.querySelector('.subject-code').textContent = subject.code || '';
+        subjectsListEl.appendChild(item);
+      });
   }
 
   subjectsSection.hidden = false;

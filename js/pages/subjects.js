@@ -125,3 +125,8 @@ subjectForm.addEventListener('submit', async (event) => {
 });
 
 loadSubjects();
+
+if (params.get('add') === '1') {
+  openAddSubjectModal();
+  history.replaceState(null, '', `${window.location.pathname}?id=${groupId}`);
+}
