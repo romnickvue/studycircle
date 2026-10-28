@@ -2213,3 +2213,39 @@ form button[type="submit"] {
     display: block;
   }
 }
+
+@media (max-width: 768px) {
+  .group-panel {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 12px;
+    row-gap: 12px;
+    align-items: center;
+  }
+
+  .group-panel[hidden] {
+    display: none;
+  }
+
+  .group-panel .panel-header {
+    display: contents;
+  }
+
+  .group-panel > :not(.panel-header) {
+    grid-column: 1 / -1;
+  }
+
+  .group-panel .panel-heading h2 {
+    font-size: 1.15rem;
+  }
+
+  .group-panel .member-search {
+    grid-column: 1 / -1;
+  }
+
+  .group-panel .pill-btn {
+    grid-column: 1 / -1;
+    order: 99;
+    justify-content: center;
+  }
+}
