@@ -2069,3 +2069,83 @@ form button[type="submit"] {
   font-size: 0.9rem;
   opacity: 0.85;
 }
+
+.content {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.neo-card,
+.neo-row,
+.neo-row > div {
+  min-width: 0;
+}
+
+@media (max-width: 768px) {
+  .group-columns,
+  .tasks-sections-grid,
+  .settings-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .panel-header {
+    flex-wrap: wrap;
+  }
+
+  .panel-header .pill-btn {
+    margin-left: auto;
+  }
+
+  .view-pills {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+.tab-more-menu {
+  position: fixed;
+  right: var(--space-2);
+  bottom: 88px;
+  z-index: 60;
+  min-width: 210px;
+  padding: 8px;
+  border-radius: 16px;
+  background: var(--color-cream);
+  box-shadow: 6px 6px 14px var(--neo-shadow-dark), -4px -4px 10px var(--neo-shadow-light);
+}
+
+.tab-more-menu[hidden] {
+  display: none;
+}
+
+.tab-more-menu a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  color: var(--color-text-green);
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.tab-more-menu a:active {
+  background: rgba(169, 191, 168, 0.3);
+}
+
+@media (max-width: 768px) {
+  .hamburger-btn,
+  .sidebar.group-mode {
+    display: none;
+  }
+
+  .content {
+    padding-top: var(--space-3);
+  }
+}
+
+.group-tab-bar .tab-back {
+  border-right: 1px solid rgba(169, 191, 168, 0.5);
+  border-radius: 18px 6px 6px 18px;
+}
