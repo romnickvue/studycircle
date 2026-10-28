@@ -2477,3 +2477,55 @@ select {
   font-weight: bold;
   letter-spacing: 3px;
 }
+
+.join-help {
+  margin: 0 0 var(--space-2);
+  opacity: 0.75;
+}
+
+.join-input {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+  text-align: center;
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 1.4rem;
+  font-weight: bold;
+  letter-spacing: 4px;
+}
+
+.join-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.join-head h3 {
+  margin: 0;
+}
+
+.join-head .modal-close {
+  float: none;
+  flex-shrink: 0;
+}
+
+.join-form .join-input {
+  padding: 16px;
+  margin-top: 4px;
+}
+
+.join-form .join-error {
+  margin: var(--space-1) 0 0;
+  text-align: center;
+}
+
+.modal.join-modal form button[type="submit"] {
+  margin-top: var(--space-2);
+}
+
+.join-form input.join-input {
+  max-width: none;
+  width: 100%;
+}

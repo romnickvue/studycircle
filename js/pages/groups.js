@@ -39,9 +39,7 @@ function openCreateGroupModal() {
 
 document.getElementById('create-group-btn-main').addEventListener('click', openCreateGroupModal);
 document.getElementById('create-group-btn').addEventListener('click', openCreateGroupModal);
-document.getElementById('join-group-btn').addEventListener('click', () => {
-  showToast('Join a Group is coming soon!');
-});
+document.getElementById('join-group-btn').addEventListener('click', () => openJoinGroupModal());
 
 const createGroupForm = document.getElementById('create-group-form');
 const createGroupError = document.getElementById('create-group-error');
