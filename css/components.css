@@ -2249,3 +2249,122 @@ form button[type="submit"] {
     justify-content: center;
   }
 }
+
+@media (max-width: 768px) {
+
+  .task-row,
+  .subject-card,
+  .subject-card-row,
+  .neo-row:has(.neo-checkbox) {
+    display: grid;
+    align-items: center;
+    column-gap: 12px;
+    row-gap: 6px;
+  }
+
+  /* Group Tasks page rows */
+  .task-row {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas: "icon main menu" ". due .";
+  }
+  .task-row .task-icon { grid-area: icon; width: 36px; height: 36px; font-size: 1rem; }
+  .task-row .task-main { grid-area: main; }
+  .task-row .task-due { grid-area: due; justify-self: start; }
+  .task-row .subject-menu { grid-area: menu; }
+
+  /* Subjects page cards */
+  .subject-card {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas: "icon main menu" ". stat .";
+  }
+  .subject-card .subject-icon-tile { grid-area: icon; width: 40px; height: 40px; font-size: 1.1rem; }
+  .subject-card .subject-main { grid-area: main; }
+  .subject-card .subject-stat { grid-area: stat; width: auto; padding-left: 0; order: 0; }
+  .subject-card .subject-menu { grid-area: menu; }
+
+  /* Group Overview subject cards */
+  .subject-card-row {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas: "icon info chev" ". pill .";
+  }
+  .subject-card-row .subject-icon-tile { grid-area: icon; width: 40px; height: 40px; font-size: 1.1rem; }
+  .subject-card-row .subject-info { grid-area: info; }
+  .subject-card-row .subject-count-pill { grid-area: pill; justify-self: start; }
+  .subject-card-row > i { grid-area: chev; }
+
+/* Task cards with a checkbox (Dashboard, My Tasks, Overview, Subjects) */
+  .neo-row:has(.neo-checkbox) {
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas:
+      "check text"
+      "check badge";
+  }
+  .neo-row:has(.neo-checkbox) > :nth-child(1) { grid-area: check; align-self: center; }
+  .neo-row:has(.neo-checkbox) > :nth-child(2) { grid-area: text; min-width: 0; }
+  .neo-row:has(.neo-checkbox) > :nth-child(3) { grid-area: badge; justify-self: start; }
+}
+
+@media (max-width: 768px) {
+  .neo-row:has(.neo-checkbox) > .neo-row-badge {
+    margin-left: 0;
+    margin-top: 2px;
+  }
+}
+
+.member-search {
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .group-panel .member-search {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+textarea,
+select {
+  border: none;
+  border-radius: 14px;
+  padding: 12px 16px;
+  background: var(--color-cream);
+  color: var(--color-text-green);
+  box-shadow: inset 3px 3px 6px var(--neo-shadow-dark), inset -3px -3px 6px var(--neo-shadow-light);
+  transition: box-shadow 0.15s ease;
+}
+
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: 1rem;
+  resize: vertical;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-sage);
+  opacity: 0.8;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  box-shadow: inset 3px 3px 6px var(--neo-shadow-dark), inset -3px -3px 6px var(--neo-shadow-light), 0 0 0 2px var(--color-sage);
+}
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%233F5D4A'%3E%3Cpath d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 14px;
+}
