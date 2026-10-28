@@ -2470,3 +2470,10 @@ select {
   background: linear-gradient(145deg, #7FA588, #6A8F74);
   color: var(--color-cream);
 }
+
+.invite-code-text {
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 1.2rem;
+  font-weight: bold;
+  letter-spacing: 3px;
+}

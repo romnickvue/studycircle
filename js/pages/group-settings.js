@@ -137,8 +137,8 @@ const activeInviteEl = document.getElementById('active-invite');
 const linkTextEl = document.getElementById('invite-link-text');
 const expiryTextEl = document.getElementById('invite-expiry-text');
 
-function buildInviteUrl(code) {
-  return `${window.location.origin}/pages/accept-invitation.html?code=${code}`;
+function formatInviteCode(code) {
+  return code.length === 8 ? `${code.slice(0, 4)}-${code.slice(4)}` : code;
 }
 
 async function loadActiveInvite() {
@@ -150,7 +150,7 @@ async function loadActiveInvite() {
     return;
   }
 
-  linkTextEl.textContent = buildInviteUrl(invitation.code);
+  linkTextEl.textContent = formatInviteCode(invitation.code);
   expiryTextEl.textContent = new Date(invitation.expires_at).toLocaleString();
   activeInviteEl.hidden = false;
   generateBtn.hidden = true;
