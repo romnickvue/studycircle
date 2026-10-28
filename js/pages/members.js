@@ -39,7 +39,10 @@ function buildMemberRow(member, isAdmin) {
   row.innerHTML = `
     <div class="member-cell-name">
       <span class="member-avatar"></span>
-      <span class="member-name"></span>
+      <span class="member-text">
+        <span class="member-name"></span>
+        <span class="member-role-line"></span>
+      </span>
     </div>
     <div><span class="member-role-pill"></span></div>
     <div class="col-joined member-joined"></div>
@@ -47,6 +50,7 @@ function buildMemberRow(member, isAdmin) {
 
   row.querySelector('.member-avatar').textContent = initialsOf(name);
   row.querySelector('.member-name').textContent = isMe ? `${name} (You)` : name;
+  row.querySelector('.member-role-line').textContent = isMemberAdmin ? 'Admin' : 'Member';
 
   const pill = row.querySelector('.member-role-pill');
   pill.classList.add(isMemberAdmin ? 'is-admin-role' : 'is-member-role');

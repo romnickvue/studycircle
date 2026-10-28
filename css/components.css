@@ -2149,3 +2149,67 @@ form button[type="submit"] {
   border-right: 1px solid rgba(169, 191, 168, 0.5);
   border-radius: 18px 6px 6px 18px;
 }
+
+@media (max-width: 768px) {
+  .content {
+    padding-left: var(--space-2);
+    padding-right: var(--space-2);
+  }
+
+  .neo-card,
+  .group-panel {
+    padding: var(--space-2);
+    border-radius: 20px;
+  }
+
+  .group-hero,
+  .profile-card {
+    padding: var(--space-2);
+  }
+
+  .neo-row,
+  .subject-card,
+  .subject-card-row,
+  .task-row {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+
+  .panel-header {
+    gap: 12px;
+    margin-bottom: var(--space-2);
+  }
+}
+
+.member-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.member-role-line {
+  display: none;
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+  .members-head span:nth-child(2),
+  .member-row > div:nth-child(2) {
+    display: none;
+  }
+
+  .members-head,
+  .member-row {
+    grid-template-columns: 1fr;
+  }
+
+  .group-panel.is-admin .members-head,
+  .group-panel.is-admin .member-row {
+    grid-template-columns: 1fr 48px;
+  }
+
+  .member-role-line {
+    display: block;
+  }
+}
