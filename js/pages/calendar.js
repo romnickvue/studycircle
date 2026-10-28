@@ -135,9 +135,6 @@ function openDayModal(dateKey, dateObj) {
       item.style.cursor = 'pointer';
       const groupLabel = activity.groups ? ` — ${activity.groups.name}` : '';
       item.textContent = `${activity.title}${groupLabel} (${activity.activity_type})`;
-      item.addEventListener('click', () => {
-        window.location.href = `activity-detail.html?id=${activity.id}`;
-      });
       listEl.appendChild(item);
     });
   }

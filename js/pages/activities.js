@@ -119,10 +119,6 @@ function buildTaskRow(activity, isCompleted) {
   if (urgency === 'OVERDUE') dueEl.classList.add('task-due-overdue');
   if (urgency === 'COMPLETED') dueEl.classList.add('task-due-done');
 
-  row.querySelector('.task-main').addEventListener('click', () => {
-    window.location.href = `activity-detail.html?id=${activity.id}`;
-  });
-
   const dropdown = row.querySelector('.menu-dropdown');
 
   row.querySelector('.menu-btn').addEventListener('click', (e) => {

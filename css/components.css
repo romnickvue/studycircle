@@ -518,7 +518,6 @@ form button[type="submit"] {
   display: flex;
   align-items: center;
   gap: var(--space-1);
-  cursor: pointer;
 }
 
 .neo-checkbox {
@@ -1645,7 +1644,6 @@ form button[type="submit"] {
 .task-main {
   flex: 1;
   min-width: 0;
-  cursor: pointer;
 }
 
 .task-title {

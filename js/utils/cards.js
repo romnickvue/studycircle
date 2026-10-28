@@ -68,10 +68,6 @@ function buildActivityCard(activity, options = {}) {
       row.appendChild(badge);
     }
 
-    row.addEventListener('click', () => {
-      window.location.href = `activity-detail.html?id=${activity.id}`;
-    });
-
     return row;
   }
 
@@ -95,10 +91,6 @@ function buildActivityCard(activity, options = {}) {
 
   const badge = buildUrgencyBadge(activity.due_at, options.isCompleted || false);
   if (badge) card.appendChild(badge);
-
-  card.addEventListener('click', () => {
-    window.location.href = `activity-detail.html?id=${activity.id}`;
-  });
 
   return card;
 }
