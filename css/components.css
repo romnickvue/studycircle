@@ -2044,3 +2044,19 @@ form button[type="submit"] {
   margin-bottom: 6px;
   font-weight: bold;
 }
+
+.neo-checkbox {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.neo-checkbox i {
+  font-size: 0.9rem;
+}
+
+.neo-checkbox.checked {
+  background: linear-gradient(145deg, #7FA588, #6A8F74);
+  color: var(--color-cream);
+}

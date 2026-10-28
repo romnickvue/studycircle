@@ -55,10 +55,10 @@ async function loadTasks() {
   completedList.innerHTML = '';
   overdueList.innerHTML = '';
 
-  today.forEach((a) => todayList.appendChild(buildActivityCard(a, { showGroup: true, neo: true, sectionBorder: 'today' })));
-  soon.forEach((a) => soonList.appendChild(buildActivityCard(a, { showGroup: true, neo: true, sectionBorder: 'soon' })));
-  completed.forEach((a) => completedList.appendChild(buildActivityCard(a, { showGroup: true, isCompleted: true, neo: true, sectionBorder: 'completed' })));
-  overdue.forEach((a) => overdueList.appendChild(buildActivityCard(a, { showGroup: true, neo: true, sectionBorder: 'overdue' })));
+  today.forEach((a) => todayList.appendChild(buildActivityCard(a, { showGroup: true, neo: true, sectionBorder: 'today', onStatusChange: loadTasks })));
+  soon.forEach((a) => soonList.appendChild(buildActivityCard(a, { showGroup: true, neo: true, sectionBorder: 'soon', onStatusChange: loadTasks })));
+  completed.forEach((a) => completedList.appendChild(buildActivityCard(a, { showGroup: true, isCompleted: true, neo: true, sectionBorder: 'completed', onStatusChange: loadTasks })));
+  overdue.forEach((a) => overdueList.appendChild(buildActivityCard(a, { showGroup: true, neo: true, sectionBorder: 'overdue', onStatusChange: loadTasks })));
 
   if (today.length === 0 && soon.length === 0 && completed.length === 0 && overdue.length === 0) {
     allCaughtUpEl.hidden = false;

@@ -150,10 +150,10 @@ async function loadActivities() {
   completedListEl.innerHTML = '';
   overdueListEl.innerHTML = '';
 
-  todayArr.forEach((a) => todayListEl.appendChild(buildActivityCard(a, { showSubject: true, neo: true, sectionBorder: 'today' })));
-  soonArr.forEach((a) => soonListEl.appendChild(buildActivityCard(a, { showSubject: true, neo: true, sectionBorder: 'soon' })));
-  completedArr.forEach((a) => completedListEl.appendChild(buildActivityCard(a, { showSubject: true, isCompleted: true, neo: true, sectionBorder: 'completed' })));
-  overdueArr.forEach((a) => overdueListEl.appendChild(buildActivityCard(a, { showSubject: true, neo: true, sectionBorder: 'overdue' })));
+  todayArr.forEach((a) => todayListEl.appendChild(buildActivityCard(a, { showSubject: true, neo: true, sectionBorder: 'today', onStatusChange: loadActivities })));
+  soonArr.forEach((a) => soonListEl.appendChild(buildActivityCard(a, { showSubject: true, neo: true, sectionBorder: 'soon', onStatusChange: loadActivities })));
+  completedArr.forEach((a) => completedListEl.appendChild(buildActivityCard(a, { showSubject: true, isCompleted: true, neo: true, sectionBorder: 'completed', onStatusChange: loadActivities })));
+  overdueArr.forEach((a) => overdueListEl.appendChild(buildActivityCard(a, { showSubject: true, neo: true, sectionBorder: 'overdue', onStatusChange: loadActivities })));
 
   document.getElementById('today-section').hidden = todayArr.length === 0;
   document.getElementById('soon-section').hidden = soonArr.length === 0;

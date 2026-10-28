@@ -63,7 +63,8 @@ function buildSubjectSection(title, subtitle, items, subjectId) {
         showSubject: false,
         isCompleted: done,
         neo: true,
-        sectionBorder: borderKeyFor(a, done)
+        sectionBorder: borderKeyFor(a, done),
+        onStatusChange: loadSubjects
       }));
     });
   }

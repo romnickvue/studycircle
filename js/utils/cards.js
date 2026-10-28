@@ -8,7 +8,39 @@ function buildActivityCard(activity, options = {}) {
     }
 
     const checkbox = document.createElement('div');
-    checkbox.className = 'neo-checkbox';
+    checkbox.className = 'neo-checkbox' + (options.isCompleted ? ' checked' : '');
+    checkbox.setAttribute('role', 'checkbox');
+    checkbox.setAttribute('aria-checked', options.isCompleted ? 'true' : 'false');
+    checkbox.tabIndex = 0;
+    checkbox.innerHTML = options.isCompleted ? '<i class="bi bi-check-lg"></i>' : '';
+
+    let busy = false;
+    const toggleStatus = async (e) => {
+      e.stopPropagation();
+      if (busy) return;
+      busy = true;
+
+      const nextStatus = options.isCompleted ? 'NOT_STARTED' : 'COMPLETED';
+      const { error } = await ProgressService.setStatus(activity.id, nextStatus);
+      busy = false;
+
+      if (error) {
+        if (typeof showToast === 'function') showToast('Could not update task.', 'error');
+        return;
+      }
+
+      if (typeof options.onStatusChange === 'function') {
+        options.onStatusChange(activity, nextStatus);
+      }
+    };
+
+    checkbox.addEventListener('click', toggleStatus);
+    checkbox.addEventListener('keydown', (e) => {
+      if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        toggleStatus(e);
+      }
+    });
 
     const textWrap = document.createElement('div');
     textWrap.style.flex = '1';
