@@ -14,4 +14,12 @@ function wireGroupSidebarLinks(groupId) {
       link.href = linkMap[href];
     }
   });
+
+  const navList = document.querySelector('.sidebar nav ul');
+  if (navList && !navList.querySelector('.sidebar-back-link')) {
+    const item = document.createElement('li');
+    item.className = 'sidebar-back-item';
+    item.innerHTML = '<a href="groups.html" class="sidebar-back-link"><i class="bi bi-arrow-left"></i> Back to My Groups</a>';
+    navList.prepend(item);
+  }
 }
