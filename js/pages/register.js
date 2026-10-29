@@ -11,6 +11,13 @@ form.addEventListener('submit', async (event) => {
   const displayName = document.getElementById('display-name').value.trim();
   const email = document.getElementById('email').value.trim();
   const password = document.getElementById('password').value;
+  const confirmPassword = document.getElementById('confirm-password').value;
+
+  if (password !== confirmPassword) {
+    errorEl.textContent = 'Passwords do not match.';
+    errorEl.hidden = false;
+    return;
+  }
 
   const submitButton = form.querySelector('button[type="submit"]');
   submitButton.disabled = true;
