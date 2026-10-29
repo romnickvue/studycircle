@@ -27,7 +27,9 @@ function calendarBucket(activity, statusMap) {
 }
 
 async function renderCalendar() {
-  const { activities, error } = await ActivitiesService.listMine();
+  const { activities: groupActivities, error } = await ActivitiesService.listMine();
+  const { activities: personalActivities } = await ActivitiesService.listPersonal();
+  const activities = [...(groupActivities || []), ...(personalActivities || [])];
 
   const activityIds = activities.filter((a) => a.due_at).map((a) => a.id);
   const { statusMap } = await ProgressService.getManyMine(activityIds);
@@ -133,7 +135,7 @@ function openDayModal(dateKey, dateObj) {
       const item = document.createElement('div');
       item.style.padding = 'var(--space-1)';
       item.style.cursor = 'pointer';
-      const groupLabel = activity.groups ? ` — ${activity.groups.name}` : '';
+      const groupLabel = activity.groups ? ` — ${activity.groups.name}` : ' — Personal';
       item.textContent = `${activity.title}${groupLabel} (${activity.activity_type})`;
       listEl.appendChild(item);
     });
