@@ -143,11 +143,50 @@ document.querySelectorAll('.view-pill').forEach((pill) => {
   });
 });
 
+const personalForm = document.getElementById('personal-form');
+const personalError = document.getElementById('personal-error');
+
 document.getElementById('add-personal-btn').addEventListener('click', () => {
-  showToast('Add Task coming soon!');
+  personalForm.reset();
+  personalError.hidden = true;
+  openModal('personal-modal');
+  document.getElementById('personal-title').focus();
 });
 
-loadTasks();
-loadPersonalTasks();
+personalForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  personalError.hidden = true;
 
+  const title = document.getElementById('personal-title').value.trim();
+  const dueDateOnly = document.getElementById('personal-due').value;
+
+  if (!title) {
+    personalError.textContent = 'Please enter a title.';
+    personalError.hidden = false;
+    return;
+  }
+
+  const submitButton = personalForm.querySelector('button[type="submit"]');
+  submitButton.disabled = true;
+
+  const { error } = await ActivitiesService.createPersonal({
+    title,
+    dueAt: dueDateOnly ? endOfDayManila(dueDateOnly) : null
+  });
+
+  submitButton.disabled = false;
+
+  if (error) {
+    personalError.textContent = error.message;
+    personalError.hidden = false;
+    return;
+  }
+
+  closeModal('personal-modal');
+  personalForm.reset();
+  showToast('Task added.');
+  loadPersonalTasks();
+});
+
+loadPersonalTasks();
 loadTasks();

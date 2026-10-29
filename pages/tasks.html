@@ -166,7 +166,25 @@
             </div>
           </div>
         </div>
+      </div>
 
+      <div id="personal-modal" class="modal-overlay" hidden>
+        <div class="modal">
+          <button type="button" class="modal-close" onclick="closeModal('personal-modal')">&times;</button>
+          <h3 id="personal-modal-title">Add Personal Task</h3>
+
+          <form id="personal-form">
+            <label for="personal-title">Title</label>
+            <input type="text" id="personal-title" maxlength="120" required />
+
+            <label for="personal-due">Due date (optional)</label>
+            <input type="date" id="personal-due" />
+
+            <p id="personal-error" class="form-error" hidden></p>
+
+            <button type="submit">Add Task</button>
+          </form>
+        </div>
       </div>
     </main>
   </div>
@@ -176,6 +194,7 @@
   <script src="../js/services/progress.service.js"></script>
   <script src="../js/utils/cards.js"></script>
   <script src="../js/utils/toast.js"></script>
+  <script src="../js/utils/modal.js"></script>
   <script src="../js/pages/tasks.js"></script>
 </body>
 </html>
