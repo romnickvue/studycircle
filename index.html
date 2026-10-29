@@ -2,21 +2,114 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>StudyCircle</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StudyCircle — Learn Together. Move Forward Together.</title>
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+</head>
+<body>
+  <div id="landing" hidden>
+    <div class="landing-wrap">
+      <header class="landing-nav">
+        <a class="landing-brand" href="index.html">
+          <img src="assets/images/logo-placeholder.png" alt="" />
+          <span>StudyCircle</span>
+        </a>
+        <nav class="landing-links">
+          <a href="pages/sign-in.html">Sign In</a>
+          <a href="pages/register.html" class="landing-cta-small">Register</a>
+        </nav>
+      </header>
+
+      <section class="landing-hero">
+        <div class="landing-hero-text">
+          <p class="eyebrow">YOUR ACADEMIC COLLABORATION SPACE</p>
+          <h1>Learn Together.<br />Move Forward Together.</h1>
+          <p class="landing-lead">
+            StudyCircle is a focused, collaborative workspace for classmates to organize
+            academic responsibilities, track progress, and study together.
+          </p>
+          <div class="landing-actions">
+            <a href="pages/register.html" class="landing-btn primary">Get Started <i class="bi bi-arrow-right"></i></a>
+            <a href="#features" class="landing-btn">Learn More</a>
+          </div>
+        </div>
+
+        <div class="landing-hero-art">
+          <div class="landing-art-circle"><i class="bi bi-book-half"></i></div>
+        </div>
+      </section>
+
+      <section id="features" class="landing-features">
+        <h2>Everything You Need for Academic Success</h2>
+        <p class="landing-features-sub">Stay organized, collaborate with your group, and achieve your goals.</p>
+
+        <div class="feature-grid">
+          <div class="neo-card feature-card">
+            <div class="neo-icon-circle"><i class="bi bi-check2-square"></i></div>
+            <div>
+              <h3>Track Your Tasks</h3>
+              <p>Keep up with your academic responsibilities and never miss a deadline.</p>
+            </div>
+          </div>
+
+          <div class="neo-card feature-card">
+            <div class="neo-icon-circle"><i class="bi bi-people"></i></div>
+            <div>
+              <h3>Work in Groups</h3>
+              <p>Join or create study groups and collaborate with your classmates.</p>
+            </div>
+          </div>
+
+          <div class="neo-card feature-card">
+            <div class="neo-icon-circle"><i class="bi bi-calendar3"></i></div>
+            <div>
+              <h3>Stay Organized</h3>
+              <p>Use the calendar to plan your schedule and important dates.</p>
+            </div>
+          </div>
+
+          <div class="neo-card feature-card">
+            <div class="neo-icon-circle"><i class="bi bi-book"></i></div>
+            <div>
+              <h3>Focus on Learning</h3>
+              <p>Build good habits, make progress, and achieve your academic goals.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="landing-footer">
+        <p class="landing-footer-name">StudyCircle</p>
+        <p>Learn Together. Move Forward Together.</p>
+        <p>&copy; 2026 StudyCircle</p>
+      </footer>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/config/supabase.local.js"></script>
   <script src="js/config/supabase.js"></script>
   <script src="js/services/auth.service.js"></script>
   <script>
-    (async function redirect() {
-      const { session } = await AuthService.getSession();
-      if (session) {
-        window.location.href = 'pages/dashboard.html';
-      } else {
-        window.location.href = 'pages/sign-in.html';
+    (async function init() {
+      const landing = document.getElementById('landing');
+
+      try {
+        const { session } = await AuthService.getSession();
+        if (session) {
+          window.location.href = 'pages/dashboard.html';
+          return;
+        }
+      } catch (err) {
+        // If the check fails, just show the landing page
       }
+
+      landing.hidden = false;
     })();
   </script>
-</head>
-<body></body>
+</body>
 </html>
