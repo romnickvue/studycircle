@@ -53,12 +53,18 @@
           <h1>My Tasks</h1>
           <p class="hero-sub">Stay on top of your academic work, one task at a time.</p>
         </div>
-        <button id="add-task-btn">+ Add task</button>
+      </div>
+
+      <div class="view-pills">
+        <button type="button" class="view-pill active" data-view="group"><i class="bi bi-people"></i> Group Tasks</button>
+        <button type="button" class="view-pill" data-view="personal"><i class="bi bi-person"></i> Personal</button>
       </div>
 
       <div id="loading-state" class="skeleton skeleton-card" style="max-width: 400px;"></div>
 
-        <div id="tasks-content" hidden>
+      <div id="tasks-content" hidden>
+
+        <div id="group-tasks-view">
           <div class="stats-row">
             <div class="neo-card stat-card">
               <p class="stat-label">Due today</p>
@@ -76,52 +82,91 @@
               <p class="stat-number" id="stat-completed">0</p>
             </div>
           </div>
-        <div class="tasks-sections-grid">
-          <div class="neo-card tasks-list-card">
-            <div id="today-section">
-              <div class="section-header-row">
-                <h3>Today <span class="section-count" id="today-count">0</span></h3>
-                <span class="section-hint">Needs your attention</span>
+
+          <div class="tasks-sections-grid">
+            <div class="neo-card tasks-list-card">
+              <div id="today-section">
+                <div class="section-header-row">
+                  <h3>Today <span class="section-count" id="today-count">0</span></h3>
+                  <span class="section-hint">Needs your attention</span>
+                </div>
+                <div id="today-list"></div>
               </div>
-              <div id="today-list"></div>
+            </div>
+
+            <div class="neo-card tasks-list-card">
+              <div id="soon-section">
+                <div class="section-header-row">
+                  <h3>Due Soon <span class="section-count" id="soon-count">0</span></h3>
+                  <span class="section-hint">Plan ahead</span>
+                </div>
+                <div id="soon-list"></div>
+              </div>
+            </div>
+
+            <div class="neo-card tasks-list-card">
+              <div id="completed-section">
+                <div class="section-header-row">
+                  <h3>Completed <span class="section-count" id="completed-count">0</span></h3>
+                  <span class="section-hint">Nice work!</span>
+                </div>
+                <div id="completed-list"></div>
+              </div>
+            </div>
+
+            <div class="neo-card tasks-list-card">
+              <div id="overdue-section">
+                <div class="section-header-row">
+                  <h3>Overdue <span class="section-count" id="overdue-count">0</span></h3>
+                  <span class="section-hint">Catch up when you can</span>
+                </div>
+                <div id="overdue-list"></div>
+              </div>
             </div>
           </div>
 
-          <div class="neo-card tasks-list-card">
-            <div id="soon-section">
-              <div class="section-header-row">
-                <h3>Due Soon <span class="section-count" id="soon-count">0</span></h3>
-                <span class="section-hint">Plan ahead</span>
-              </div>
-              <div id="soon-list"></div>
-            </div>
+          <div id="all-caught-up" class="empty-state" hidden>
+            <p>You're all caught up!</p>
           </div>
+        </div>
 
-          <div class="neo-card tasks-list-card">
-            <div id="completed-section">
-              <div class="section-header-row">
-                <h3>Completed <span class="section-count" id="completed-count">0</span></h3>
-                <span class="section-hint">Nice work!</span>
+        <div id="personal-tasks-view" hidden>
+          <div class="neo-card group-panel">
+            <div class="panel-header">
+              <div class="neo-icon-circle"><i class="bi bi-person-check"></i></div>
+              <div class="panel-heading">
+                <h2>Personal Tasks</h2>
+                <p class="panel-sub">Just for you. Not shared with any group.</p>
               </div>
-              <div id="completed-list"></div>
+              <button type="button" id="add-personal-btn" class="pill-btn"><i class="bi bi-plus-lg"></i> Add Task</button>
             </div>
-          </div>
 
-          <div class="neo-card tasks-list-card">
-            <div id="overdue-section">
-              <div class="section-header-row">
-                <h3>Overdue <span class="section-count" id="overdue-count">0</span></h3>
-                <span class="section-hint">Catch up when you can</span>
-              </div>
-              <div id="overdue-list"></div>
+            <div id="p-overdue-section">
+              <h3>Overdue <span class="section-count" id="p-overdue-count">0</span></h3>
+              <div id="p-overdue-list"></div>
             </div>
-          </div>
 
-            <div id="all-caught-up" class="empty-state" hidden>
-              <p>You're all caught up!</p>
+            <div id="p-today-section">
+              <h3>Today <span class="section-count" id="p-today-count">0</span></h3>
+              <div id="p-today-list"></div>
+            </div>
+
+            <div id="p-soon-section">
+              <h3>Upcoming <span class="section-count" id="p-soon-count">0</span></h3>
+              <div id="p-soon-list"></div>
+            </div>
+
+            <div id="p-completed-section">
+              <h3>Completed <span class="section-count" id="p-completed-count">0</span></h3>
+              <div id="p-completed-list"></div>
+            </div>
+
+            <div id="personal-empty" class="empty-state" hidden>
+              <p>No personal tasks yet.</p>
             </div>
           </div>
         </div>
+
       </div>
     </main>
   </div>

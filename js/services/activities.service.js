@@ -80,6 +80,39 @@ const ActivitiesService = {
     return { activities: data ?? [], error };
   },
 
+    async createPersonal({ title, description, dueAt }) {
+    const { session } = await AuthService.getSession();
+
+    const { data, error } = await supabaseClient
+      .from('academic_activities')
+      .insert({
+        group_id: null,
+        subject_id: null,
+        created_by: session.user.id,
+        title,
+        description: description || null,
+        activity_type: 'OTHER',
+        due_at: dueAt || null
+      })
+      .select()
+      .single();
+
+    return { activity: data, error };
+  },
+
+  async listPersonal() {
+    const { session } = await AuthService.getSession();
+
+    const { data, error } = await supabaseClient
+      .from('academic_activities')
+      .select('*')
+      .is('group_id', null)
+      .eq('created_by', session.user.id)
+      .order('due_at', { ascending: true, nullsFirst: false });
+
+    return { activities: data ?? [], error };
+  },
+
   async countThisWeek(groupId) {
     const { start, end } = getCurrentWeekWindow();
     const { count, error } = await supabaseClient
