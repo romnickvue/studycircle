@@ -68,6 +68,11 @@ function buildActivityCard(activity, options = {}) {
       row.appendChild(badge);
     }
 
+    if (options.menu) {
+      row.classList.add('has-menu');
+      row.appendChild(buildRowMenu(options.menu));
+    }
+
     return row;
   }
 
@@ -212,3 +217,39 @@ function buildGroupCardDetailed(group, memberCount) {
 
   return card;
 }
+
+function buildRowMenu(menu) {
+  const wrap = document.createElement('div');
+  wrap.className = 'subject-menu row-menu';
+  wrap.innerHTML = `
+    <button type="button" class="menu-btn" aria-label="Task options"><i class="bi bi-three-dots"></i></button>
+    <div class="menu-dropdown" hidden>
+      <button type="button" class="menu-item" data-action="edit"><i class="bi bi-pencil"></i> Edit Task</button>
+      <button type="button" class="menu-item menu-item-danger" data-action="delete"><i class="bi bi-trash"></i> Remove Task</button>
+    </div>`;
+
+  const dropdown = wrap.querySelector('.menu-dropdown');
+  wrap.addEventListener('click', (e) => e.stopPropagation());
+
+  wrap.querySelector('.menu-btn').addEventListener('click', () => {
+    const wasHidden = dropdown.hidden;
+    document.querySelectorAll('.menu-dropdown').forEach((m) => { m.hidden = true; });
+    dropdown.hidden = !wasHidden;
+  });
+
+  wrap.querySelector('[data-action="edit"]').addEventListener('click', () => {
+    dropdown.hidden = true;
+    menu.onEdit();
+  });
+
+  wrap.querySelector('[data-action="delete"]').addEventListener('click', () => {
+    dropdown.hidden = true;
+    menu.onDelete();
+  });
+
+  return wrap;
+}
+
+document.addEventListener('click', () => {
+  document.querySelectorAll('.menu-dropdown').forEach((m) => { m.hidden = true; });
+});

@@ -122,7 +122,11 @@ async function loadPersonalTasks() {
         neo: true,
         isCompleted: key === 'completed',
         sectionBorder: key,
-        onStatusChange: loadPersonalTasks
+        onStatusChange: loadPersonalTasks,
+        menu: {
+          onEdit: () => openEditPersonal(a),
+          onDelete: () => deletePersonal(a)
+        }
       }));
     });
 
@@ -145,13 +149,43 @@ document.querySelectorAll('.view-pill').forEach((pill) => {
 
 const personalForm = document.getElementById('personal-form');
 const personalError = document.getElementById('personal-error');
+let editingPersonalId = null;
 
-document.getElementById('add-personal-btn').addEventListener('click', () => {
+function openAddPersonal() {
+  editingPersonalId = null;
   personalForm.reset();
   personalError.hidden = true;
+  document.getElementById('personal-modal-title').textContent = 'Add Personal Task';
+  personalForm.querySelector('button[type="submit"]').textContent = 'Add Task';
   openModal('personal-modal');
   document.getElementById('personal-title').focus();
-});
+}
+
+function openEditPersonal(activity) {
+  editingPersonalId = activity.id;
+  personalForm.reset();
+  personalError.hidden = true;
+  document.getElementById('personal-title').value = activity.title;
+  document.getElementById('personal-due').value = activity.due_at ? activity.due_at.split('T')[0] : '';
+  document.getElementById('personal-modal-title').textContent = 'Edit Personal Task';
+  personalForm.querySelector('button[type="submit"]').textContent = 'Save Changes';
+  openModal('personal-modal');
+  document.getElementById('personal-title').focus();
+}
+
+function deletePersonal(activity) {
+  confirmAction(`Remove "${activity.title}"?`, async () => {
+    const { error } = await ActivitiesService.remove(activity.id);
+    if (error) {
+      showToast(error.message, 'error');
+      return;
+    }
+    showToast('Task removed.');
+    loadPersonalTasks();
+  });
+}
+
+document.getElementById('add-personal-btn').addEventListener('click', openAddPersonal);
 
 personalForm.addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -159,6 +193,7 @@ personalForm.addEventListener('submit', async (event) => {
 
   const title = document.getElementById('personal-title').value.trim();
   const dueDateOnly = document.getElementById('personal-due').value;
+  const dueAt = dueDateOnly ? endOfDayManila(dueDateOnly) : null;
 
   if (!title) {
     personalError.textContent = 'Please enter a title.';
@@ -169,10 +204,18 @@ personalForm.addEventListener('submit', async (event) => {
   const submitButton = personalForm.querySelector('button[type="submit"]');
   submitButton.disabled = true;
 
-  const { error } = await ActivitiesService.createPersonal({
-    title,
-    dueAt: dueDateOnly ? endOfDayManila(dueDateOnly) : null
-  });
+  let error;
+  if (editingPersonalId) {
+    const result = await ActivitiesService.update(editingPersonalId, {
+      subjectId: null,
+      title,
+      activityType: 'OTHER',
+      dueAt
+    });
+    error = result.error || (!result.updated ? { message: 'Could not save changes.' } : null);
+  } else {
+    ({ error } = await ActivitiesService.createPersonal({ title, dueAt }));
+  }
 
   submitButton.disabled = false;
 
@@ -182,9 +225,10 @@ personalForm.addEventListener('submit', async (event) => {
     return;
   }
 
+  const wasEditing = !!editingPersonalId;
   closeModal('personal-modal');
   personalForm.reset();
-  showToast('Task added.');
+  showToast(wasEditing ? 'Task updated.' : 'Task added.');
   loadPersonalTasks();
 });
 

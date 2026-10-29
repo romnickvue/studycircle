@@ -2529,3 +2529,23 @@ select {
   max-width: none;
   width: 100%;
 }
+
+.row-menu {
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .neo-row.has-menu:has(.neo-checkbox) {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      "check text menu"
+      "check badge menu";
+  }
+
+  .neo-row.has-menu:has(.neo-checkbox) > .row-menu {
+    grid-area: menu;
+    align-self: center;
+    margin-left: 0;
+  }
+}
