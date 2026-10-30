@@ -10,6 +10,8 @@ const activityError = document.getElementById('activity-error');
 const activitySubjectSelect = document.getElementById('activity-subject');
 
 let editingActivityId = null;
+let myUserId = null;
+let canManageAll = false;
 
 function manilaYearMonth(date) {
   const parts = new Intl.DateTimeFormat('en-CA', {
@@ -120,6 +122,11 @@ function buildTaskRow(activity, isCompleted) {
   if (urgency === 'COMPLETED') dueEl.classList.add('task-due-done');
 
   const dropdown = row.querySelector('.menu-dropdown');
+  const canManage = canManageAll || activity.created_by === myUserId;
+  if (!canManage) {
+    row.querySelector('.subject-menu').remove();
+    return row;
+  }
 
   row.querySelector('.menu-btn').addEventListener('click', (e) => {
     e.stopPropagation();
@@ -155,6 +162,18 @@ async function loadActivities() {
     window.location.href = 'unauthorized.html';
     return;
   }
+
+  const { session } = await AuthService.getSession();
+  myUserId = session.user.id;
+
+  const { data: membership } = await supabaseClient
+    .from('group_memberships')
+    .select('role')
+    .eq('group_id', groupId)
+    .eq('user_id', myUserId)
+    .maybeSingle();
+
+  canManageAll = membership?.role === 'ADMIN';
 
   const thisMonth = activities.filter((a) => a.due_at && isWithinCurrentMonth(a.due_at));
   const { statusMap } = await ProgressService.getManyMine(thisMonth.map((a) => a.id));
