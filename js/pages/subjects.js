@@ -155,6 +155,19 @@ async function loadSubjects() {
   }
 
   const { activities } = await ActivitiesService.listByGroup(groupId);
+
+  const { session } = await AuthService.getSession();
+  const myId = session.user.id;
+
+  const { data: membership } = await supabaseClient
+    .from('group_memberships')
+    .select('role')
+    .eq('group_id', groupId)
+    .eq('user_id', myId)
+    .maybeSingle();
+
+  const isAdmin = membership?.role === 'ADMIN';
+
   const countBySubject = {};
   (activities || []).forEach((a) => {
     if (a.subject_id) countBySubject[a.subject_id] = (countBySubject[a.subject_id] || 0) + 1;
@@ -194,6 +207,13 @@ async function loadSubjects() {
     card.querySelector('.subject-title').textContent = subject.name;
     card.querySelector('.subject-code-line').textContent = subject.code || 'No code';
     card.querySelector('.subject-count').textContent = `${count} ${count === 1 ? 'activity' : 'activities'}`;
+
+    const canManage = isAdmin || subject.created_by === myId;
+    if (!canManage) {
+      card.querySelector('.subject-menu').remove();
+      subjectsListEl.appendChild(card);
+      return;
+    }
 
     const dropdown = card.querySelector('.menu-dropdown');
 
