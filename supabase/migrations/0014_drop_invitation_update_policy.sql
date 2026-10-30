@@ -1,0 +1,1 @@
+drop policy "invitations_update_revoke_admin" on group_invitations;
