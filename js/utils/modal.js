@@ -1,5 +1,15 @@
 function openModal(modalId) {
-  document.getElementById(modalId).hidden = false;
+  const overlay = document.getElementById(modalId);
+  overlay.hidden = false;
+
+  const dialog = overlay.querySelector('.modal');
+  if (dialog) {
+    dialog.setAttribute('role', 'dialog');
+    dialog.setAttribute('aria-modal', 'true');
+  }
+
+  const firstField = overlay.querySelector('input, select, textarea');
+  if (firstField) firstField.focus();
 }
 
 function closeModal(modalId) {
@@ -43,3 +53,10 @@ function confirmAction(message, onConfirm) {
   document.body.appendChild(overlay);
   overlay.querySelector('.confirm-cancel').focus();
 }
+
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Escape') return;
+  document
+    .querySelectorAll('.modal-overlay:not([hidden]):not(.confirm-overlay):not(.join-overlay)')
+    .forEach((overlay) => { overlay.hidden = true; });
+});

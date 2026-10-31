@@ -2972,3 +2972,15 @@ html {
 .neo-row.border-nodate {
   border-left: 4px solid var(--color-sage-light);
 }
+
+:focus-visible {
+  outline: 3px solid var(--color-sage);
+  outline-offset: 2px;
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+.auth-field input:focus-visible {
+  outline: none;
+}

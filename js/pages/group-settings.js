@@ -31,17 +31,37 @@ function renderIconPicker(currentIcon) {
   selectedIcon = currentIcon;
   const picker = document.getElementById('icon-picker');
   picker.innerHTML = '';
+  picker.setAttribute('role', 'radiogroup');
+  picker.setAttribute('aria-label', 'Group icon');
 
   GROUP_ICONS.forEach((icon) => {
     const btn = document.createElement('div');
     btn.className = `icon-option ${icon === currentIcon ? 'selected' : ''}`;
     btn.innerHTML = `<i class="bi ${icon}"></i>`;
-    btn.addEventListener('click', () => {
+    btn.setAttribute('role', 'radio');
+    btn.setAttribute('tabindex', '0');
+    btn.setAttribute('aria-label', icon.replace('bi-', '').replace(/-/g, ' '));
+    btn.setAttribute('aria-checked', icon === currentIcon ? 'true' : 'false');
+
+    const choose = () => {
       selectedIcon = icon;
-      picker.querySelectorAll('.icon-option').forEach((el) => el.classList.remove('selected'));
+      picker.querySelectorAll('.icon-option').forEach((el) => {
+        el.classList.remove('selected');
+        el.setAttribute('aria-checked', 'false');
+      });
       btn.classList.add('selected');
+      btn.setAttribute('aria-checked', 'true');
       checkDirty();
+    };
+
+    btn.addEventListener('click', choose);
+    btn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        choose();
+      }
     });
+
     picker.appendChild(btn);
   });
 }
