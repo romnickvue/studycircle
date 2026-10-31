@@ -2949,3 +2949,22 @@ html {
 .auth-field input::-ms-clear {
   display: none;
 }
+
+.neo-row-title,
+.neo-row-meta,
+.task-title,
+.task-subject,
+.subject-title,
+.subject-code-line,
+.subject-name,
+.subject-code,
+.panel-heading h2,
+.panel-sub,
+.group-hero-info h1,
+.group-hero-desc,
+.group-detail-text h3 {
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+
+.task-row.border-nodate { border-left-color: var(--color-sage-light); }

@@ -57,17 +57,17 @@ function endOfDayManila(dateOnlyString) {
   return `${dateOnlyString}T23:59:59+08:00`;
 }
 
-// Returns { start, end } of the current "week window" in Manila time.
-// Week starts Sunday 00:00. The window resets automatically once that boundary passes.
+// Returns { start, end } of the "task window" in Manila time.
+// Rolling window: from 7 days before today up to 7 days after today.
+// (Name kept as "week" so existing callers keep working.)
 function getCurrentWeekWindow() {
-  const todayManila = getManilaToday(); // already Manila midnight, from existing function
-  const dayOfWeek = todayManila.getDay(); // 0 = Sunday
+  const todayManila = getManilaToday();
 
   const start = new Date(todayManila);
-  start.setDate(start.getDate() - dayOfWeek);
+  start.setDate(start.getDate() - 7);
 
-  const end = new Date(start);
-  end.setDate(end.getDate() + 7);
+  const end = new Date(todayManila);
+  end.setDate(end.getDate() + 8); // exclusive, so all of day +7 is included
 
   return { start, end };
 }

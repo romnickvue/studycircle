@@ -25,7 +25,9 @@ function manilaYearMonth(date) {
 }
 
 function isWithinCurrentMonth(dueAt) {
-  return manilaYearMonth(dueAt) === manilaYearMonth(new Date());
+  if (manilaYearMonth(dueAt) === manilaYearMonth(new Date())) return true;
+  // Also keep anything due within a week of today, so month boundaries never hide a task
+  return isWithinCurrentWeek(dueAt);
 }
 
 document.getElementById('month-label').textContent = new Date().toLocaleDateString('en-US', {
@@ -93,7 +95,8 @@ function buildTaskRow(activity, isCompleted) {
   const dueLabel = activity.due_at ? formatUrgencyLabel(activity.due_at, isCompleted) : 'No due date';
 
   let borderKey = 'soon';
-  if (isCompleted) borderKey = 'completed';
+  if (!activity.due_at) borderKey = 'nodate';
+  else if (isCompleted) borderKey = 'completed';
   else if (urgency === 'OVERDUE') borderKey = 'overdue';
   else if (urgency === 'DUE_TODAY') borderKey = 'today';
   row.classList.add(`border-${borderKey}`);
@@ -176,6 +179,9 @@ async function loadActivities() {
   canManageAll = membership?.role === 'ADMIN';
 
   const thisMonth = activities.filter((a) => a.due_at && isWithinCurrentMonth(a.due_at));
+  const noDate = activities
+    .filter((a) => !a.due_at)
+    .sort((x, y) => new Date(y.created_at) - new Date(x.created_at));
   const { statusMap } = await ProgressService.getManyMine(thisMonth.map((a) => a.id));
 
   const overdue = [];
@@ -208,6 +214,9 @@ async function loadActivities() {
   fill('overdue-list', overdue, false);
   fill('pending-list', pending, false);
   fill('completed-list', completed, true);
+  fill('nodate-list', noDate, false);
+  document.getElementById('nodate-count').textContent = noDate.length;
+  document.getElementById('nodate-section').hidden = noDate.length === 0;
 
   document.getElementById('overdue-count').textContent = overdue.length;
   document.getElementById('pending-count').textContent = pending.length;
@@ -217,7 +226,7 @@ async function loadActivities() {
   document.getElementById('pending-section').hidden = pending.length === 0;
   document.getElementById('completed-section').hidden = completed.length === 0;
 
-  emptyEl.hidden = thisMonth.length > 0;
+  emptyEl.hidden = thisMonth.length > 0 || noDate.length > 0;
   panelEl.hidden = false;
 }
 
