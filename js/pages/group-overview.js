@@ -117,7 +117,8 @@ async function loadActivities() {
   }
 
   const thisWeekActivities = activities.filter((a) => a.due_at && isWithinCurrentWeek(a.due_at));
-  const activityIds = thisWeekActivities.map((a) => a.id);
+  const noDateActs = activities.filter((a) => !a.due_at);
+  const activityIds = [...thisWeekActivities, ...noDateActs].map((a) => a.id);
   const { statusMap } = await ProgressService.getManyMine(activityIds);
 
   const todayArr = [];
@@ -160,7 +161,13 @@ async function loadActivities() {
   document.getElementById('completed-section').hidden = completedArr.length === 0;
   document.getElementById('overdue-section').hidden = overdueArr.length === 0;
 
-  const totalShown = todayArr.length + soonArr.length + completedArr.length + overdueArr.length;
+  const noDate = noDateActs.filter((a) => (statusMap[a.id] || 'NOT_STARTED') !== 'COMPLETED');
+  const noDateListEl = document.getElementById('nodate-list');
+  noDateListEl.innerHTML = '';
+  noDate.forEach((a) => noDateListEl.appendChild(buildActivityCard(a, { showSubject: true, neo: true, sectionBorder: 'nodate', onStatusChange: loadActivities })));
+  document.getElementById('nodate-section').hidden = noDate.length === 0;
+
+  const totalShown = todayArr.length + soonArr.length + completedArr.length + overdueArr.length + noDate.length;
   activitiesEmptyEl.hidden = totalShown > 0;
 
   activitiesEmptyEl.hidden = activities.length > 0;

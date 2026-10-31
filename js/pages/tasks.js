@@ -75,6 +75,7 @@ const personalLists = {
   overdue: document.getElementById('p-overdue-list'),
   today: document.getElementById('p-today-list'),
   soon: document.getElementById('p-soon-list'),
+    nodate: document.getElementById('p-nodate-list'),
   completed: document.getElementById('p-completed-list')
 };
 
@@ -88,7 +89,7 @@ async function loadPersonalTasks() {
 
   const { statusMap } = await ProgressService.getManyMine(activities.map((a) => a.id));
 
-  const buckets = { overdue: [], today: [], soon: [], completed: [] };
+  const buckets = { overdue: [], today: [], soon: [], nodate:[], completed: [] };
 
   activities.forEach((a) => {
     const done = ((statusMap || {})[a.id] || 'NOT_STARTED') === 'COMPLETED';
@@ -99,7 +100,7 @@ async function loadPersonalTasks() {
     }
 
     if (!a.due_at) {
-      buckets.soon.push(a);
+      buckets.nodate.push(a);
       return;
     }
 
