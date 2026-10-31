@@ -2968,3 +2968,7 @@ html {
 }
 
 .task-row.border-nodate { border-left-color: var(--color-sage-light); }
+
+.neo-row.border-nodate {
+  border-left: 4px solid var(--color-sage-light);
+}
