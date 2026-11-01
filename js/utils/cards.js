@@ -10,6 +10,7 @@ function buildActivityCard(activity, options = {}) {
     const checkbox = document.createElement('div');
     checkbox.className = 'neo-checkbox' + (options.isCompleted ? ' checked' : '');
     checkbox.setAttribute('role', 'checkbox');
+    checkbox.setAttribute('aria-label', activity.title);
     checkbox.setAttribute('aria-checked', options.isCompleted ? 'true' : 'false');
     checkbox.tabIndex = 0;
     checkbox.innerHTML = options.isCompleted ? '<i class="bi bi-check-lg"></i>' : '';

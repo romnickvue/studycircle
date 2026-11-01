@@ -9,6 +9,8 @@
     --color-button-bg: var(--color-text-green);
     --color-button-text: var(--color-cream);
     --color-accent: var(--color-sage);
+    --color-text-muted: #4F6B58;
+    --color-sage-text: #4A7455;
 
     /* Spacing (8px scale) */
     --space-1: 8px;

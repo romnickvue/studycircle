@@ -2984,3 +2984,94 @@ select:focus-visible,
 .auth-field input:focus-visible {
   outline: none;
 }
+
+/* ===== Accessible text colors ===== */
+
+/* Muted text: a solid color instead of faded opacity */
+.empty-state p,
+.activity-card-meta,
+.cal-weekdays span,
+.mobile-app-header .tagline,
+.hero-sub,
+.neo-row-meta,
+.neo-card-subtitle,
+.neo-join-sub,
+.stat-sublabel,
+.section-hint,
+.group-detail-desc,
+.group-meta-col p,
+.page-subtitle,
+.action-desc,
+.panel-sub,
+.field-help,
+.task-subject,
+.subject-code-line,
+.subject-code,
+.member-role-line,
+.member-joined,
+.auth-sub,
+.landing-lead,
+.feature-card p,
+.landing-features-sub,
+.landing-footer p,
+.join-help,
+.group-hero-desc,
+.section-empty {
+  color: var(--color-text-muted);
+  opacity: 1;
+}
+
+.landing-footer .landing-footer-name {
+  color: var(--color-text-green);
+}
+
+/* Light-green text: a darker green that is readable */
+.eyebrow,
+.hero-name,
+.neo-view-all,
+.profile-line,
+.subject-stat,
+.group-hero-meta,
+.neo-row-chevron,
+.auth-field > i,
+.toggle-password,
+.toggle-password:hover,
+.toggle-password:active {
+  color: var(--color-sage-text);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-text-muted);
+  opacity: 1;
+}
+
+/* Buttons and avatars with cream text: deeper green so the text is readable */
+.save-btn,
+.auth-submit,
+.modal form button[type="submit"],
+.confirm-ok,
+.landing-btn.primary,
+.landing-links a.landing-cta-small,
+.member-avatar {
+  background: linear-gradient(145deg, #4A7455, #3F6B4B);
+}
+
+/* Bottom bar: solid text color instead of faded opacity */
+.bottom-tab-bar a {
+  opacity: 1;
+  color: var(--color-text-muted);
+}
+
+.bottom-tab-bar a.active {
+  color: var(--color-text-green);
+}
+
+/* Text on light-green chips: a lighter background so the text is readable */
+.neo-avatar,
+.section-count,
+.subject-count-pill,
+.task-due:not(.task-due-overdue):not(.task-due-done) {
+  background: #C9D9C5;
+  color: var(--color-text-green);
+}
