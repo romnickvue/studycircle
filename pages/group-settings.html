@@ -110,6 +110,18 @@
             <button type="button" id="generate-invite-btn" class="pill-btn"><i class="bi bi-key"></i> Generate Code</button>
           </div>
 
+          <div class="neo-card settings-card">
+            <div class="settings-card-head">
+              <div class="neo-icon-circle small"><i class="bi bi-trash"></i></div>
+              <div>
+                <h2>Delete Group</h2>
+                <p class="field-help">Moves the group to Trash for all members. An admin can restore it later from My Groups.</p>
+              </div>
+            </div>
+
+            <button type="button" id="delete-group-btn" class="pill-btn leave-pill"><i class="bi bi-trash"></i> Delete Group</button>
+          </div>
+
           <div id="save-bar" hidden>
             <button type="submit" form="settings-form" id="save-btn" class="save-btn"><i class="bi bi-check2-circle"></i> Save Changes</button>
           </div>
@@ -121,6 +133,7 @@
   <script src="../js/services/groups.service.js"></script>
   <script src="../js/utils/sidebar-links.js"></script>
   <script src="../js/utils/drawer.js"></script>
+  <script src="../js/services/trash.service.js"></script>
   <script src="../js/pages/group-settings.js"></script>
 </body>
 </html>

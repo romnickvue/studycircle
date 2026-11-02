@@ -199,6 +199,18 @@ document.getElementById('copy-invite-btn').addEventListener('click', async () =>
   showToast('Link copied.');
 });
 
+document.getElementById('delete-group-btn').addEventListener('click', () => {
+  confirmAction('Delete this group? It moves to Trash for every member, and only a group admin can restore it.', async () => {
+    const { error } = await TrashService.archiveGroup(groupId);
+    if (error) {
+      showToast(error.message, 'error');
+      return;
+    }
+    showToast('Group moved to Trash.');
+    window.location.href = 'groups.html';
+  });
+});
+
 document.getElementById('leave-group-btn').addEventListener('click', () => {
   confirmAction('Are you sure you want to leave this group?', async () => {
     const { error } = await MembersService.leave(groupId);
