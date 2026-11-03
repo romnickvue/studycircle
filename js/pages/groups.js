@@ -69,4 +69,76 @@ createGroupForm.addEventListener('submit', async (event) => {
   window.location.href = `group-overview.html?id=${groupId}`;
 });
 
+const trashListEl = document.getElementById('trash-list');
+const trashEmptyEl = document.getElementById('trash-empty');
+
+async function loadTrash() {
+  const { groups, error } = await TrashService.listGroups();
+
+  if (error) {
+    showToast('Could not load trash.', 'error');
+    return;
+  }
+
+  trashListEl.innerHTML = '';
+  trashEmptyEl.hidden = groups.length > 0;
+
+  groups.forEach((group) => {
+    const row = document.createElement('div');
+    row.className = 'trash-row';
+    row.innerHTML = `
+      <span class="trash-icon"><i class="bi ${group.icon_name || 'bi-people-fill'}"></i></span>
+      <span class="trash-info">
+        <span class="trash-name"></span>
+        <span class="trash-date"></span>
+      </span>
+      <span class="trash-actions">
+        <button type="button" class="trash-restore">Restore</button>
+        <button type="button" class="btn-destructive trash-delete">Delete</button>
+      </span>`;
+
+    row.querySelector('.trash-name').textContent = group.name;
+    row.querySelector('.trash-date').textContent = `Deleted ${new Date(group.trashed_at).toLocaleDateString('en-US', {
+      month: 'short', day: 'numeric', year: 'numeric'
+    })}`;
+
+    const restoreBtn = row.querySelector('.trash-restore');
+    restoreBtn.addEventListener('click', async () => {
+      restoreBtn.disabled = true;
+      const { error: restoreError } = await TrashService.restoreGroup(group.id);
+
+      if (restoreError) {
+        restoreBtn.disabled = false;
+        showToast(restoreError.message, 'error');
+        return;
+      }
+
+      showToast('Group restored.');
+      loadTrash();
+      loadGroups();
+    });
+
+    row.querySelector('.trash-delete').addEventListener('click', () => {
+      confirmAction(`Permanently delete "${group.name}"? Its tasks, subjects, and members are removed for good. This cannot be undone.`, async () => {
+        const { error: deleteError } = await TrashService.permanentlyDeleteGroup(group.id);
+
+        if (deleteError) {
+          showToast(deleteError.message, 'error');
+          return;
+        }
+
+        showToast('Group permanently deleted.');
+        loadTrash();
+      });
+    });
+
+    trashListEl.appendChild(row);
+  });
+}
+
+document.getElementById('open-trash-btn').addEventListener('click', async () => {
+  openModal('trash-modal');
+  await loadTrash();
+});
+
 loadGroups();

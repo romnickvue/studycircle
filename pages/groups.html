@@ -52,6 +52,7 @@
           <h1>My Groups</h1>
           <p class="hero-sub">Your joined groups and study communities.</p>
         </div>
+        <button type="button" id="open-trash-btn" class="trash-btn" aria-label="Open trash"><i class="bi bi-trash"></i></button>
       </div>
 
       <div id="loading-state" class="skeleton skeleton-card" style="max-width: 400px;"></div>
@@ -91,12 +92,27 @@
           </form>
         </div>
       </div>
+
+      <div id="trash-modal" class="modal-overlay" hidden>
+        <div class="modal trash-modal" aria-labelledby="trash-modal-title">
+          <button type="button" class="modal-close" aria-label="Close" onclick="closeModal('trash-modal')">&times;</button>
+          <h3 id="trash-modal-title">Trash</h3>
+          <p class="panel-sub trash-help">Groups you deleted. Restoring brings back the group with its members and tasks.</p>
+
+          <div id="trash-list"></div>
+
+          <div id="trash-empty" class="empty-state" hidden>
+            <p>Trash is empty.</p>
+          </div>
+        </div>
+      </div>
     </main>
   </div>
 
   
   <script src="../js/services/groups.service.js"></script>
   <script src="../js/services/invitations.service.js"></script>
+  <script src="../js/services/trash.service.js"></script>
   <script src="../js/utils/join-group.js"></script>
   <script src="../js/utils/cards.js"></script>
   <script src="../js/pages/groups.js"></script>
